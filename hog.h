@@ -1,9 +1,12 @@
 #ifndef __HOG_H__
 #define __HOG_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include <string>
 #include <vector>
-#include <map>
 
 using namespace std;
 
@@ -16,8 +19,11 @@ class CHog {
 		~CHog();
 
 		CHog &operator=(const CHog &source);
+
+		vector<string> get_Filenames() const;
 	protected:
 	private:
+		string mFilename;
 };
 
 #endif
