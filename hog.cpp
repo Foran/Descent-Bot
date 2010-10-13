@@ -34,8 +34,7 @@ vector<string> CHog::get_Filenames() const
 	if(fp) {
 		if(3 == fread(signature, sizeof(char), 3, fp)) {
 			if(signature[0] == 'D' && signature[1] == 'H' && signature[2]) {
-				while(!feof(fp)) {
-					if(13 != fread(file_name, sizeof(char), 13, fp)) break; //Exit if feof() fails to return end of file
+				while(13 == fread(file_name, sizeof(char), 13, fp)) {
 					string name = file_name;
 					retval.push_back(name);
 					fread(&file_size, sizeof(int), 1, fp);
