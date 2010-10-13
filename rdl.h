@@ -36,6 +36,8 @@ class CRdl {
       long objectsOffset;
       long fileSize;
    } mHeader;
+   
+   void Init();
 };
 
 #endif
