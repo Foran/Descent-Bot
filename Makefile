@@ -1,5 +1,5 @@
 Q = @
-OBJS=	main.o hog.o
+OBJS=	main.o hog.o rdl.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
 DEFINES=-DDEBUG -DVERSION=\"0.01a\"
