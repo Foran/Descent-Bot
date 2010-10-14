@@ -25,8 +25,7 @@ CHog &CHog::operator=(const CHog &source)
 vector<string> CHog::get_Filenames() const
 {
 	vector<string> retval;
-	string filename = "missions/" + mFilename;
-	FILE *fp = fopen(filename.c_str(), "rb");
+	FILE *fp = get_FilePointer();
 	char signature[3];
 	char file_name[13];
 	int file_size;
@@ -47,4 +46,15 @@ vector<string> CHog::get_Filenames() const
 	}
 
 	return retval;
+}
+
+FILE *CHog::get_FilePointer()
+{
+   string filename = "missions/" + mFilename;
+   FILE *retval = fopen(filename.c_str(), "rb");
+   if(retval == NULL) {
+      retval = fopen(mFilename.c_str(), "rb");
+   }
+   
+   return retval;
 }

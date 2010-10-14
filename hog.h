@@ -10,20 +10,22 @@
 
 using namespace std;
 
-class CHog {
-	public:
-		CHog();
-		CHog(const string &filename);
-		CHog(const CHog &source);
-
-		~CHog();
-
-		CHog &operator=(const CHog &source);
-
-		vector<string> get_Filenames() const;
-	protected:
-	private:
-		string mFilename;
+class CHog
+{
+ public:
+   CHog();
+   CHog(const string &filename);
+   CHog(const CHog &source);
+   
+   ~CHog();
+   
+   CHog &operator=(const CHog &source);
+   
+   vector<string> get_Filenames() const;
+ protected:
+ private:
+   string mFilename;
+   FILE *get_FilePointer();
 };
 
 #endif
