@@ -48,7 +48,7 @@ vector<string> CHog::get_Filenames() const
 	return retval;
 }
 
-FILE *CHog::get_FilePointer()
+FILE *CHog::get_FilePointer() const
 {
    string filename = "missions/" + mFilename;
    FILE *retval = fopen(filename.c_str(), "rb");

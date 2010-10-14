@@ -25,7 +25,7 @@ class CHog
  protected:
  private:
    string mFilename;
-   FILE *get_FilePointer();
+   FILE *get_FilePointer() const;
 };
 
 #endif
