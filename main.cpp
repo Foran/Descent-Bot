@@ -9,6 +9,8 @@ int main(int argc, char **argv)
 	for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {
 		printf("%s\n", (*i).c_str());
 	}
-
+   
+   CRdl rdl(hog, "chaos1.rdl");
+   
 	return retval;
 }

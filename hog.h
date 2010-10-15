@@ -21,7 +21,10 @@ class CHog
    
    CHog &operator=(const CHog &source);
    
+   void set_Filename(const string &filename);
+   
    vector<string> get_Filenames() const;
+   FILE *OpenFile(const string &filename);
  protected:
  private:
    string mFilename;

@@ -11,8 +11,9 @@
 using namespace std;
 
 #include "hog.h"
+#include "file.h"
 
-class CRdl {
+class CRdl : public CFile {
  public:
    CRdl();
    CRdl(const string &filename);
@@ -24,10 +25,8 @@ class CRdl {
    CRdl &operator=(const CRdl &source);
    
    void Reset();
-   bool Load(const string &filename);
-   bool Load(const CHog &hog, const string &filename);
-   bool Load(const string &hog, const string &filename);
  protected:
+   virtual bool LoadByFP(FILE *fp);
  private:
    struct {
       char signature[4];

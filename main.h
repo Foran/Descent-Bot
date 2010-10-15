@@ -2,6 +2,7 @@
 #define __MAIN_H__
 
 #include "hog.h"
+#include "rdl.h"
 
 #endif
 

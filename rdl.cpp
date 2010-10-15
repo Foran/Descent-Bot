@@ -46,24 +46,14 @@ void CRdl::Reset()
    memset(&mHeader, 0, sizeof(mHeader));
 }
 
-bool CRdl::Load(const string &filename)
+bool CRdl::LoadByFP(FILE *fp)
 {
    bool retval = false;
    
-   return retval;
-}
-
-bool CRdl::Load(const CHog &hog, const string &filename)
-{
-   bool retval = false;
-   
-   return retval;
-}
-
-bool CRdl::Load(const string &hog, const string &filename)
-{
-   bool retval = false;
-   
+   if(fp != NULL) {
+      fclose(fp);
+   }
+      
    return retval;
 }
 
