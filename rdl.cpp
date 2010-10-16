@@ -49,8 +49,16 @@ void CRdl::Reset()
 bool CRdl::LoadByFP(FILE *fp)
 {
    bool retval = false;
+   long basePos = -1;
    
    if(fp != NULL) {
+      basePos = ftell(fp);
+      if(1 == fread(&mHeader, sizeof(mHeader), 1, fp) &&
+	 !memcmp(mHeader.signature, "LVLP", 4) &&
+	 mHeader.version == 1) {
+	 printf("%c%c%c%c %li\n", mHeader.signature[0], mHeader.signature[1], mHeader.signature[2], mHeader.signature[3], mHeader.version);
+      }
+      
       fclose(fp);
    }
       

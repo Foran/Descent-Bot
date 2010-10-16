@@ -13,6 +13,21 @@ using namespace std;
 #include "hog.h"
 #include "file.h"
 
+typedef struct CUBE {
+   struct {
+      short hi;
+      short lo;
+   } fixedX;
+   struct {
+      short hi;
+      short lo;
+   } fixedY;
+   struct {
+      short hi;
+      short lo;
+   } fixedZ;
+} CUBE;
+
 class CRdl : public CFile {
  public:
    CRdl();
