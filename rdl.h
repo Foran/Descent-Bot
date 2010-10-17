@@ -13,20 +13,41 @@ using namespace std;
 #include "hog.h"
 #include "file.h"
 
-typedef struct CUBE {
+typedef struct DESCENT_FIXED 
+{
+   union {
+      int raw;
+      struct {
+	 short hi;
+	 unsigned short lo;
+      } parts;
+   } value;
+} DESCENT_FIXED;
+
+typedef struct DESCENT_VERTEX 
+{
+   DESCENT_FIXED x, y, z;
+} DESCENT_VERTEX;
+
+typedef struct DESCENT_CUBE 
+{
+   unsigned short left;
+   unsigned short top;
+   unsigned short right;
+   unsigned short bottom;
+   unsigned short back;
+   unsigned short front;
+   bool energy;
+   unsigned short verticies[8];
+   unsigned char special;
+   char energyCenterNumber;
+   short value;
    struct {
-      short hi;
-      short lo;
-   } fixedX;
-   struct {
-      short hi;
-      short lo;
-   } fixedY;
-   struct {
-      short hi;
-      short lo;
-   } fixedZ;
-} CUBE;
+      signed hi: 4;
+      unsigned lo: 12;
+   } staticLight;
+   
+} DESCENT_CUBE;
 
 class CRdl : public CFile {
  public:
@@ -50,6 +71,9 @@ class CRdl : public CFile {
       long objectsOffset;
       long fileSize;
    } mHeader;
+   
+   vector<DESCENT_VERTEX> mDescentVerticies;
+   vector<DESCENT_CUBE> mDescentCubes;
    
    void Init();
 };
