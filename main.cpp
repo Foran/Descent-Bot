@@ -3,6 +3,8 @@
 int main(int argc, char **argv)
 {
 	int retval = 0;
+   
+   global_Log.add_Logger(Debug, new CLogDriverRaw());
 
 	CHog hog("chaos.hog");
 	vector<string> names = hog.get_Filenames();

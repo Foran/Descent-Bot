@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#include "log.h"
+
 class CHog
 {
  public:

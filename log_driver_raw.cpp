@@ -1,5 +1,9 @@
 #include "log_driver_raw.h"
 
+CLogDriverRaw::CLogDriverRaw() 
+{
+}
+
 bool CLogDriverRaw::Write(LogType type, int level, const string &message)
 {
    bool retval = true;

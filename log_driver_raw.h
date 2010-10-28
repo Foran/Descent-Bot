@@ -11,6 +11,7 @@ using namespace std;
 class CLogDriverRaw : public iLogDriver 
 {
  public:
+   CLogDriverRaw();
    virtual bool Write(LogType type, int level, const string &message);
  protected:
  private:
