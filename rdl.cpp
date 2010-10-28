@@ -53,7 +53,7 @@ bool CRdl::LoadByFP(FILE *fp)
    long basePos = -1;
    
    if(fp != NULL) {
-      basePos = ftell(fp);
+      basePos = ftell(fp) + 1;
       if(1 == fread(&mHeader, sizeof(mHeader), 1, fp) &&
 	 !memcmp(mHeader.signature, "LVLP", 4) &&
 	 mHeader.version == 1) {
@@ -65,11 +65,14 @@ bool CRdl::LoadByFP(FILE *fp)
 	    printf("%i verticies, %i cubes\n", vertexCount, cubeCount);
 	    DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
 	    size_t count;
+	    printf("sizeof(DESCENT_VERTEX) is %u, ftell() returned %li\n", sizeof(DESCENT_VERTEX), ftell(fp));
 	    if(vertexCount == (unsigned short)(count = fread(list, sizeof(DESCENT_VERTEX), vertexCount, fp))) {
 	       for(unsigned int i = 0; i < vertexCount; i++) {
+		  global_Log.Write(Debug, 200, "Added a vertex");
 		  mDescentVerticies.push_back(list[i]);
 	       }
 	    }
+	    printf("fread() returned %i, ftell() returned %li\n", count, ftell(fp));
 	    delete list;
 
 	    for(unsigned int i = 0; i < cubeCount; i++) {

@@ -12,6 +12,7 @@ using namespace std;
 
 #include "hog.h"
 #include "file.h"
+#include "log.h"
 
 typedef struct DESCENT_FIXED 
 {
