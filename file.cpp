@@ -39,7 +39,10 @@ bool CFile::Load(const string &filename)
       fp = descent.OpenFile(filename);
    }
    
-   retval = LoadByFP(fp);
+   if(fp) {
+      retval = LoadByFP(fp);
+      fp = NULL;
+   }
    
    return retval;
 }
@@ -57,7 +60,10 @@ bool CFile::Load(const CHog &hog, const string &filename)
       }
    }
    
-   retval = LoadByFP(fp);
+   if(fp) {
+      retval = LoadByFP(fp);
+      fp = NULL;
+   }
    
    return retval;
 }
@@ -76,7 +82,10 @@ bool CFile::Load(const string &hog, const string &filename)
       }
    }
    
-   retval = LoadByFP(fp);
+   if(fp) {
+      retval = LoadByFP(fp);
+      fp = NULL;
+   }
    
    return retval;
 }
