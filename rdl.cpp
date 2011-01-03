@@ -65,14 +65,14 @@ bool CRdl::LoadByFP(FILE *fp)
 	    printf("%i verticies, %i cubes\n", vertexCount, cubeCount);
 	    DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
 	    size_t count;
-	    printf("sizeof(DESCENT_VERTEX) is %u, ftell() returned %li\n", sizeof(DESCENT_VERTEX), ftell(fp));
+	    printf("sizeof(DESCENT_VERTEX) is %lu, ftell() returned %li\n", sizeof(DESCENT_VERTEX), ftell(fp));
 	    if(vertexCount == (unsigned short)(count = fread(list, sizeof(DESCENT_VERTEX), vertexCount, fp))) {
 	       for(unsigned int i = 0; i < vertexCount; i++) {
 		  global_Log.Write(Debug, 200, "Added a vertex");
 		  mDescentVerticies.push_back(list[i]);
 	       }
 	    }
-	    printf("fread() returned %i, ftell() returned %li\n", count, ftell(fp));
+	    printf("fread() returned %zi, ftell() returned %li\n", count, ftell(fp));
 	    delete list;
 
 	    for(unsigned int i = 0; i < cubeCount; i++) {
@@ -142,7 +142,7 @@ bool CRdl::LoadByFP(FILE *fp)
       fclose(fp);
    }
    
-   printf("Vertex Count: %i, Cube Count: %i\n", mDescentVerticies.size(), mDescentCubes.size());
+   printf("Vertex Count: %zi, Cube Count: %zi\n", mDescentVerticies.size(), mDescentCubes.size());
       
    return retval;
 }
