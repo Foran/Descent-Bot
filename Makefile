@@ -6,7 +6,7 @@ DEFINES=-DDEBUG -DVERSION=\"0.01a\"
 LIBS=-lxml2 -llua5.1
 CC=g++
 BIN=descent-bot
-CFLAGS=-Wall -g -I/usr/include/libxml2 -fpack-struct -fno-exceptions
+CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2 -fpack-struct -fno-exceptions
 
 .PHONY: all
 

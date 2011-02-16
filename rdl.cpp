@@ -72,7 +72,7 @@ bool CRdl::LoadByFP(FILE *fp)
 		  mDescentVerticies.push_back(list[i]);
 	       }
 	    }
-	    printf("fread() returned %zi, ftell() returned %li\n", count, ftell(fp));
+	    printf("fread() returned %li, ftell() returned %li\n", count, ftell(fp));
 	    delete list;
 
 	    for(unsigned int i = 0; i < cubeCount; i++) {
@@ -142,7 +142,7 @@ bool CRdl::LoadByFP(FILE *fp)
       fclose(fp);
    }
    
-   printf("Vertex Count: %zi, Cube Count: %zi\n", mDescentVerticies.size(), mDescentCubes.size());
+   printf("Vertex Count: %li, Cube Count: %li\n", mDescentVerticies.size(), mDescentCubes.size());
       
    return retval;
 }
