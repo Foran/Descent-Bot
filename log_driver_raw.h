@@ -1,7 +1,7 @@
 #ifndef __LOG_DRIVER_RAW_H__
 #define __LOG_DRIVER_RAW_H__
 
-#include <stdio.h>
+#include <iostream>
 #include <string>
 
 using namespace std;

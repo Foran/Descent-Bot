@@ -73,22 +73,22 @@ void CRdl::doLoad()
       if((*file).read((char *)&mHeader, 4) &&
 	 !memcmp(mHeader.signature, "LVLP", 4) &&
 	 mHeader.version == 1) {
-	 printf("%c%c%c%c %li\n", mHeader.signature[0], mHeader.signature[1], mHeader.signature[2], mHeader.signature[3], mHeader.version);
+	 cout << mHeader.signature[0] << mHeader.signature[1] << mHeader.signature[2] << mHeader.signature[3] << mHeader.version << endl;
 	 (*file).seekg(static_cast<unsigned short>(mPos) + mHeader.mineDataOffset, ios_base::beg);
 	 unsigned short vertexCount;
 	 unsigned short cubeCount;
 	 if((*file).read((char *)&vertexCount, sizeof(vertexCount)) && (*file).read((char *)&cubeCount, sizeof(cubeCount))) {
-	    printf("%i verticies, %i cubes\n", vertexCount, cubeCount);
+	    cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
 	    DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
 	    size_t count = vertexCount;
-	    printf("sizeof(DESCENT_VERTEX) is %u, ftell() returned %i\n", sizeof(DESCENT_VERTEX), static_cast<int>((*file).tellg()));
+	    cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX) << ", file.tellg() returned " << (*file).tellg() << endl;
 	    if((*file).read((char *)list, sizeof(vertexCount) * vertexCount)) {
 	       for(unsigned int i = 0; i < vertexCount; i++) {
-		  global_Log.Write(Debug, 200, "Added a vertex");
+		  global_Log.Write(LogType_Debug, 200, "Added a vertex");
 		  mDescentVerticies.push_back(list[i]);
 	       }
 	    }
-	    printf("fread() returned %i, ftell() returned %i\n", static_cast<int>(count), static_cast<int>((*file).tellg()));
+	    cout << "fread() returned " << count << ", file.tellg() returned " << (*file).tellg() << endl;
 	    delete list;
 
 	    for(unsigned int i = 0; i < cubeCount; i++) {
@@ -158,7 +158,7 @@ void CRdl::doLoad()
       (*file).close();
    }
    
-   printf("Vertex Count: %i, Cube Count: %i\n", static_cast<int>(mDescentVerticies.size()), static_cast<int>(mDescentCubes.size()));
+   cout << "Vertex Count: " << mDescentVerticies.size() << ", Cube Count: " << mDescentCubes.size() << endl;
 }
 
 void CRdl::Init()

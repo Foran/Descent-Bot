@@ -7,11 +7,11 @@ using namespace std;
 
 enum LogType 
 {
-     Fatal,
-     Error,
-     Warning,
-     Debug,
-     Info
+     LogType_Fatal,
+     LogType_Error,
+     LogType_Warning,
+     LogType_Debug,
+     LogType_Info
 };
 
 typedef struct iLogDriver

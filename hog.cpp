@@ -60,7 +60,7 @@ vector<string> CHog::get_Filenames() const
 bool CHog::Load(const string &filename)
 {
   bool retval = true;
-  fstreamptr file(filename.c_str(), ios::in | ios::binary);
+  fstreamptr file(("missions/" + filename).c_str(), ios::in | ios::binary);
   char signature[3];
   char file_name[13];
   int file_size;
@@ -72,13 +72,13 @@ bool CHog::Load(const string &filename)
     mFilename = filename;
     if(!(*file).eof() && (*file).read(signature, 3)) {
       if(signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
-	global_Log.Write(Debug, 100, "Found a valid signature");
+	global_Log.Write(LogType_Debug, 100, "Found a valid signature");
 	while(!(*file).eof() && (*file).read(file_name, 13)) {
 	  string name = file_name;
 	  if(!(*file).eof() && (*file).read((char *)&file_size, 4)) {
 	    streampos pos = (*file).tellg();
 	    mFiles.push_back(new CFile(*this, name, pos, file_size));
-	    global_Log.Write(Debug, 60, "Found file: " + name + " in hog");
+	    global_Log.Write(LogType_Debug, 60, "Found file: " + name + " in hog");
 	    (*file).seekg(file_size, ios_base::cur);
 	  }
 	}

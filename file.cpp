@@ -78,12 +78,12 @@ fstreamptr CFile::get_Stream()
   
   if(mFilename.length() > 0) {
     if(mHog == NULL) {
-      global_Log.Write(Debug, 200, "Opening " + mFilename + " in direct mode");
+      global_Log.Write(LogType_Debug, 200, "Opening " + mFilename + " in direct mode");
       (*file).open(mFilename.c_str(), ios::in | ios::binary);
       mPos = (*file).tellg();
     }
     else {
-      global_Log.Write(Debug, 200, "Opening " + mFilename + " from " + mHog->mFilename);
+      global_Log.Write(LogType_Debug, 200, "Opening " + mFilename + " from " + mHog->mFilename);
       file = mHog->get_Stream(mFilename);
     }
   }

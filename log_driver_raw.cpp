@@ -9,27 +9,27 @@ bool CLogDriverRaw::Write(LogType type, int level, const string &message)
    bool retval = true;
    
    switch(type) {
-    case Fatal:
-      printf("Fatal");
+    case LogType_Fatal:
+      cout << "Fatal";
       break;
-    case Error:
-      printf("Error");
+    case LogType_Error:
+      cout << "Error";
       break;
-    case Warning:
-      printf("Warning");
+    case LogType_Warning:
+      cout << "Warning";
       break;
-    case Debug:
-      printf("Debug");
+    case LogType_Debug:
+      cout << "Debug";
       break;
-    case Info:
-      printf("Info");
+    case LogType_Info:
+      cout << "Info";
       break;
     default:
-      printf("Unknown Type");
+      cout << "Unknown Type";
       break;
    }
    
-   printf("(%i): %s\n", level, message.c_str());
+   cout << "(" << level << "): " <<  message << endl;
    
    return retval;
 }
