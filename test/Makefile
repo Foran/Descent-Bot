@@ -9,7 +9,7 @@ BIN=testDescent-Bot
 CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 #-fpack-struct -fno-exceptions
 
-.PHONY: all
+.PHONY: all test
 
 all: $(BIN)
 
@@ -40,3 +40,6 @@ mrproper: clean
 	@echo "Removing dependancies..."
 	$(Q)-rm -rf $(DEPENDS)
 
+test: $(BIN)
+	@echo "Starting Testing Sequence..."
+	$(Q)./$(BIN)

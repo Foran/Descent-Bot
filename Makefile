@@ -9,14 +9,13 @@ BIN=descent-bot
 CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 #-fpack-struct -fno-exceptions
 
-.PHONY: all
+.PHONY: all test
 
 all: $(BIN)
 
 $(BIN):$(OBJS)
 	@echo "Linking $@..."
 	$(Q)$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(BIN)
-
 %.h:
 	@echo FORCING DEPENDENCY CHECK - HEADERFILE $@ MISSING
 	$(Q)rm -f *.d
@@ -35,8 +34,12 @@ $(BIN):$(OBJS)
 clean:
 	@echo "Cleaning Files..."
 	$(Q)-rm -rf *~ $(OBJS) $(BIN)
+	$(Q)make -C test clean
 
 mrproper: clean
 	@echo "Removing dependancies..."
 	$(Q)-rm -rf $(DEPENDS)
+	$(Q)make -C test mrproper
 
+test: $(BIN)
+	$(Q)make -C test test
