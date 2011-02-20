@@ -26,6 +26,7 @@ CFile::CFile(const CHog &hog, const string &filename, streampos offset, int leng
   mFilename = filename;
   mPos = offset;
   mLength = length;
+   cout << "Loading file " << hog.mFilename << "." << mFilename << " at offset " << mPos << " for " << mLength << " bytes" << endl;
 }
 
 CFile::CFile(const CFile &source)
@@ -43,7 +44,7 @@ CFile &CFile::operator=(const CFile &source)
   mHog = source.mHog;
   mFilename = source.mFilename;
   mLength = source.mLength;
-  mPos = mPos;
+  mPos = source.mPos;
   
   return *this;
 }
@@ -79,12 +80,13 @@ fstreamptr CFile::get_Stream()
   if(mFilename.length() > 0) {
     if(mHog == NULL) {
       global_Log.Write(LogType_Debug, 200, "Opening " + mFilename + " in direct mode");
-      (*file).open(mFilename.c_str(), ios::in | ios::binary);
+      (*file).open(("missions/" + mFilename).c_str(), ios::in | ios::binary);
       mPos = (*file).tellg();
     }
     else {
       global_Log.Write(LogType_Debug, 200, "Opening " + mFilename + " from " + mHog->mFilename);
       file = mHog->get_Stream(mFilename);
+       cout << ((*file).is_open() ? "True" : "False") << endl;
     }
   }
   

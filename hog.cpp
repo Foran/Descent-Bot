@@ -93,8 +93,10 @@ bool CHog::Load(const string &filename)
 
 fstreamptr CHog::get_Stream() const
 {
-  fstreamptr file(mFilename.c_str(), ios::in | ios::binary);
-  
+  fstreamptr file(("missions/" + mFilename).c_str(), ios::in | ios::binary);
+   
+   global_Log.Write(LogType_Debug, 200, "Attempting to open Hog (" + mFilename + ") Stream..." + ((*file).is_open() ? "Success" : "Failure"));
+    
   return file;
 }
 
@@ -102,7 +104,12 @@ fstreamptr CHog::get_Stream(const string &name) const
 {
   fstreamptr file = get_Stream();
   
-  if((*file).is_open()) (*file).seekg((*this)[name].mPos, ios_base::beg);
+   if((*file).is_open()) {
+      cout << "Before: " << (*file).tellg() << endl;
+      (*file).seekg((*this)[name].mPos, ios_base::beg);
+      global_Log.Write(LogType_Debug, 200, "Attempting to open Hog (" + mFilename + ") Entry (" + name + ") Stream..." + (!(*file).eof() ? "Success" : "Failure"));
+      cout << "After: " << (*file).tellg() << endl;
+   }
   
   return file;
 }

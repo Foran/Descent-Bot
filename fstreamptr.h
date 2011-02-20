@@ -2,9 +2,12 @@
 #define __FSTREAMPTR_H__
 
 #include <fstream>
+#include <iostream>
 #include <map>
 
 using namespace std;
+
+#include "log.h"
 
 class fstreamptr {
 public:

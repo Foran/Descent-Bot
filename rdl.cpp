@@ -69,15 +69,20 @@ void CRdl::doLoad()
 {
   fstreamptr file = get_Stream();
    
+   cout << "Loading " << mFilename << "..." << endl;
+   
    if((*file).is_open()) {
-      if((*file).read((char *)&mHeader, 4) &&
-	 !memcmp(mHeader.signature, "LVLP", 4) &&
+      (*file).read((char *)&mHeader, sizeof(mHeader));
+      cout << "File position is now: " << (*file).tellg() << endl << "Version is: " << mHeader.version << endl;
+      if(!memcmp(mHeader.signature, "LVLP", 4) &&
 	 mHeader.version == 1) {
 	 cout << mHeader.signature[0] << mHeader.signature[1] << mHeader.signature[2] << mHeader.signature[3] << mHeader.version << endl;
 	 (*file).seekg(static_cast<unsigned short>(mPos) + mHeader.mineDataOffset, ios_base::beg);
-	 unsigned short vertexCount;
-	 unsigned short cubeCount;
-	 if((*file).read((char *)&vertexCount, sizeof(vertexCount)) && (*file).read((char *)&cubeCount, sizeof(cubeCount))) {
+	 unsigned short vertexCount = 0;
+	 unsigned short cubeCount = 0;
+	 (*file).read((char *)&vertexCount, sizeof(vertexCount));
+	 (*file).read((char *)&cubeCount, sizeof(cubeCount));
+	 if(!(*file).eof()) {
 	    cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
 	    DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
 	    size_t count = vertexCount;
@@ -90,49 +95,63 @@ void CRdl::doLoad()
 	    }
 	    cout << "fread() returned " << count << ", file.tellg() returned " << (*file).tellg() << endl;
 	    delete list;
-
-	    for(unsigned int i = 0; i < cubeCount; i++) {
+	    
+	    unsigned short i;
+	    for(i = 0; i < cubeCount; i++) {
 	       DESCENT_CUBE cube;
 	       memset(&cube, 0, sizeof(cube));
 	       unsigned char mask;
-	       if((*file).read((char *)&mask, 1)) {
+	       (*file).read((char *)&mask, 1);
+	       if(!(*file).eof()) {
 		  if(mask & 0x01) {
 		     unsigned short value;
-		     if((*file).read((char *)&value, sizeof(value))) cube.left = value;
+		     (*file).read((char *)&value, sizeof(value));
+		     if(!(*file).eof()) cube.left = value;
 		     else break;
 		  }
 		  if(mask & 0x02) {
 		     unsigned short value;
-		     if((*file).read((char *)&value, sizeof(value))) cube.top = value;
+		     (*file).read((char *)&value, sizeof(value));
+		     if(!(*file).eof()) cube.top = value;
 		     else break;
 		  }
 		  if(mask & 0x04) {
 		     unsigned short value;
-		     if((*file).read((char *)&value, sizeof(value))) cube.right = value;
+		     (*file).read((char *)&value, sizeof(value));
+		     if(!(*file).eof()) cube.right = value;
 		     else break;
 		  }
 		  if(mask & 0x08) {
 		     unsigned short value;
-		     if((*file).read((char *)&value, sizeof(value))) cube.bottom = value;
+		     (*file).read((char *)&value, sizeof(value));
+		     if(!(*file).eof()) cube.bottom = value;
 		     else break;
 		  }
 		  if(mask & 0x10) {
 		     unsigned short value;
-		     if((*file).read((char *)&value, sizeof(value))) cube.back = value;
+		     (*file).read((char *)&value, sizeof(value));
+		     if(!(*file).eof()) cube.back = value;
 		     else break;
 		  }
 		  if(mask & 0x20) {
 		     unsigned short value;
-		     if((*file).read((char *)&value, sizeof(value))) cube.front = value;
+		     (*file).read((char *)&value, sizeof(value));
+		     if(!(*file).eof()) cube.front = value;
 		     else break;
 		  }
 		  if(mask & 0x40) cube.energy = true;
-		  if((*file).read((char *)cube.verticies, sizeof(DESCENT_VERTEX) * 8)) break;
+		  (*file).read((char *)cube.verticies, sizeof(DESCENT_VERTEX) * 8);
+		  if((*file).eof()) break;
 		  char buffer[4];
-		  if(cube.energy && (*file).read(buffer, 4)) break;	
-		  if((*file).read(buffer, 2)) break;
+		  if(cube.energy) {
+		     (*file).read(buffer, 4);
+		     if((*file).eof()) break;
+		  }
+		  (*file).read(buffer, 2);
+		  if((*file).eof()) break;
 		  unsigned char walls;
-		  if((*file).read((char *)&walls, 1)) break;
+		  (*file).read((char *)&walls, 1);
+		  if((*file).eof()) break;
 		  if(walls & 0x01) (*file).read(buffer, 1);
 		  if(walls & 0x02) (*file).read(buffer, 1);
 		  if(walls & 0x04) (*file).read(buffer, 1);
@@ -141,7 +160,8 @@ void CRdl::doLoad()
 		  if(walls & 0x20) (*file).read(buffer, 1);
 		  if(!(mask & 0x01) || walls & 0x01) {
 		     unsigned short texture;
-		     if((*file).read((char *)&texture, sizeof(texture)) && texture & 0x8000) {
+		     (*file).read((char *)&texture, sizeof(texture));
+		     if(!(*file).eof() && texture & 0x8000) {
 			(*file).read((char *)&texture, sizeof(texture));
 		     }
 		      (*file).read((char *)&texture, sizeof(texture));
@@ -152,11 +172,15 @@ void CRdl::doLoad()
 		  mDescentCubes.push_back(cube);
 	       }
 	    }
+	    cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
 	 }
+	 else cout << "Failed to read Vertix and Cube counts" << endl;
       }
+      else cout << "Failed to read a valid signature (" << mHeader.signature[0] << mHeader.signature[1] << mHeader.signature[2] << mHeader.signature[3] << ")" << endl;
       
       (*file).close();
    }
+   else cout << "Failed to open " << mFilename << endl;
    
    cout << "Vertex Count: " << mDescentVerticies.size() << ", Cube Count: " << mDescentCubes.size() << endl;
 }

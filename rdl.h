@@ -70,10 +70,10 @@ class CRdl : public CFile {
  private:
    struct {
       char signature[4];
-      long version;
-      long mineDataOffset;
-      long objectsOffset;
-      long fileSize;
+      int version;
+      int mineDataOffset;
+      int objectsOffset;
+      int fileSize;
    } mHeader;
    
    vector<DESCENT_VERTEX> mDescentVerticies;

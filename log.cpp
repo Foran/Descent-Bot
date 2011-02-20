@@ -25,6 +25,6 @@ void CLog::add_Logger(const LogType type, iLogDriver *log_driver)
 void CLog::Write(const LogType type, int level, const string &message)
 {
    for(vector<iLogDriver *>::iterator i = mDrivers[static_cast<int>(type)].begin(); i != mDrivers[static_cast<int>(type)].end(); i++) {
-      if(level <= 200) dynamic_cast<iLogDriver *>(*i)->Write(type, level, message);
+      if(level <= 100) dynamic_cast<iLogDriver *>(*i)->Write(type, level, message);
    }
 }

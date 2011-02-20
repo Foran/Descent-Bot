@@ -5,23 +5,27 @@ map<fstream *, int> fstreamptr::mReferences;
 fstreamptr::fstreamptr()
 {
   mPtr = new fstream();
-  mReferences[mPtr] = 0;
+  mReferences[mPtr] = 1;
+   cout << "Initial fstreamptf() called" << endl;
 }
 
 fstreamptr::fstreamptr(const fstreamptr &source)
 {
+   cout << "Copy constructor for fstreamptr called" << endl;
   *this = source;
 }
 
 fstreamptr::fstreamptr(const char *filename, const ios_base::openmode mode)
 {
   mPtr = new fstream(filename, mode);
-  mReferences[mPtr] = 0;
+  mReferences[mPtr] = 1;
+   cout << "Initial fstreamptr(filename, mode) called" << endl;
 }
 
 fstreamptr::~fstreamptr()
 {
   mReferences[mPtr]--;
+   cout << "Descructor for fstreamptr called with a reference count of " << mReferences[mPtr] << endl;
   if(mReferences[mPtr] == 0) {
     mReferences.erase(mPtr);
     delete mPtr;
