@@ -1,16 +1,16 @@
 #ifndef __FILE_H__
 #define __FILE_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <string>
 #include <vector>
 
 using namespace std;
 
+class CHog;
+
+#include "hogmanager.h"
 #include "hog.h"
+#include "fstreamptr.h"
 
 class CFile {
  public:
@@ -23,13 +23,20 @@ class CFile {
    
    CFile &operator=(const CFile &source);
    
-   bool Load(const string &filename);
-   bool Load(const CHog &hog, const string &filename);
-   bool Load(const string &hog, const string &filename);
+   void Load(const string &filename);
+   void Load(const CHog &hog, const string &filename);
+   void Load(const string &hog, const string &filename);
  protected:
-   virtual bool LoadByFP(FILE *fp) = 0;
-   FILE *get_FilePointer(const string &filename) const;
+   fstreamptr get_Stream();
+   bool eof(fstream &file);
+   string mFilename;
+   streampos mPos;
+   int mLength;  
  private:
+   CHog *mHog;
+   CFile(const CHog &hog, const string &filename, streampos offset, int length);
+   
+   friend class CHog;
 };
 
 #endif

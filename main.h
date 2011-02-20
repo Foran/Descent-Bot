@@ -3,7 +3,7 @@
 
 #include "log.h"
 #include "log_driver_raw.h"
-#include "hog.h"
+#include "hogmanager.h"
 #include "rdl.h"
 
 #endif

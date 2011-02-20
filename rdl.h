@@ -1,8 +1,6 @@
 #ifndef __RDL_H__
 #define __RDL_H__
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <string>
@@ -11,8 +9,10 @@
 using namespace std;
 
 #include "hog.h"
+#include "hogmanager.h"
 #include "file.h"
 #include "log.h"
+#include "fstreamptr.h"
 
 typedef struct DESCENT_FIXED 
 {
@@ -62,8 +62,10 @@ class CRdl : public CFile {
    CRdl &operator=(const CRdl &source);
    
    void Reset();
+   void Load(const string &filename);
+   void Load(const CHog &hog, const string &filename);
+   void Load(const string &hog, const string &filename);
  protected:
-   virtual bool LoadByFP(FILE *fp);
  private:
    struct {
       char signature[4];
@@ -77,6 +79,7 @@ class CRdl : public CFile {
    vector<DESCENT_CUBE> mDescentCubes;
    
    void Init();
+   void doLoad();
 };
 
 #endif

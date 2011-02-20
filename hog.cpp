@@ -6,98 +6,102 @@ CHog::CHog()
 
 CHog::CHog(const string &filename)
 {
-   set_Filename(filename);
+   Load(filename);
 }
 
 CHog::CHog(const CHog &source)
 {
+  *this = source;
 }
 
 CHog::~CHog()
 {
+  for(vector<CFile *>::iterator i = mFiles.begin(); i != mFiles.end(); i++) {
+    delete *i;
+  }
 }
 
 CHog &CHog::operator=(const CHog &source)
 {
-	return *this;
+  Load(source.mFilename);
+  return *this;
 }
 
-void CHog::set_Filename(const string &filename)
+bool CHog::operator==(const CHog &source)
 {
-   mFilename = filename;
+  return mFilename == source.mFilename;
+}
+
+CFile CHog::operator[](const string &name) const
+{
+  CFile file;
+  
+  for(vector<CFile *>::const_iterator i = mFiles.begin(); i != mFiles.end(); i++) {
+    if((**i).mFilename == name) {
+      file = **i;
+      break;
+    }
+  }
+  
+  return file;
 }
 
 vector<string> CHog::get_Filenames() const
 {
-   vector<string> retval;
-   FILE *fp = get_FilePointer();
-   char signature[3];
-   char file_name[13];
-   int file_size;
+  vector<string> retval;
    
-   if(fp) {
-      if(3 == fread(signature, sizeof(char), 3, fp)) {
-	 if(signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
-	    global_Log.Write(Debug, 100, "Found a valid signature");
-	    while(13 == fread(file_name, sizeof(char), 13, fp)) {
-	       string name = file_name;
-	       retval.push_back(name);
-	       global_Log.Write(Debug, 60, "Found file: " + name + " in hog and added to list");
-	       fread(&file_size, sizeof(int), 1, fp);
-	       fseek(fp, file_size, SEEK_CUR);
-	    }
-	 }
-      }
-      fclose(fp);
-      fp = NULL;
-   }
-   
-   return retval;
+  for(vector<CFile *>::const_iterator i = mFiles.begin(); i != mFiles.end(); i++) {
+    retval.push_back((*i)->mFilename);
+  }
+  
+  return retval;
 }
 
-FILE *CHog::OpenFile(const string &filename)
+bool CHog::Load(const string &filename)
 {
-   FILE *retval = NULL;
-   FILE *fp = get_FilePointer();
-   char signature[3];
-   char file_name[13];
-   int file_size;
-   
-   if(fp) {
-      if(3 == fread(signature, sizeof(char), 3, fp)) {
-	 if(signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
-	    global_Log.Write(Debug, 100, "Found a valid signature");
-	    while(13 == fread(file_name, sizeof(char), 13, fp)) {
-	       string name = file_name;
-	       fread(&file_size, sizeof(int), 1, fp);
-	       global_Log.Write(Debug, 60, "Found file: " + name + " in hog");
-	       if(filename == name) {
-		  global_Log.Write(Debug, 60, "Found file in hog that we were looking for");
-		  retval = fp;
-		  break;
-	       }
-	       fseek(fp, file_size, SEEK_CUR);
-	    }
-	 }
+  bool retval = true;
+  fstreamptr file(filename.c_str(), ios::in | ios::binary);
+  char signature[3];
+  char file_name[13];
+  int file_size;
+  
+  mFilename = "";
+  mFiles.clear();
+  
+  if((*file).is_open()) {
+    if(!(*file).eof() && (*file).read(signature, 3)) {
+      if(signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
+	global_Log.Write(Debug, 100, "Found a valid signature");
+	while(!(*file).eof() && (*file).read(file_name, 13)) {
+	  string name = file_name;
+	  if(!(*file).eof() && (*file).read((char *)&file_size, 4)) {
+	    streampos pos = (*file).tellg();
+	    mFiles.push_back(new CFile(*this, name, pos, file_size));
+	    global_Log.Write(Debug, 60, "Found file: " + name + " in hog");
+	    (*file).seekg(file_size, ios_base::cur);
+	  }
+	}
+	if(mFiles.size() > 0) retval = true;
       }
-      if(retval == NULL) {
-	 fclose(fp);
-	 fp = NULL;
-      }
-   }
-   
-   return retval;
+    }
+    (*file).close();
+  }
+  
+  return retval;
 }
 
-FILE *CHog::get_FilePointer() const
+fstreamptr CHog::get_Stream() const
 {
-   string filename = "missions/" + mFilename;
-   FILE *retval = fopen(filename.c_str(), "rb");
-   if(retval == NULL) {
-      retval = fopen(mFilename.c_str(), "rb");
-      global_Log.Write(Debug, 50, "Opening " + mFilename);
-   }
-   else global_Log.Write(Debug, 50, "Opening " + filename);
-   
-   return retval;
+  fstreamptr file(mFilename.c_str(), ios::in | ios::binary);
+  
+  return file;
+}
+
+fstreamptr CHog::get_Stream(const string &name) const
+{
+  fstreamptr file = get_Stream();
+  
+  if((*file).is_open()) (*file).seekg((*this)[name].mPos, ios_base::beg);
+  
+  return file;
 }

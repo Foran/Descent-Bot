@@ -1,16 +1,16 @@
 #ifndef __HOG_H__
 #define __HOG_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <string>
 #include <vector>
 
 using namespace std;
 
+class CFile;
+
 #include "log.h"
+#include "file.h"
+#include "fstreamptr.h"
 
 class CHog
 {
@@ -22,16 +22,22 @@ class CHog
    ~CHog();
    
    CHog &operator=(const CHog &source);
+   bool operator==(const CHog &source);
    
-   void set_Filename(const string &filename);
+   CFile operator[](const string &name) const;
+   
+   bool Load(const string &filename);
    
    vector<string> get_Filenames() const;
-   FILE *OpenFile(const string &filename);
  protected:
  private:
    string mFilename;
-   FILE *get_FilePointer() const;
+   vector<CFile *> mFiles;
+   fstreamptr get_Stream() const;
+   fstreamptr get_Stream(const string &name) const;
+   
+   friend class CFile;
+   friend class HogManager;
 };
 
 #endif
-

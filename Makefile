@@ -1,12 +1,13 @@
 Q = @
-OBJS=	main.o hog.o rdl.o file.o log.o log_driver_raw.o config.o
+OBJS=	main.o hog.o rdl.o file.o log.o log_driver_raw.o config.o hogmanager.o fstreamptr.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
 DEFINES=-DDEBUG -DVERSION=\"0.01a\"
 LIBS=-lxml2 -llua5.1
 CC=g++
 BIN=descent-bot
-CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2 -fpack-struct -fno-exceptions
+CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
+#-fpack-struct -fno-exceptions
 
 .PHONY: all
 

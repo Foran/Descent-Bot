@@ -1,102 +1,104 @@
-#include "rdl.h"
+#include "file.h"
 
 CFile::CFile()
 {
+  mHog = NULL;
 }
 
 CFile::CFile(const string &filename)
 {
+  Load(filename);
 }
 
 CFile::CFile(const CHog &hog, const string &filename)
 {
+  Load(hog, filename);
 }
 
 CFile::CFile(const string &hog, const string &filename)
 {
+  mHog = &HogManager::get_Hog(hog);
+}
+
+CFile::CFile(const CHog &hog, const string &filename, streampos offset, int length)
+{
+  mHog = const_cast<CHog *>(&hog);
+  mFilename = filename;
+  mPos = offset;
+  mLength = length;
 }
 
 CFile::CFile(const CFile &source)
 {
+  *this = source;
 }
 
 CFile::~CFile()
 {
+  mHog = NULL;
 }
 
 CFile &CFile::operator=(const CFile &source)
 {
-   return *this;
+  mHog = source.mHog;
+  mFilename = source.mFilename;
+  mLength = source.mLength;
+  mPos = mPos;
+  
+  return *this;
 }
 
-bool CFile::Load(const string &filename)
+void CFile::Load(const string &filename)
 {
-   bool retval = false;
-   
-   FILE *fp = get_FilePointer(filename);
-   if(fp == NULL) {
-      CHog descent("descent.hog");
-      fp = descent.OpenFile(filename);
-   }
-   
-   if(fp) {
-      retval = LoadByFP(fp);
-      fp = NULL;
-   }
-   
-   return retval;
+  mHog = NULL;
+  mFilename = filename;
+  mLength = 0;
+  mPos = 0;
 }
 
-bool CFile::Load(const CHog &hog, const string &filename)
+void CFile::Load(const CHog &hog, const string &filename)
 {
-   bool retval = false;
-   
-   FILE *fp = get_FilePointer(filename);
-   if(fp == NULL) {
-      fp = const_cast<CHog &>(hog).OpenFile(filename);
-      if(fp == NULL) {
-	 CHog descent("descent.hog");
-	 fp = descent.OpenFile(filename);
-      }
-   }
-   
-   if(fp) {
-      retval = LoadByFP(fp);
-      fp = NULL;
-   }
-   
-   return retval;
+  mHog = const_cast<CHog *>(&hog);
+  mFilename = filename;
+  mLength = (*mHog)[filename].mLength;
+  mPos = (*mHog)[filename].mPos;
 }
 
-bool CFile::Load(const string &hog, const string &filename)
+void CFile::Load(const string &hog, const string &filename)
 {
-   bool retval = false;
-   
-   FILE *fp = get_FilePointer(filename);
-   if(fp == NULL) {
-      CHog tempHog(hog);
-      fp = tempHog.OpenFile(filename);
-      if(fp == NULL) {
-	 CHog descent("descent.hog");
-	 fp = descent.OpenFile(filename);
-      }
-   }
-   
-   if(fp) {
-      retval = LoadByFP(fp);
-      fp = NULL;
-   }
-   
-   return retval;
+  mHog = &HogManager::get_Hog(hog);
+  mFilename = filename;
+  mLength = (*mHog)[filename].mLength;
+  mPos = (*mHog)[filename].mPos;
 }
 
-FILE *CFile::get_FilePointer(const string &filename) const
+fstreamptr CFile::get_Stream()
 {
-   string file = "missions/" + filename;
-   FILE *retval = fopen(file.c_str(), "rb");
-   if(retval == NULL) {
-      retval = fopen(filename.c_str(), "rb");
-   }
-   
-   return retval;
+  fstreamptr file;
+  
+  if(mFilename.length() > 0) {
+    if(mHog == NULL) {
+      (*file).open(mFilename.c_str(), ios::in | ios::binary);
+      mPos = (*file).tellg();
+    }
+    else {
+      file = mHog->get_Stream(mFilename);
+    }
+  }
+  
+  return file;
+}
+
+bool CFile::eof(fstream &file)
+{
+  bool retval = true;
+  
+  if(mHog == NULL) {
+    retval = file.eof();
+  }
+  else {
+    retval = (file.tellg() - mPos) >= mLength;
+  }
+  
+  return retval;
 }
