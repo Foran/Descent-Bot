@@ -1,20 +1,25 @@
 #include "hogmanager.h"
 
-vector<CHog *> HogManager::mHogs;
+vector<CHog *> CHogManager::mHogs;
+unsigned int CHogManager::mReferences = 0;
 
-void HogManager::Init()
+CHogManager HogManager;
+
+CHogManager::CHogManager()
 {
-  atexit(Cleanup);
+  mReferences++;
 }
 
-void HogManager::Cleanup()
+CHogManager::~CHogManager()
 {
-  for(vector<CHog *>::iterator i = mHogs.begin(); i != mHogs.end(); i++) {
-    delete *i;
+  if(--mReferences == 0) {
+    for(vector<CHog *>::iterator i = mHogs.begin(); i != mHogs.end(); i++) {
+      delete *i;
+    }
   }
 }
 
-CHog &HogManager::get_Hog(const string &filename)
+CHog &CHogManager::operator[](const string &filename)
 {
   CHog *hog = NULL;
   

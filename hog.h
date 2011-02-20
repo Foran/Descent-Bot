@@ -12,6 +12,10 @@ class CFile;
 #include "file.h"
 #include "fstreamptr.h"
 
+class CHogManager;
+
+#include "hogmanager.h"
+
 class CHog
 {
  public:
@@ -37,7 +41,7 @@ class CHog
    fstreamptr get_Stream(const string &name) const;
    
    friend class CFile;
-   friend class HogManager;
+   friend class CHogManager;
 };
 
 #endif

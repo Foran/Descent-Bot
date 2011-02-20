@@ -1,23 +1,26 @@
 #ifndef __HOGMANAGER_H__
 #define __HOGMANAGER_H__
 
-#include <stdlib.h>
-
 #include <vector>
 
 using namespace std;
 
+class CHog;
+
 #include "hog.h"
 
-class HogManager {
+class CHogManager {
 public:
-  static void Init();
-  static void Cleanup();
+  CHogManager();
+  ~CHogManager();
   
-  static CHog &get_Hog(const string &filename);
+  CHog &operator[](const string &filename);
 protected:
 private:
   static vector<CHog *> mHogs;
+  static unsigned int mReferences;
 };
+
+extern CHogManager HogManager;
 
 #endif

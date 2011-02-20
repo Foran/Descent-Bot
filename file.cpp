@@ -17,7 +17,7 @@ CFile::CFile(const CHog &hog, const string &filename)
 
 CFile::CFile(const string &hog, const string &filename)
 {
-  mHog = &HogManager::get_Hog(hog);
+  mHog = &HogManager[hog];
 }
 
 CFile::CFile(const CHog &hog, const string &filename, streampos offset, int length)
@@ -66,7 +66,7 @@ void CFile::Load(const CHog &hog, const string &filename)
 
 void CFile::Load(const string &hog, const string &filename)
 {
-  mHog = &HogManager::get_Hog(hog);
+  mHog = &HogManager[hog];
   mFilename = filename;
   mLength = (*mHog)[filename].mLength;
   mPos = (*mHog)[filename].mPos;
