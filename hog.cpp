@@ -69,6 +69,7 @@ bool CHog::Load(const string &filename)
   mFiles.clear();
   
   if((*file).is_open()) {
+    mFilename = filename;
     if(!(*file).eof() && (*file).read(signature, 3)) {
       if(signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
 	global_Log.Write(Debug, 100, "Found a valid signature");

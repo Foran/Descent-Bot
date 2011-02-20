@@ -1,6 +1,7 @@
 #ifndef __HOGMANAGER_H__
 #define __HOGMANAGER_H__
 
+#include <string>
 #include <vector>
 
 using namespace std;
