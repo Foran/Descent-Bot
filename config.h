@@ -8,4 +8,6 @@ class CConfig
  private:
 };
 
+extern CConfig global_Config;
+
 #endif
