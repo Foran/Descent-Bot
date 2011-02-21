@@ -1,9 +1,9 @@
 Q = @
-OBJS=	main.o test.o
+OBJS=	main.o test.o testManager.o testbase.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
 DEFINES=-DDEBUG
-LIBS=-lxml2 -llua5.1 -lcppunit
+LIBS=-lxml2 -llua5.1
 CC=g++
 BIN=testDescent-Bot
 CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2

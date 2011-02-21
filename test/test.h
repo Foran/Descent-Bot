@@ -7,14 +7,19 @@
 
 using namespace std;
 
-typedef struct iTest 
+typedef struct iTestContainer 
+{
+} iTestContainer;
+
+typedef void (iTestContainer::*TestPtr)();
+
+typedef struct iTestClass : public iTestContainer
 {
    virtual void TestInitialize() = 0;
-   virtual vector<string> &get_TestList() const = 0;
-   virtual void operator()(const string &testName) = 0;
-   virtual void ExecuteTest(const string &testName) = 0;
+   virtual vector<string> get_Tests() const = 0;
+   virtual TestPtr operator[](const string &test) = 0;
    virtual void TestCleanup() = 0;
-} iTest;
+} iTestClass;
 
 class Assert : public exception
 {
