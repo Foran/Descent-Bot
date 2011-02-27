@@ -1,12 +1,13 @@
 Q = @
-OBJS=	main.o test.o testManager.o testbase.o
+OBJS=	main.o test.o testManager.o testbase.o test_hog.o
+PROJ_OBJS= ../hog.o ../file.o ../rdl.o ../fstreamptr.o ../log.o ../hogmanager.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
 DEFINES=-DDEBUG
 LIBS=-lxml2 -llua5.1
 CC=g++
 BIN=testDescent-Bot
-CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
+CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2 -I../
 #-fpack-struct -fno-exceptions
 
 .PHONY: all test
@@ -14,8 +15,9 @@ CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 all: $(BIN)
 
 $(BIN):$(OBJS)
+	@make -C ../
 	@echo "Linking $@..."
-	$(Q)$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(BIN)
+	$(Q)$(CC) $(CFLAGS) $(PROJ_OBJS) $(OBJS) $(LIBS) -o $(BIN)
 
 %.h:
 	@echo FORCING DEPENDENCY CHECK - HEADERFILE $@ MISSING
