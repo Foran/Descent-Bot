@@ -6,9 +6,9 @@
 using namespace std;
 
 #include "log.h"
-#include "log_driver_raw.h"
 #include "hogmanager.h"
 #include "rdl.h"
+#include "config.h"
 
 #endif
 

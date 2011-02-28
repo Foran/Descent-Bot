@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<Configuration Version="1.0">
+	<Logging>
+		<Logger Name="Main Console" Type="Debug" Level="100" Driver="Raw" />
+	</Logging>
+</Configuration>

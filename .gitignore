@@ -3,3 +3,4 @@
 *.d
 descent-bot
 Descent-Bot.kdev4
+config/*.xml
