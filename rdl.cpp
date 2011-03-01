@@ -1,5 +1,81 @@
 #include "rdl.h"
 
+istream &operator>>(istream &input, DESCENT_CUBE &cube)
+{
+   memset(&cube, 0, sizeof(cube));
+   unsigned char mask;
+   input.read((char *)&mask, 1);
+   if(!input.eof()) {
+      if(mask & 0x01) {
+	 unsigned short value;
+	 input.read((char *)&value, sizeof(value));
+	 if(!input.eof()) cube.left = value;
+	 else return input; //**FIXME: this should set the fail bit **//
+      }
+      if(mask & 0x02) {
+	 unsigned short value;
+	 input.read((char *)&value, sizeof(value));
+	 if(!input.eof()) cube.top = value;
+	 else return input;
+      }
+      if(mask & 0x04) {
+	 unsigned short value;
+	 input.read((char *)&value, sizeof(value));
+	 if(!input.eof()) cube.right = value;
+	 else return input;
+      }
+      if(mask & 0x08) {
+	 unsigned short value;
+	 input.read((char *)&value, sizeof(value));
+	 if(!input.eof()) cube.bottom = value;
+	 else return input;
+      }
+      if(mask & 0x10) {
+	 unsigned short value;
+	 input.read((char *)&value, sizeof(value));
+	 if(!input.eof()) cube.back = value;
+	 else return input;
+      }
+      if(mask & 0x20) {
+	 unsigned short value;
+	 input.read((char *)&value, sizeof(value));
+	 if(!input.eof()) cube.front = value;
+	 else return input;
+      }
+      if(mask & 0x40) cube.energy = true;
+      input.read((char *)cube.verticies, sizeof(DESCENT_VERTEX) * 8);
+      if(input.eof()) return input;
+      char buffer[4];
+      if(cube.energy) {
+	 input.read(buffer, 4);
+	 if(input.eof()) return input;
+      }
+      input.read(buffer, 2);
+      if(input.eof()) return input;
+      unsigned char walls;
+      input.read((char *)&walls, 1);
+      if(input.eof()) return input;
+      if(walls & 0x01) input.read(buffer, 1);
+      if(walls & 0x02) input.read(buffer, 1);
+      if(walls & 0x04) input.read(buffer, 1);
+      if(walls & 0x08) input.read(buffer, 1);
+      if(walls & 0x10) input.read(buffer, 1);
+      if(walls & 0x20) input.read(buffer, 1);
+      if(!(mask & 0x01) || walls & 0x01) {
+	 unsigned short texture;
+	 input.read((char *)&texture, sizeof(texture));
+	 if(!input.eof() && texture & 0x8000) {
+	    input.read((char *)&texture, sizeof(texture));
+	 }
+	 input.read((char *)&texture, sizeof(texture));
+	 input.read((char *)&texture, sizeof(texture));
+	 input.read((char *)&texture, sizeof(texture));
+      }
+   }
+   
+   return input;
+}
+
 CRdl::CRdl()
 {
    Init();
@@ -99,78 +175,8 @@ void CRdl::doLoad()
 	    unsigned short i;
 	    for(i = 0; i < cubeCount; i++) {
 	       DESCENT_CUBE cube;
-	       memset(&cube, 0, sizeof(cube));
-	       unsigned char mask;
-	       (*file).read((char *)&mask, 1);
-	       if(!(*file).eof()) {
-		  if(mask & 0x01) {
-		     unsigned short value;
-		     (*file).read((char *)&value, sizeof(value));
-		     if(!(*file).eof()) cube.left = value;
-		     else break;
-		  }
-		  if(mask & 0x02) {
-		     unsigned short value;
-		     (*file).read((char *)&value, sizeof(value));
-		     if(!(*file).eof()) cube.top = value;
-		     else break;
-		  }
-		  if(mask & 0x04) {
-		     unsigned short value;
-		     (*file).read((char *)&value, sizeof(value));
-		     if(!(*file).eof()) cube.right = value;
-		     else break;
-		  }
-		  if(mask & 0x08) {
-		     unsigned short value;
-		     (*file).read((char *)&value, sizeof(value));
-		     if(!(*file).eof()) cube.bottom = value;
-		     else break;
-		  }
-		  if(mask & 0x10) {
-		     unsigned short value;
-		     (*file).read((char *)&value, sizeof(value));
-		     if(!(*file).eof()) cube.back = value;
-		     else break;
-		  }
-		  if(mask & 0x20) {
-		     unsigned short value;
-		     (*file).read((char *)&value, sizeof(value));
-		     if(!(*file).eof()) cube.front = value;
-		     else break;
-		  }
-		  if(mask & 0x40) cube.energy = true;
-		  (*file).read((char *)cube.verticies, sizeof(DESCENT_VERTEX) * 8);
-		  if((*file).eof()) break;
-		  char buffer[4];
-		  if(cube.energy) {
-		     (*file).read(buffer, 4);
-		     if((*file).eof()) break;
-		  }
-		  (*file).read(buffer, 2);
-		  if((*file).eof()) break;
-		  unsigned char walls;
-		  (*file).read((char *)&walls, 1);
-		  if((*file).eof()) break;
-		  if(walls & 0x01) (*file).read(buffer, 1);
-		  if(walls & 0x02) (*file).read(buffer, 1);
-		  if(walls & 0x04) (*file).read(buffer, 1);
-		  if(walls & 0x08) (*file).read(buffer, 1);
-		  if(walls & 0x10) (*file).read(buffer, 1);
-		  if(walls & 0x20) (*file).read(buffer, 1);
-		  if(!(mask & 0x01) || walls & 0x01) {
-		     unsigned short texture;
-		     (*file).read((char *)&texture, sizeof(texture));
-		     if(!(*file).eof() && texture & 0x8000) {
-			(*file).read((char *)&texture, sizeof(texture));
-		     }
-		      (*file).read((char *)&texture, sizeof(texture));
-		      (*file).read((char *)&texture, sizeof(texture));
-		      (*file).read((char *)&texture, sizeof(texture));
-		  }
-		  
-		  mDescentCubes.push_back(cube);
-	       }
+	       (*file) >> cube;
+	       if(!(*file).eof()) mDescentCubes.push_back(cube);
 	    }
 	    cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
 	 }

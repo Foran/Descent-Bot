@@ -31,7 +31,7 @@ typedef struct DESCENT_VERTEX
    DESCENT_FIXED x, y, z;
 } DESCENT_VERTEX;
 
-typedef struct DESCENT_CUBE 
+typedef struct DESCENT_CUBE
 {
    unsigned short left;
    unsigned short top;
@@ -48,7 +48,9 @@ typedef struct DESCENT_CUBE
       signed hi: 4;
       unsigned lo: 12;
    } staticLight;
-   
+ private:
+   friend istream &operator>>(istream &input, DESCENT_CUBE &cube);
+   friend class Crdl;
 } DESCENT_CUBE;
 
 class CRdl : public CFile {
