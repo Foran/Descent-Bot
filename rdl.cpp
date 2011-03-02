@@ -1,5 +1,10 @@
 #include "rdl.h"
 
+/********************************
+ * This method compartmentalizes
+ * the loading of cube data in
+ * an rdl
+ *******************************/
 istream &operator>>(istream &input, DESCENT_CUBE &cube)
 {
    memset(&cube, 0, sizeof(cube));
@@ -10,51 +15,81 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube)
 	 unsigned short value;
 	 input.read((char *)&value, sizeof(value));
 	 if(!input.eof()) cube.left = value;
-	 else return input; //**FIXME: this should set the fail bit **//
+	 else {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       if(mask & 0x02) {
 	 unsigned short value;
 	 input.read((char *)&value, sizeof(value));
 	 if(!input.eof()) cube.top = value;
-	 else return input;
+	 else {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       if(mask & 0x04) {
 	 unsigned short value;
 	 input.read((char *)&value, sizeof(value));
 	 if(!input.eof()) cube.right = value;
-	 else return input;
+	 else {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       if(mask & 0x08) {
 	 unsigned short value;
 	 input.read((char *)&value, sizeof(value));
 	 if(!input.eof()) cube.bottom = value;
-	 else return input;
+	 else {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       if(mask & 0x10) {
 	 unsigned short value;
 	 input.read((char *)&value, sizeof(value));
 	 if(!input.eof()) cube.back = value;
-	 else return input;
+	 else {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       if(mask & 0x20) {
 	 unsigned short value;
 	 input.read((char *)&value, sizeof(value));
 	 if(!input.eof()) cube.front = value;
-	 else return input;
+	 else {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       if(mask & 0x40) cube.energy = true;
       input.read((char *)cube.verticies, sizeof(DESCENT_VERTEX) * 8);
-      if(input.eof()) return input;
+      if(input.eof()) {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       char buffer[4];
       if(cube.energy) {
 	 input.read(buffer, 4);
-	 if(input.eof()) return input;
+	 if(input.eof()) {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       }
       input.read(buffer, 2);
-      if(input.eof()) return input;
+      if(input.eof()) {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       unsigned char walls;
       input.read((char *)&walls, 1);
-      if(input.eof()) return input;
+      if(input.eof()) {
+	    input.setstate(ios::failbit);
+	    return input;
+	 }
       if(walls & 0x01) input.read(buffer, 1);
       if(walls & 0x02) input.read(buffer, 1);
       if(walls & 0x04) input.read(buffer, 1);
