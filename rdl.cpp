@@ -2,6 +2,37 @@
 
 /********************************
  * This method compartmentalizes
+ * the loading of fixed data types
+ *******************************/
+istream &operator>>(istream &input, DESCENT_FIXED &fixed)
+{
+   input.read((char *)&fixed.value.raw, sizeof(fixed.value.raw));
+   return input;
+}
+
+/********************************
+ * This method compartmentalizes
+ * the loading of fixed data types
+ *******************************/
+istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed)
+{
+   input.read((char *)&fixed.value.raw, sizeof(fixed.value.raw));
+   return input;
+}
+
+/********************************
+ * This method compartmentalizes
+ * the loading of vertex data in
+ * an rdl
+ *******************************/
+istream &operator>>(istream &input, DESCENT_VERTEX &vertex)
+{
+   input >> vertex.x >> vertex.y >> vertex.z;
+   return input;
+}
+
+/********************************
+ * This method compartmentalizes
  * the loading of cube data in
  * an rdl
  *******************************/
@@ -9,105 +40,259 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube)
 {
    memset(&cube, 0, sizeof(cube));
    unsigned char mask;
-   input.read((char *)&mask, 1);
-   if(!input.eof()) {
-      if(mask & 0x01) {
-	 unsigned short value;
-	 input.read((char *)&value, sizeof(value));
-	 if(!input.eof()) cube.left = value;
-	 else {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      if(mask & 0x02) {
-	 unsigned short value;
-	 input.read((char *)&value, sizeof(value));
-	 if(!input.eof()) cube.top = value;
-	 else {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      if(mask & 0x04) {
-	 unsigned short value;
-	 input.read((char *)&value, sizeof(value));
-	 if(!input.eof()) cube.right = value;
-	 else {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      if(mask & 0x08) {
-	 unsigned short value;
-	 input.read((char *)&value, sizeof(value));
-	 if(!input.eof()) cube.bottom = value;
-	 else {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      if(mask & 0x10) {
-	 unsigned short value;
-	 input.read((char *)&value, sizeof(value));
-	 if(!input.eof()) cube.back = value;
-	 else {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      if(mask & 0x20) {
-	 unsigned short value;
-	 input.read((char *)&value, sizeof(value));
-	 if(!input.eof()) cube.front = value;
-	 else {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      if(mask & 0x40) cube.energy = true;
-      input.read((char *)cube.verticies, sizeof(DESCENT_VERTEX) * 8);
-      if(input.eof()) {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      char buffer[4];
-      if(cube.energy) {
-	 input.read(buffer, 4);
-	 if(input.eof()) {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      }
-      input.read(buffer, 2);
-      if(input.eof()) {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      unsigned char walls;
-      input.read((char *)&walls, 1);
-      if(input.eof()) {
-	    input.setstate(ios::failbit);
-	    return input;
-	 }
-      if(walls & 0x01) input.read(buffer, 1);
-      if(walls & 0x02) input.read(buffer, 1);
-      if(walls & 0x04) input.read(buffer, 1);
-      if(walls & 0x08) input.read(buffer, 1);
-      if(walls & 0x10) input.read(buffer, 1);
-      if(walls & 0x20) input.read(buffer, 1);
-      if(!(mask & 0x01) || walls & 0x01) {
-	 unsigned short texture;
-	 input.read((char *)&texture, sizeof(texture));
-	 if(!input.eof() && texture & 0x8000) {
-	    input.read((char *)&texture, sizeof(texture));
-	 }
-	 input.read((char *)&texture, sizeof(texture));
-	 input.read((char *)&texture, sizeof(texture));
-	 input.read((char *)&texture, sizeof(texture));
+   if(!(input >> mask)) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read cube mask" << endl;
+      return input;
+   }
+   if(mask & 0x01) {
+      input.read((char*)&cube.left, sizeof(cube.left));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.left value" << endl;
+	 return input;
       }
    }
-   
+   if(mask & 0x02) {
+      input.read((char*)&cube.top, sizeof(cube.top));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.top value" << endl;
+	 return input;
+      }
+   }
+   if(mask & 0x04) {
+      input.read((char*)&cube.right, sizeof(cube.right));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.right value" << endl;
+	 return input;
+      }
+   }
+   if(mask & 0x08) {
+      input.read((char*)&cube.bottom, sizeof(cube.bottom));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.bottom value" << endl;
+	 return input;
+      }
+   }
+   if(mask & 0x10) {
+      input.read((char*)&cube.back, sizeof(cube.back));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.back value" << endl;
+	 return input;
+      }
+   }
+   if(mask & 0x20) {
+      input.read((char*)&cube.front, sizeof(cube.front));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.front value" << endl;
+	 return input;
+      }
+   }
+   if(mask & 0x40) cube.energy = true;
+   for(int i = 0; i < 8; i++) {
+      input.read((char *)&cube.verticies[i], sizeof(cube.verticies[i]));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.verticies[" << i << "] value" << endl;
+	 return input;
+      }
+   }
+   if(cube.energy) {
+      input >> cube.energyCenter.special;
+      input >> cube.energyCenter.energyCenterNumber;
+      input.read((char *)&cube.energyCenter.value, sizeof(cube.energyCenter.value));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read the cube.energy value" << endl;
+	 return input;
+      }
+   }
+   input.read((char *)&cube.staticLight.value.raw, sizeof(cube.staticLight.value.raw));
+   if(input.rdstate() != ios::goodbit) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read staticLight" << endl;
+      return input;
+   }
+   unsigned char wallmask;
+   if(!(input >> wallmask)) {
+      input.setstate(ios::failbit);
+      return input;
+   }
+   if(wallmask & 0x01 && !(input >> cube.walls[0])) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read Wall[0]" << endl;
+      return input;
+   }
+   if(wallmask & 0x02 && !(input >> cube.walls[1])) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read Wall[1]" << endl;
+      return input;
+   }
+   if(wallmask & 0x04 && !(input >> cube.walls[2])) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read Wall[2]" << endl;
+      return input;
+   }
+   if(wallmask & 0x08 && !(input >> cube.walls[3])) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read Wall[3]" << endl;
+      return input;
+   }
+   if(wallmask & 0x10 && !(input >> cube.walls[4])) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read Wall[4]" << endl;
+      return input;
+   }
+   if(wallmask & 0x20 && !(input >> cube.walls[5])) {
+      input.setstate(ios::failbit);
+      cout << "Failed to read Wall[5]" << endl;
+      return input;
+   }
+   if(!(mask & 0x01) || wallmask & 0x01) {
+      unsigned short texture;
+      input.read((char *)&texture, sizeof(texture));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read texture for walls[0]" << endl;
+	 return input;
+      }
+      if(texture & 0x8000) {
+	 input.read((char *)&texture, sizeof(texture));
+	 if(input.rdstate() != ios::goodbit) {
+	    input.setstate(ios::failbit);
+	    cout << "Failed to read texture2 for walls[0]" << endl;
+	    return input;
+	 }
+      }
+      DESCENT_SHORTFIXED u,v,l;
+      input >> u >> v >> l;
+      if(input.rdstate() != ios::goodbit) {
+	 cout << "Failed to read uvl for walls[0]" << endl;
+	 return input;
+      }
+   }
+   if(!(mask & 0x02) || wallmask & 0x02) {
+      unsigned short texture;
+      input.read((char *)&texture, sizeof(texture));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read texture for walls[1]" << endl;
+	 return input;
+      }
+      if(texture & 0x8000) {
+	 input.read((char *)&texture, sizeof(texture));
+	 if(input.rdstate() != ios::goodbit) {
+	    input.setstate(ios::failbit);
+	    cout << "Failed to read texture2 for walls[1]" << endl;
+	    return input;
+	 }
+      }
+      DESCENT_SHORTFIXED u,v,l;
+      input >> u >> v >> l;
+      if(input.rdstate() != ios::goodbit) {
+	 cout << "state: " << (input.rdstate() & ios::eofbit) << endl;
+	 cout << "Failed to read uvl for walls[1]" << endl;
+	 return input;
+      }
+   }
+   if(!(mask & 0x04) || wallmask & 0x04) {
+      unsigned short texture;
+      input.read((char *)&texture, sizeof(texture));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read texture for walls[2]" << endl;
+	 return input;
+      }
+      if(texture & 0x8000) {
+	 input.read((char *)&texture, sizeof(texture));
+	 if(input.rdstate() != ios::goodbit) {
+	    input.setstate(ios::failbit);
+	    cout << "Failed to read texture2 for walls[2]" << endl;
+	    return input;
+	 }
+      }
+      DESCENT_SHORTFIXED u,v,l;
+      input >> u >> v >> l;
+      if(input.rdstate() != ios::goodbit) {
+	 cout << "Failed to read uvl for walls[2]" << endl;
+	 return input;
+      }
+   }
+   if(!(mask & 0x08) || wallmask & 0x08) {
+      unsigned short texture;
+      input.read((char *)&texture, sizeof(texture));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read texture for walls[3]" << endl;
+	 return input;
+      }
+      if(texture & 0x8000) {
+	 input.read((char *)&texture, sizeof(texture));
+	 if(input.rdstate() != ios::goodbit) {
+	    input.setstate(ios::failbit);
+	    cout << "Failed to read texture2 for walls[3]" << endl;
+	    return input;
+	 }
+      }
+      DESCENT_SHORTFIXED u,v,l;
+      input >> u >> v >> l;
+      if(input.rdstate() != ios::goodbit) {
+	 cout << "Failed to read uvl for walls[3]" << endl;
+	 return input;
+      }
+   }
+   if(!(mask & 0x10) || wallmask & 0x10) {
+      unsigned short texture;
+      input.read((char *)&texture, sizeof(texture));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read texture for walls[4]" << endl;
+	 return input;
+      }
+      if(texture & 0x8000) {
+	 input.read((char *)&texture, sizeof(texture));
+	 if(input.rdstate() != ios::goodbit) {
+	    input.setstate(ios::failbit);
+	    cout << "Failed to read texture2 for walls[4]" << endl;
+	    return input;
+	 }
+      }
+      DESCENT_SHORTFIXED u,v,l;
+      input >> u >> v >> l;
+      if(input.rdstate() != ios::goodbit) {
+	 cout << "Failed to read uvl for walls[4]" << endl;
+	 return input;
+      }
+   }
+   if(!(mask & 0x20) || wallmask & 0x20) {
+      unsigned short texture;
+      input.read((char *)&texture, sizeof(texture));
+      if(input.rdstate() != ios::goodbit) {
+	 input.setstate(ios::failbit);
+	 cout << "Failed to read texture for walls[4]" << endl;
+	 return input;
+      }
+      if(texture & 0x8000) {
+	 input.read((char *)&texture, sizeof(texture));
+	 if(input.rdstate() != ios::goodbit) {
+	    input.setstate(ios::failbit);
+	    cout << "Failed to read texture2 for walls[4]" << endl;
+	    return input;
+	 }
+      }
+      DESCENT_SHORTFIXED u,v,l;
+      input >> u >> v >> l;
+      if(input.rdstate() != ios::goodbit) {
+	 cout << "Failed to read uvl for walls[5]" << endl;
+	 return input;
+      }
+   }
+
    return input;
 }
 
@@ -179,51 +364,67 @@ void CRdl::Load(const string &hog, const string &filename)
 void CRdl::doLoad()
 {
   fstreamptr file = get_Stream();
-   
    cout << "Loading " << mFilename << "..." << endl;
    
    if((*file).is_open()) {
-      (*file).read((char *)&mHeader, sizeof(mHeader));
-      cout << "File position is now: " << (*file).tellg() << endl << "Version is: " << mHeader.version << endl;
-      if(!memcmp(mHeader.signature, "LVLP", 4) &&
-	 mHeader.version == 1) {
-	 cout << mHeader.signature[0] << mHeader.signature[1] << mHeader.signature[2] << mHeader.signature[3] << mHeader.version << endl;
-	 (*file).seekg(static_cast<unsigned short>(mPos) + mHeader.mineDataOffset, ios_base::beg);
-	 unsigned short vertexCount = 0;
-	 unsigned short cubeCount = 0;
-	 (*file).read((char *)&vertexCount, sizeof(vertexCount));
-	 (*file).read((char *)&cubeCount, sizeof(cubeCount));
-	 if(!(*file).eof()) {
-	    cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
-	    DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
-	    size_t count = vertexCount;
-	    cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX) << ", file.tellg() returned " << (*file).tellg() << endl;
-	    if((*file).read((char *)list, sizeof(vertexCount) * vertexCount)) {
-	       for(unsigned int i = 0; i < vertexCount; i++) {
-		  global_Log.Write(LogType_Debug, 200, "Added a vertex");
-		  mDescentVerticies.push_back(list[i]);
-	       }
-	    }
-	    cout << "fread() returned " << count << ", file.tellg() returned " << (*file).tellg() << endl;
-	    delete list;
-	    
-	    unsigned short i;
-	    for(i = 0; i < cubeCount; i++) {
-	       DESCENT_CUBE cube;
-	       (*file) >> cube;
-	       if(!(*file).eof()) mDescentCubes.push_back(cube);
-	    }
-	    cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
-	 }
-	 else cout << "Failed to read Vertix and Cube counts" << endl;
-      }
-      else cout << "Failed to read a valid signature (" << mHeader.signature[0] << mHeader.signature[1] << mHeader.signature[2] << mHeader.signature[3] << ")" << endl;
-      
+      (*file) >> *this;
       (*file).close();
    }
    else cout << "Failed to open " << mFilename << endl;
    
    cout << "Vertex Count: " << mDescentVerticies.size() << ", Cube Count: " << mDescentCubes.size() << endl;
+}
+
+istream &operator>>(istream &input, RDL_HEADER &header)
+{
+   input.read((char *)&header, sizeof(header));
+   return input;
+}
+
+ostream &operator<<(ostream &output, RDL_HEADER &header)
+{
+   output << header.signature[0] << header.signature[1] << header.signature[2] << header.signature[3] << header.version;
+   return output;
+}
+
+istream &operator>>(istream &input, CRdl &rdl) 
+{
+   input >> rdl.mHeader;
+   cout << "File position is now: " << input.tellg() << endl << "Version is: " << rdl.mHeader.version << endl;
+   if(!memcmp(rdl.mHeader.signature, "LVLP", 4) &&
+      rdl.mHeader.version == 1) {
+      cout << rdl.mHeader << endl;
+      input.seekg(static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.mineDataOffset, ios_base::beg);
+      unsigned short vertexCount = 0;
+      unsigned short cubeCount = 0;
+      input.read((char *)&vertexCount, sizeof(vertexCount));
+      input.read((char *)&cubeCount, sizeof(cubeCount));
+      if(!input.eof()) {
+	 cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
+	 DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
+	 size_t count = vertexCount;
+	 cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX) << ", file.tellg() returned " << input.tellg() << endl;
+	 if(input.read((char *)list, sizeof(vertexCount) * vertexCount)) {
+	    for(unsigned int i = 0; i < vertexCount; i++) {
+	       global_Log.Write(LogType_Debug, 200, "Added a vertex");
+	       rdl.mDescentVerticies.push_back(list[i]);
+	    }
+	 }
+	 cout << "fread() returned " << count << ", file.tellg() returned " << input.tellg() << endl;
+	 delete list;
+	 
+	 unsigned short i;
+	 for(i = 0; i < cubeCount && input.rdstate() == ios::goodbit; i++) {
+	    DESCENT_CUBE cube;
+	    if(input >> cube) rdl.mDescentCubes.push_back(cube);
+	    else cout << "An error occured during processing" << endl;
+	 }
+	 cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
+      }
+      else cout << "Failed to read Vertix and Cube counts" << endl;
+   }
+   else cout << "Failed to read a valid signature (" << rdl.mHeader << ")" << endl;
+   return input;
 }
 
 void CRdl::Init()

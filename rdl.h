@@ -24,11 +24,33 @@ typedef struct DESCENT_FIXED
 	 unsigned short lo;
       } parts;
    } value;
+ private:
+   friend class DESCENT_VERTEX;
+   friend class CRdl;
+   friend istream &operator>>(istream &input, DESCENT_FIXED &fixed);
 } DESCENT_FIXED;
+
+typedef struct DESCENT_SHORTFIXED
+{
+   union {
+      short raw;
+      struct {
+	 signed hi: 4;
+	 unsigned lo: 12;
+      } parts;
+   } value;
+ private:
+   friend class DESCENT_VERTEX;
+   friend class CRdl;
+   friend istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed);
+} DESCENT_SHORTFIXED;
 
 typedef struct DESCENT_VERTEX 
 {
    DESCENT_FIXED x, y, z;
+ private:
+   friend class CRdl;
+   friend istream &operator>>(istream &input, DESCENT_VERTEX &vertex);
 } DESCENT_VERTEX;
 
 typedef struct DESCENT_CUBE
@@ -41,17 +63,29 @@ typedef struct DESCENT_CUBE
    unsigned short front;
    bool energy;
    unsigned short verticies[8];
-   unsigned char special;
-   char energyCenterNumber;
-   short value;
    struct {
-      signed hi: 4;
-      unsigned lo: 12;
-   } staticLight;
+      unsigned char special;
+      char energyCenterNumber;
+      short value;
+   } energyCenter;
+   DESCENT_SHORTFIXED staticLight;
+   unsigned char walls[6];
  private:
+   friend class CRdl;
    friend istream &operator>>(istream &input, DESCENT_CUBE &cube);
-   friend class Crdl;
 } DESCENT_CUBE;
+
+typedef struct RDL_HEADER {
+   char signature[4];
+   int version;
+   int mineDataOffset;
+   int objectsOffset;
+   int fileSize;
+ private:
+   friend class CRdl;
+   friend istream &operator>>(istream &input, RDL_HEADER &header);
+   friend ostream &operator<<(ostream &output, RDL_HEADER &header);
+} RDL_HEADER;
 
 class CRdl : public CFile {
  public:
@@ -70,20 +104,13 @@ class CRdl : public CFile {
    void Load(const string &hog, const string &filename);
  protected:
  private:
-   struct {
-      char signature[4];
-      int version;
-      int mineDataOffset;
-      int objectsOffset;
-      int fileSize;
-   } mHeader;
-   
+     RDL_HEADER mHeader;   
    vector<DESCENT_VERTEX> mDescentVerticies;
    vector<DESCENT_CUBE> mDescentCubes;
    
    void Init();
    void doLoad();
+   friend istream &operator>>(istream &input, CRdl &rdl);
 };
 
 #endif
-
