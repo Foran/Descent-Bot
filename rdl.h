@@ -24,10 +24,13 @@ typedef struct DESCENT_FIXED
 	 unsigned short lo;
       } parts;
    } value;
+   float get_Value();
+   void set_Value(float f);
  private:
    friend class DESCENT_VERTEX;
    friend class CRdl;
    friend istream &operator>>(istream &input, DESCENT_FIXED &fixed);
+   friend ostream &operator<<(ostream &output, DESCENT_FIXED &fixed);
 } DESCENT_FIXED;
 
 typedef struct DESCENT_SHORTFIXED

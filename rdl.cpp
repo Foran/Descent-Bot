@@ -1,5 +1,16 @@
 #include "rdl.h"
 
+float DESCENT_FIXED::get_Value()
+{
+   float retval = value.parts.hi;
+   retval += value.parts.lo / 65536.0;
+   return retval;
+}
+
+void DESCENT_FIXED::set_Value(float f)
+{
+}
+
 /********************************
  * This method compartmentalizes
  * the loading of fixed data types
@@ -8,6 +19,16 @@ istream &operator>>(istream &input, DESCENT_FIXED &fixed)
 {
    input.read((char *)&fixed.value.raw, sizeof(fixed.value.raw));
    return input;
+}
+
+/********************************
+ * This method compartmentalizes
+ * the displaying of fixed data types
+ *******************************/
+ostream &operator<<(ostream &output, DESCENT_FIXED &fixed)
+{
+   output << fixed.get_Value();
+   return output;
 }
 
 /********************************
@@ -432,6 +453,10 @@ istream &operator>>(istream &input, CRdl &rdl)
 	    if(!(input >> vertex)) break;
 	    rdl.mDescentVerticies.push_back(vertex);
 	 }
+	 cout << "First vertex is: " << rdl.mDescentVerticies[0].x << ", " << rdl.mDescentVerticies[0].y << ", " << rdl.mDescentVerticies[0].z << endl;
+	 cout << "Second vertex is: " << rdl.mDescentVerticies[1].x << ", " << rdl.mDescentVerticies[1].y << ", " << rdl.mDescentVerticies[1].z << endl;
+	 cout << "Third vertex is: " << rdl.mDescentVerticies[2].x << ", " << rdl.mDescentVerticies[2].y << ", " << rdl.mDescentVerticies[2].z << endl;
+	 cout << "Fourth vertex is: " << rdl.mDescentVerticies[3].x << ", " << rdl.mDescentVerticies[3].y << ", " << rdl.mDescentVerticies[3].z << endl;
 	 cout << "File position is now: " << input.tellg() << ", state bit is: " << input.rdstate() << endl;
 	 cout << "We expect to be at: " << (static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.mineDataOffset + 5 + (12 * vertexCount)) << endl;
 	 unsigned short i;
