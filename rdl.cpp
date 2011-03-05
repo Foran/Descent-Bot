@@ -27,8 +27,22 @@ istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed)
  *******************************/
 istream &operator>>(istream &input, DESCENT_VERTEX &vertex)
 {
-   input >> vertex.x >> vertex.y >> vertex.z;
+   input >> vertex.x;
+   input >> vertex.y;
+   input >> vertex.z;
    return input;
+}
+
+ostream &operator<<(ostream &output, DESCENT_CUBE &cube) 
+{
+   output << "Cube.Left = " << cube.left << endl;
+   output << "Cube.Top = " << cube.top << endl;
+   output << "Cube.Right = " << cube.right << endl;
+   output << "Cube.Bottom = " << cube.bottom << endl;
+   output << "Cube.Back = " << cube.back << endl;
+   output << "Cube.Front = " << cube.front << endl;
+   
+   return output;
 }
 
 /********************************
@@ -193,7 +207,9 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube)
 	 }
       }
       DESCENT_SHORTFIXED u,v,l;
-      input >> u >> v >> l;
+      if(!(input >> u)) cout << "Failed to read u for walls[1]" << endl;
+      if(!(input >> v)) cout << "Failed to read v for walls[1]" << endl;
+      if(!(input >> l)) cout << "Failed to read l for walls[1]" << endl;
       if(input.rdstate() != ios::goodbit) {
 	 cout << "state: " << (input.rdstate() & ios::eofbit) << endl;
 	 cout << "Failed to read uvl for walls[1]" << endl;
@@ -389,36 +405,42 @@ ostream &operator<<(ostream &output, RDL_HEADER &header)
 
 istream &operator>>(istream &input, CRdl &rdl) 
 {
+   cout << "File position is now: " << input.tellg() << endl;
+   cout << "Hog pos is: " << rdl.mPos << endl;
+   cout << "rdl length is: " << rdl.mLength << endl;
    input >> rdl.mHeader;
    cout << "File position is now: " << input.tellg() << endl << "Version is: " << rdl.mHeader.version << endl;
    if(!memcmp(rdl.mHeader.signature, "LVLP", 4) &&
       rdl.mHeader.version == 1) {
       cout << rdl.mHeader << endl;
       input.seekg(static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.mineDataOffset, ios_base::beg);
+      cout << "File position is now: " << input.tellg() << endl;
+      char version;
+      input >> version;
       unsigned short vertexCount = 0;
       unsigned short cubeCount = 0;
       input.read((char *)&vertexCount, sizeof(vertexCount));
       input.read((char *)&cubeCount, sizeof(cubeCount));
       if(!input.eof()) {
 	 cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
-	 DESCENT_VERTEX *list = new DESCENT_VERTEX[vertexCount];
-	 size_t count = vertexCount;
+	 cout << "File position is now: " << input.tellg() << endl;
+	 cout << "Minedata version: " << static_cast<int>(version) << endl;
 	 cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX) << ", file.tellg() returned " << input.tellg() << endl;
-	 if(input.read((char *)list, sizeof(vertexCount) * vertexCount)) {
-	    for(unsigned int i = 0; i < vertexCount; i++) {
-	       global_Log.Write(LogType_Debug, 200, "Added a vertex");
-	       rdl.mDescentVerticies.push_back(list[i]);
-	    }
+	 for(unsigned int i = 0; i < vertexCount; i++) {
+	    global_Log.Write(LogType_Debug, 200, "Added a vertex");
+	    DESCENT_VERTEX vertex;
+	    if(!(input >> vertex)) break;
+	    rdl.mDescentVerticies.push_back(vertex);
 	 }
-	 cout << "fread() returned " << count << ", file.tellg() returned " << input.tellg() << endl;
-	 delete list;
-	 
+	 cout << "File position is now: " << input.tellg() << ", state bit is: " << input.rdstate() << endl;
+	 cout << "We expect to be at: " << (static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.mineDataOffset + 5 + (12 * vertexCount)) << endl;
 	 unsigned short i;
 	 for(i = 0; i < cubeCount && input.rdstate() == ios::goodbit; i++) {
 	    DESCENT_CUBE cube;
 	    if(input >> cube) rdl.mDescentCubes.push_back(cube);
-	    else cout << "An error occured during processing" << endl;
+	    else cout << "An error occured during processing" << endl << "Dumping cube data: " << cube << endl;
 	 }
+	 cout << "File position is now: " << input.tellg() << endl;
 	 cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
       }
       else cout << "Failed to read Vertix and Cube counts" << endl;

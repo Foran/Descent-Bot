@@ -73,6 +73,7 @@ typedef struct DESCENT_CUBE
  private:
    friend class CRdl;
    friend istream &operator>>(istream &input, DESCENT_CUBE &cube);
+   friend ostream &operator<<(ostream &output, DESCENT_CUBE &cube);
 } DESCENT_CUBE;
 
 typedef struct RDL_HEADER {
