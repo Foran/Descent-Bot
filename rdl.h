@@ -14,39 +14,7 @@ using namespace std;
 #include "file.h"
 #include "log.h"
 #include "fstreamptr.h"
-
-typedef struct DESCENT_FIXED 
-{
-   union {
-      int raw;
-      struct {
-	 short hi;
-	 unsigned short lo;
-      } parts;
-   } value;
-   float get_Value();
-   void set_Value(float f);
- private:
-   friend class DESCENT_VERTEX;
-   friend class CRdl;
-   friend istream &operator>>(istream &input, DESCENT_FIXED &fixed);
-   friend ostream &operator<<(ostream &output, DESCENT_FIXED &fixed);
-} DESCENT_FIXED;
-
-typedef struct DESCENT_SHORTFIXED
-{
-   union {
-      short raw;
-      struct {
-	 signed hi: 4;
-	 unsigned lo: 12;
-      } parts;
-   } value;
- private:
-   friend class DESCENT_VERTEX;
-   friend class CRdl;
-   friend istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed);
-} DESCENT_SHORTFIXED;
+#include "math.h"
 
 typedef struct DESCENT_VERTEX 
 {
@@ -92,34 +60,43 @@ typedef struct RDL_HEADER {
 } RDL_HEADER;
 
 typedef struct RDL_GAMEDATA_HEADER {
-   short signature;
-   short version;
-   int game_fileinfo_size;
-   char mine_filename[15];
-   int level;
-   int player_offset;
-   int player_sizeof;
-   int object_offset;
-   int object_howmany;
-   int object_sizeof;
+   short fileinfo_signature;
+   short fileinfo_version;
+   int fileinfo_sizeof;
+   int header_offset;
+   int header_size;
+   int editor_offset;
+   int editor_size;
+   int segment_offset;
+   int segment_howmany;
+   int segment_sizeof;
+   int newseg_verts_offset;
+   int newseg_verts_howmany;
+   int newseg_verts_sizeof;
+   int group_offset;
+   int group_howmany;
+   int group_sizeof;
+   int vertex_offset;
+   int vertex_howmany;
+   int vertex_sizeof;
+   int texture_offset;
+   int texture_howmany;
+   int texture_sizeof;
    int walls_offset;
    int walls_howmany;
    int walls_sizeof;
-   int doors_offset;
-   int doors_howmany;
-   int doors_sizeof;
    int triggers_offset;
    int triggers_howmany;
    int triggers_sizeof;
    int links_offset;
    int links_howmany;
    int links_sizeof;
-   int control_offset;
-   int control_howmany;
-   int control_sizeof;
-   int matcen_offset;
-   int matcen_howmany;
-   int matcen_sizeof;
+   int object_offset;
+   int object_howmany;
+   int object_sizeof;
+   int unused_offset;
+   int unused_howmamy;
+   int unused_sizeof;
  private:
    friend class CRdl;
    friend istream &operator>>(istream &input, RDL_GAMEDATA_HEADER &header);

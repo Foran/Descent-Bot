@@ -1,46 +1,5 @@
 #include "rdl.h"
 
-float DESCENT_FIXED::get_Value()
-{
-   float retval = value.parts.hi;
-   retval += value.parts.lo / 65536.0;
-   return retval;
-}
-
-void DESCENT_FIXED::set_Value(float f)
-{
-}
-
-/********************************
- * This method compartmentalizes
- * the loading of fixed data types
- *******************************/
-istream &operator>>(istream &input, DESCENT_FIXED &fixed)
-{
-   input.read((char *)&fixed.value.raw, sizeof(fixed.value.raw));
-   return input;
-}
-
-/********************************
- * This method compartmentalizes
- * the displaying of fixed data types
- *******************************/
-ostream &operator<<(ostream &output, DESCENT_FIXED &fixed)
-{
-   output << fixed.get_Value();
-   return output;
-}
-
-/********************************
- * This method compartmentalizes
- * the loading of fixed data types
- *******************************/
-istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed)
-{
-   input.read((char *)&fixed.value.raw, sizeof(fixed.value.raw));
-   return input;
-}
-
 /********************************
  * This method compartmentalizes
  * the loading of vertex data in
@@ -426,16 +385,18 @@ ostream &operator<<(ostream &output, RDL_HEADER &header)
 
 istream &operator>>(istream &input, RDL_GAMEDATA_HEADER &header)
 {
-   input.read((char *)&header, sizeof(header));
+   input.read((char *)&header, 8);
+   input.seekg(-8, ios_base::cur);
+   if(static_cast<size_t>(header.fileinfo_sizeof) > sizeof(header)) input.setstate(ios::failbit);
+   input.read((char *)&header, header.fileinfo_sizeof);
    return input;
 }
 
 ostream &operator<<(ostream &output, RDL_GAMEDATA_HEADER &header)
 {
-   output << "Signature: 0x" << hex << header.signature << "(" << dec << header.signature << ")" << endl;
-   output << "Version: " << header.version << endl;
-   output << "FileInfo Size: " << header.game_fileinfo_size << endl;
-   output << "Mine Name: " << header.mine_filename;
+   output << "Signature: 0x" << hex << header.fileinfo_signature << "(" << dec << header.fileinfo_signature << ")" << endl;
+   output << "Version: " << header.fileinfo_version << endl;
+   output << "FileInfo Size: " << header.fileinfo_sizeof << endl;
    return output;
 }
 
