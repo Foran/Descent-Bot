@@ -424,18 +424,33 @@ ostream &operator<<(ostream &output, RDL_HEADER &header)
    return output;
 }
 
+istream &operator>>(istream &input, RDL_GAMEDATA_HEADER &header)
+{
+   input.read((char *)&header, sizeof(header));
+   return input;
+}
+
+ostream &operator<<(ostream &output, RDL_GAMEDATA_HEADER &header)
+{
+   output << "Signature: 0x" << hex << header.signature << "(" << dec << header.signature << ")" << endl;
+   output << "Version: " << header.version << endl;
+   output << "FileInfo Size: " << header.game_fileinfo_size << endl;
+   output << "Mine Name: " << header.mine_filename;
+   return output;
+}
+
 istream &operator>>(istream &input, CRdl &rdl) 
 {
-   cout << "File position is now: " << input.tellg() << endl;
-   cout << "Hog pos is: " << rdl.mPos << endl;
-   cout << "rdl length is: " << rdl.mLength << endl;
+   cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")" << endl;
+   cout << "Hog pos is: 0x" << hex << rdl.mPos << "(" << dec << rdl.mPos << ")"  << endl;
+   cout << "rdl length is: 0x" << hex << rdl.mLength << "(" << dec << rdl.mLength << ")"  << endl;
    input >> rdl.mHeader;
-   cout << "File position is now: " << input.tellg() << endl << "Version is: " << rdl.mHeader.version << endl;
+   cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")"  << endl << "Version is: " << rdl.mHeader.version << endl;
    if(!memcmp(rdl.mHeader.signature, "LVLP", 4) &&
       rdl.mHeader.version == 1) {
       cout << rdl.mHeader << endl;
       input.seekg(static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.mineDataOffset, ios_base::beg);
-      cout << "File position is now: " << input.tellg() << endl;
+      cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")" << endl;
       char version;
       input >> version;
       unsigned short vertexCount = 0;
@@ -444,7 +459,7 @@ istream &operator>>(istream &input, CRdl &rdl)
       input.read((char *)&cubeCount, sizeof(cubeCount));
       if(!input.eof()) {
 	 cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
-	 cout << "File position is now: " << input.tellg() << endl;
+	 cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")" << endl;
 	 cout << "Minedata version: " << static_cast<int>(version) << endl;
 	 cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX) << ", file.tellg() returned " << input.tellg() << endl;
 	 for(unsigned int i = 0; i < vertexCount; i++) {
@@ -465,8 +480,14 @@ istream &operator>>(istream &input, CRdl &rdl)
 	    if(input >> cube) rdl.mDescentCubes.push_back(cube);
 	    else cout << "An error occured during processing" << endl << "Dumping cube data: " << cube << endl;
 	 }
-	 cout << "File position is now: " << input.tellg() << endl;
+	 cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")" << endl;
 	 cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
+	 
+	 input.seekg(static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.gameDataOffset, ios_base::beg);
+	 cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")" << endl;
+	 input >> rdl.mGameDataHeader;
+	 cout << rdl.mGameDataHeader << endl;
+	 cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec << input.tellg() << ")" << endl;
       }
       else cout << "Failed to read Vertix and Cube counts" << endl;
    }

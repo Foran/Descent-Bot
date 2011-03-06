@@ -83,13 +83,48 @@ typedef struct RDL_HEADER {
    char signature[4];
    int version;
    int mineDataOffset;
-   int objectsOffset;
+   int gameDataOffset;
    int fileSize;
  private:
    friend class CRdl;
    friend istream &operator>>(istream &input, RDL_HEADER &header);
    friend ostream &operator<<(ostream &output, RDL_HEADER &header);
 } RDL_HEADER;
+
+typedef struct RDL_GAMEDATA_HEADER {
+   short signature;
+   short version;
+   int game_fileinfo_size;
+   char mine_filename[15];
+   int level;
+   int player_offset;
+   int player_sizeof;
+   int object_offset;
+   int object_howmany;
+   int object_sizeof;
+   int walls_offset;
+   int walls_howmany;
+   int walls_sizeof;
+   int doors_offset;
+   int doors_howmany;
+   int doors_sizeof;
+   int triggers_offset;
+   int triggers_howmany;
+   int triggers_sizeof;
+   int links_offset;
+   int links_howmany;
+   int links_sizeof;
+   int control_offset;
+   int control_howmany;
+   int control_sizeof;
+   int matcen_offset;
+   int matcen_howmany;
+   int matcen_sizeof;
+ private:
+   friend class CRdl;
+   friend istream &operator>>(istream &input, RDL_GAMEDATA_HEADER &header);
+   friend ostream &operator<<(ostream &output, RDL_GAMEDATA_HEADER &header);
+} RDL_GAMEDATA_HEADER;
 
 class CRdl : public CFile {
  public:
@@ -111,6 +146,7 @@ class CRdl : public CFile {
      RDL_HEADER mHeader;   
    vector<DESCENT_VERTEX> mDescentVerticies;
    vector<DESCENT_CUBE> mDescentCubes;
+   RDL_GAMEDATA_HEADER mGameDataHeader;
    
    void Init();
    void doLoad();
