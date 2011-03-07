@@ -57,7 +57,7 @@ bool CConfig::Load(const string filename)
       if(NULL != node && static_cast<string>("Configuration") == xmlChar2string(node->name) && NULL == node->next) {
 	 for(xmlNodePtr cur_node = node->children; NULL != cur_node; cur_node = cur_node->next) {
 	    if(XML_ELEMENT_NODE == cur_node->type) {
-	       if(static_cast<string>("Logging") == xmlChar2string(cur_node->name)) retval &= Load_Logging(cur_node);
+	       if(static_cast<string>("Logging") == xmlChar2string(cur_node->name)) retval &= Logging.Load_Logging(cur_node);
 	    }
 	 }
       }
@@ -67,11 +67,11 @@ bool CConfig::Load(const string filename)
    return retval;
 }
 
-bool CConfig::Load_Logging(const xmlNodePtr node)
+bool CConfig_Logging::Load_Logging(const xmlNodePtr node)
 {
    bool retval = false;
    
-   if(NULL != node && static_cast<string>("Logging") == xmlChar2string(node->name)) {
+   if(NULL != node && static_cast<string>("Logging") == CConfig::xmlChar2string(node->name)) {
       retval = true;
       for(xmlNode *cur_node = node->children; NULL != cur_node; cur_node = cur_node->next) {
 	 if(XML_ELEMENT_NODE == cur_node->type) {
@@ -94,6 +94,27 @@ void CConfig::Reset()
 string CConfig::xmlChar2string(const xmlChar *value)
 {
    return static_cast<string>((const char *)value);
+}
+
+CConfig_Logging::CConfig_Logging()
+{
+}
+
+CConfig_Logging::CConfig_Logging(const CConfig_Logging &source)
+{
+   *this = source;
+}
+
+CConfig_Logging::~CConfig_Logging()
+{
+   for(map<string, CConfig_Logging_Logger *>::iterator i = mLoggers.begin(); i != mLoggers.end(); i++) {
+      delete (*i).second;
+   }
+}
+
+CConfig_Logging &CConfig_Logging::operator=(const CConfig_Logging &source)
+{
+   return *this;
 }
 
 CConfig_Logging_Logger::CConfig_Logging_Logger()
@@ -119,4 +140,24 @@ int CConfig_Logging_Logger::get_Level() const
 string CConfig_Logging_Logger::get_Driver() const
 {
    return mDriver;
+}
+
+string CConfig_Logging_Logger::operator[](const string &key)
+{
+   return mOptions[key];
+}
+
+vector<string> CConfig_Logging_Logger::get_Option_Names()
+{
+   vector<string> retval;
+   
+   for(map<string, string>::iterator i = mOptions.begin(); i != mOptions.end(); i++) {
+      retval.push_back((*i).first);
+   }   
+   
+   return retval;
+}
+
+CConfig_Logging_Logger::~CConfig_Logging_Logger() 
+{
 }

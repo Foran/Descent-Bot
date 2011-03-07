@@ -12,6 +12,7 @@ using namespace std;
 
 #include "log.h"
 #include "log_driver_raw.h"
+#include "log_driver_file.h"
 
 class CConfig;
 class CConfig_Logging;
@@ -19,37 +20,47 @@ class CConfig_Logging;
 class CConfig_Logging_Logger
 {
  public:
-   CConfig_Logging_Logger();
    string get_Name() const;
    string get_Type() const;
    int get_Level() const;
    string get_Driver() const;
+   string operator[](const string &key);
+   vector<string> get_Option_Names();
  protected:
  private:
      string mName;
    string mType;
    int mLevel;
    string mDriver;
+   map<string, string> mOptions;
    
-     friend class CConfig_Logging;
+   CConfig_Logging_Logger();
+   CConfig_Logging_Logger(const CConfig_Logging_Logger &source);
+   ~CConfig_Logging_Logger();
+   CConfig_Logging_Logger &operator=(const CConfig_Logging_Logger &source);
+
+   friend class CConfig_Logging;
 };
 
 
 class CConfig_Logging
 {
  public:
-   CConfig_Logging();
-   CConfig_Logging(const CConfig_Logging &source);
-   ~CConfig_Logging();
-   
-   CConfig_Logging &operator=(const CConfig_Logging &source);
    CConfig_Logging_Logger &operator[](const string &index) const;
    vector<string> get_Names() const;
  protected:
  private:
      map<string, CConfig_Logging_Logger *> mLoggers;
 
-     friend class CConfig;
+   CConfig_Logging();
+   CConfig_Logging(const CConfig_Logging &source);
+   ~CConfig_Logging();
+   
+   CConfig_Logging &operator=(const CConfig_Logging &source);
+
+   bool Load_Logging(const xmlNodePtr node);
+
+   friend class CConfig;
 };
 
 class CConfig 
@@ -65,14 +76,17 @@ class CConfig
    bool Load(const string filename);
    
    void Reset();
+   
+   CConfig_Logging Logging;
  protected:
  private:
      static unsigned int mReferences;
    
    void Init();
-   bool Load_Logging(const xmlNodePtr node);
    
-   string xmlChar2string(const xmlChar *value);
+   static string xmlChar2string(const xmlChar *value);
+   
+   friend class CConfig_Logging;
 };
 
 extern CConfig global_Config;
