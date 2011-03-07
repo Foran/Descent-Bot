@@ -433,6 +433,10 @@ istream &operator>>(istream &input, CRdl &rdl)
 	 cout << "Second vertex is: " << rdl.mDescentVerticies[1].x << ", " << rdl.mDescentVerticies[1].y << ", " << rdl.mDescentVerticies[1].z << endl;
 	 cout << "Third vertex is: " << rdl.mDescentVerticies[2].x << ", " << rdl.mDescentVerticies[2].y << ", " << rdl.mDescentVerticies[2].z << endl;
 	 cout << "Fourth vertex is: " << rdl.mDescentVerticies[3].x << ", " << rdl.mDescentVerticies[3].y << ", " << rdl.mDescentVerticies[3].z << endl;
+	 cout << "Fifth vertex is: " << rdl.mDescentVerticies[4].x << ", " << rdl.mDescentVerticies[4].y << ", " << rdl.mDescentVerticies[4].z << endl;
+	 cout << "Sixth vertex is: " << rdl.mDescentVerticies[5].x << ", " << rdl.mDescentVerticies[5].y << ", " << rdl.mDescentVerticies[5].z << endl;
+	 cout << "Seventh vertex is: " << rdl.mDescentVerticies[6].x << ", " << rdl.mDescentVerticies[6].y << ", " << rdl.mDescentVerticies[6].z << endl;
+	 cout << "Eigth vertex is: " << rdl.mDescentVerticies[7].x << ", " << rdl.mDescentVerticies[7].y << ", " << rdl.mDescentVerticies[7].z << endl;
 	 cout << "File position is now: " << input.tellg() << ", state bit is: " << input.rdstate() << endl;
 	 cout << "We expect to be at: " << (static_cast<unsigned short>(rdl.mPos) + rdl.mHeader.mineDataOffset + 5 + (12 * vertexCount)) << endl;
 	 unsigned short i;

@@ -11,7 +11,8 @@ int main(int argc, char **argv)
       cout << *i << endl;
    }
    
-   CRdl rdl("chaos.hog", "chaos1.rdl");
+   CRdl rdl1("chaos.hog", "chaos1.rdl");
+   CRdl rdl2("chaos.hog", "chaos2.rdl");
    
    return retval;
 }
