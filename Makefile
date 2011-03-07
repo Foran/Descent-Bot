@@ -44,3 +44,7 @@ mrproper: clean
 
 test: $(BIN)
 	$(Q)make -C test test
+
+createConfig:
+	@echo "Creating config/Main.xml from example..."
+	$(Q)cp config/Main.xml.example config/Main.xml
