@@ -74,10 +74,15 @@ bool CConfig_Logging::Load_Logging(const xmlNodePtr node)
    if(NULL != node && static_cast<string>("Logging") == CConfig::xmlChar2string(node->name)) {
       retval = true;
       for(xmlNode *cur_node = node->children; NULL != cur_node; cur_node = cur_node->next) {
-	 if(XML_ELEMENT_NODE == cur_node->type) {
+	 if(XML_ELEMENT_NODE == cur_node->type && static_cast<string>("Logger") == CConfig::xmlChar2string(cur_node->name)) {
 	    cout << "Scanning Configuration->Logging->" << cur_node->name << " for attributes" << endl;
 	    for(xmlAttr *attr = cur_node->properties; NULL != attr; attr = attr->next) {
 	       cout << "Configuration->Logging->" << cur_node->name << "[" << attr->name << "]=" << xmlGetProp(cur_node, attr->name) << endl;
+	    }
+	    for(xmlNode *option_node = cur_node->children; NULL != option_node; option_node = option_node->next) {
+	       if(XML_ELEMENT_NODE == option_node->type && static_cast<string>("Option") == CConfig::xmlChar2string(option_node->name)) {
+		  cout << "Option " << xmlGetProp(option_node, (xmlChar *)"Name") << " = " << xmlGetProp(option_node, (xmlChar *)"Value") << endl;
+	       }
 	    }
 	 }
       }
