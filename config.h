@@ -21,7 +21,7 @@ class CConfig_Logging_Logger
 {
  public:
    string get_Name() const;
-   string get_Type() const;
+   LogType get_Type() const;
    int get_Level() const;
    string get_Driver() const;
    string operator[](const string &key);
@@ -29,7 +29,7 @@ class CConfig_Logging_Logger
  protected:
  private:
      string mName;
-   string mType;
+   LogType mType;
    int mLevel;
    string mDriver;
    map<string, string> mOptions;
@@ -55,6 +55,8 @@ class CConfig_Logging
    CConfig_Logging();
    CConfig_Logging(const CConfig_Logging &source);
    ~CConfig_Logging();
+   
+   LogType get_LogType(const xmlNodePtr node);
    
    CConfig_Logging &operator=(const CConfig_Logging &source);
 

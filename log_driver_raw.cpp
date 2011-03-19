@@ -4,32 +4,60 @@ CLogDriverRaw::CLogDriverRaw()
 {
 }
 
+void CLogDriverRaw::set_Name(const string &name)
+{
+}
+
+string CLogDriverRaw::get_Name() const
+{
+   return "";
+}
+
+string CLogDriverRaw::get_Driver() const
+{
+   return "Raw";
+}
+
+void CLogDriverRaw::set_Type(const string &type)
+{
+}
+
+void CLogDriverRaw::set_Type(const LogType &type)
+{
+}
+
+LogType CLogDriverRaw::get_Type() const
+{
+   return LogType_Error;
+}
+
+void CLogDriverRaw::set_Level(const string &level)
+{
+}
+
+void CLogDriverRaw::set_Level(const int &level)
+{
+}
+
+int CLogDriverRaw::get_Level() const
+{
+   return 0;
+}
+
+void CLogDriverRaw::set_Option(const string &name, const string &value)
+{
+}
+
+string CLogDriverRaw::get_Option(const string &name)
+{
+   return "";
+}
+
 bool CLogDriverRaw::Write(LogType type, int level, const string &message)
 {
    bool retval = true;
    
-   switch(type) {
-    case LogType_Fatal:
-      cout << "Fatal";
-      break;
-    case LogType_Error:
-      cout << "Error";
-      break;
-    case LogType_Warning:
-      cout << "Warning";
-      break;
-    case LogType_Debug:
-      cout << "Debug";
-      break;
-    case LogType_Info:
-      cout << "Info";
-      break;
-    default:
-      cout << "Unknown Type";
-      break;
-   }
-   
-   cout << "(" << level << "): " <<  message << endl;
+   cout << type << "(" << level << "): " <<  message << endl;
    
    return retval;
 }

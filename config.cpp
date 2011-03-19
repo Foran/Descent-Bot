@@ -67,6 +67,23 @@ bool CConfig::Load(const string filename)
    return retval;
 }
 
+LogType CConfig_Logging::get_LogType(const xmlNodePtr node)
+{
+   LogType retval = LogType_Fatal;
+   if(XML_ELEMENT_NODE == node->type && static_cast<string>("Logger") == CConfig::xmlChar2string(node->name)) {
+      xmlChar *xmlType = const_cast<xmlChar *>(xmlGetProp(node, (const xmlChar *)("Type")));
+      string type = CConfig::xmlChar2string(xmlType);
+
+      if(type == "Fatal") retval = LogType_Fatal;
+      else if(type == "Error") retval = LogType_Error;
+      else if(type == "Warning") retval = LogType_Warning;
+      else if(type == "Debug") retval = LogType_Debug;
+      else if(type == "Info") retval = LogType_Info;
+   }
+   
+   return retval;
+}
+
 bool CConfig_Logging::Load_Logging(const xmlNodePtr node)
 {
    bool retval = false;
@@ -87,13 +104,13 @@ bool CConfig_Logging::Load_Logging(const xmlNodePtr node)
 	 }
       }
    }
+   global_Log.add_Logger(LogType_Debug, new CLogDriverRaw());
       
    return retval;
 }
 
 void CConfig::Reset()
 {
-//   global_Log.add_Logger(LogType_Debug, new CLogDriverRaw());
 }
 
 string CConfig::xmlChar2string(const xmlChar *value)
@@ -132,7 +149,7 @@ string CConfig_Logging_Logger::get_Name() const
    return mName;
 }
 
-string CConfig_Logging_Logger::get_Type() const
+LogType CConfig_Logging_Logger::get_Type() const
 {
    return mType;
 }
