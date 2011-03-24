@@ -1,6 +1,14 @@
 #ifndef __PACKETS_H__
 #define __PACKETS_H__
 
+#include <iostream>
+
+using namespace std;
+
+#include <netinet/in.h>
+#include <errno.h>
+#include <string.h>
+
 /*************************************
  * UDP Packet ID's taken directly from
  * D1X-Rebirth source
@@ -27,42 +35,42 @@ enum UDP_PacketType
      UPID_MDATA_P0,			// Packet containing multi buffer from a player. Priority 0 - no ACK needed.
      UPID_MDATA_P1,			// Packet containing multi buffer from a player. Priority 1 - ACK needed. Also contains pkt_num
      UPID_MDATA_ACK			// ACK packet for UPID_MDATA_P1.
-}
-
-struct PACKET_Header 
-{
-   unsigned char Packet_Type;
 };
+
+struct PACKET_Header
+{
+   char Type;
+} __attribute__ ((__packed__, aligned(1)));
 
 struct PACKET_Version_Deny 
 {
-   PACKET_Header Header;
+   char Type;
    short Major;
    short Minor;
    short Micro;
-};
+} __attribute__ ((__packed__, aligned(1)));
 
 struct PACKET_Request_Game_Info
 {
-   PACKET_Header Header;
+   char Type;
    int Request_ID;
    short Major;
    short Minor;
    short Micro;
-};
+} __attribute__ ((__packed__, aligned(1)));
 
 struct PACKET_Request_Game_Info_Lite
 {
-   PACKET_Header Header;
+   char Type;
    int Request_ID;
    short Major;
    short Minor;
    short Micro;
-};
+} __attribute__ ((__packed__, aligned(1)));
 
-struct PACKET_Game_Info 
+struct PACKET_Game_Info_Lite
 {
-   PACKET_Header Header;
+   char Type;
    short Major;
    short Minor;
    short Micro;
@@ -78,6 +86,14 @@ struct PACKET_Game_Info
    char Max_Players;
    char Game_Flags;
    char Team_Vector;
+} __attribute__ ((__packed__, aligned(1)));
+
+class CPacket_Request_Game_Info_Lite 
+{
+ public:
+   void Send(int socket, const struct sockaddr_in &addr);
+ protected:
+ private:
 };
 
 #endif

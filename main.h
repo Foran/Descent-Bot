@@ -9,6 +9,7 @@ using namespace std;
 #include "hogmanager.h"
 #include "rdl.h"
 #include "config.h"
+#include "connection.h"
 
 #endif
 
