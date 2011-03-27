@@ -14,8 +14,8 @@ int main(int argc, char **argv)
    CRdl rdl1("chaos.hog", "chaos1.rdl");
    CRdl rdl2("chaos.hog", "chaos2.rdl");
    
-   CConnection connection;
-   connection.find_Game();
+//   CConnection connection;
+//   connection.find_Game();
    
    return retval;
 }

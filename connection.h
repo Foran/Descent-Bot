@@ -18,17 +18,18 @@ using namespace std;
 class CConnection 
 {
  public:
-   CConnection();
-   ~CConnection();
-   
    void find_Game();
    void ProcessInboundPackets();
  protected:
  private:
      int mSocket;
    
+   CConnection();
    CConnection(const CConnection &source);
+   ~CConnection();
    CConnection &operator=(const CConnection &source);
+   
+   friend class CConnectionManager;
 };
 
 #endif

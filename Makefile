@@ -1,7 +1,7 @@
 Q = @
 OBJS=	main.o hog.o rdl.o file.o log.o log_driver_raw.o config.o \
 	hogmanager.o fstreamptr.o math.o log_driver.o log_driver_file.o \
-	connection.o packets.o connectionmanager.o
+	connection.o packets.o connectionmanager.o mission.o missionmanager.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
 DEFINES=-DDEBUG -DVERSION=\"0.01a\"

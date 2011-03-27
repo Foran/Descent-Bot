@@ -1,7 +1,7 @@
 #ifndef __CONNECTIONMANAGER_H__
 #define __CONNECTIONMANAGER_H__
 
-#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -31,7 +31,7 @@ class CConnectionManager
  private:
    static int mReferences;
    static int mSocket;
-   static vector<CConnection *> mConnections;
+   static map<int, CConnection *> mConnections;
 };
 
 #endif

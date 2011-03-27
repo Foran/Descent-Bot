@@ -2,7 +2,7 @@
 
 int CConnectionManager::mReferences = 0;
 int CConnectionManager::mSocket = -1;
-vector<CConnection *> CConnectionManager::mConnections;
+map<int, CConnection *> CConnectionManager::mConnections;
 
 CConnectionManager::CConnectionManager()
 {
@@ -29,8 +29,8 @@ CConnectionManager::CConnectionManager(const CConnectionManager &source)
 CConnectionManager::~CConnectionManager()
 {
    if(--mReferences) {
-      for(vector<CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
-	 delete *i;
+      for(map<int, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
+	 delete i->second;
       }
       mConnections.clear();
       if(mSocket >= 0) {
