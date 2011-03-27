@@ -4,7 +4,7 @@ OBJS=	main.o hog.o rdl.o file.o log.o log_driver_raw.o config.o \
 	connection.o packets.o connectionmanager.o mission.o missionmanager.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
-TESTOBJS=	testbase.o test_hog.o test.o testManager.o
+TESTOBJS=	test_main.o testbase.o test_hog.o test.o testManager.o
 TESTSOURCES=$(TESTOBJS:.o=.cpp)
 TESTDEPENDS=$(TESTSOURCES:.cpp=.d)
 DEFINES=-DDEBUG -DVERSION=\"0.01a\"
@@ -42,15 +42,18 @@ $(TESTBIN):$(TESTOBJS)
 
 -include $(SOURCES:.cpp=.d)
 
+-include $(TESTSOURCES:.cpp=.d)
+
 clean:
 	@echo "Cleaning Files..."
-	$(Q)-rm -rf *~ $(OBJS) $(BIN)
+	$(Q)-rm -rf *~ $(OBJS) $(BIN) $(TESTOBJS) $(TESTBIN)
 
 mrproper: clean
 	@echo "Removing dependancies..."
-	$(Q)-rm -rf $(DEPENDS)
+	$(Q)-rm -rf $(DEPENDS) $(TESTDEPENDS)
 
-test: $(TESTBIN)
+test: $(BIN) $(TESTBIN)
+	$(Q)./testdescent-bot
 
 createConfig:
 	@echo "Creating config/Main.xml from example..."
