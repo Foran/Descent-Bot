@@ -4,10 +4,14 @@ OBJS=	main.o hog.o rdl.o file.o log.o log_driver_raw.o config.o \
 	connection.o packets.o connectionmanager.o mission.o missionmanager.o
 SOURCES=$(OBJS:.o=.cpp)
 DEPENDS=$(SOURCES:.cpp=.d)
+TESTOBJS=	testbase.o test_hog.o test.o testManager.o
+TESTSOURCES=$(TESTOBJS:.o=.cpp)
+TESTDEPENDS=$(TESTSOURCES:.cpp=.d)
 DEFINES=-DDEBUG -DVERSION=\"0.01a\"
 LIBS=-lxml2 -llua5.1
 CC=g++
 BIN=descent-bot
+TESTBIN=testdescent-bot
 CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 #-fpack-struct -fno-exceptions
 
@@ -18,6 +22,11 @@ all: $(BIN)
 $(BIN):$(OBJS)
 	@echo "Linking $@..."
 	$(Q)$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(BIN)
+
+$(TESTBIN):$(TESTOBJS)
+	@echo "Linking $@..."
+	$(Q)$(CC) $(CFLAGS) $(TESTOBJS) $(LIBS) -o $(TESTBIN)
+
 %.h:
 	@echo FORCING DEPENDENCY CHECK - HEADERFILE $@ MISSING
 	$(Q)rm -f *.d
@@ -36,15 +45,12 @@ $(BIN):$(OBJS)
 clean:
 	@echo "Cleaning Files..."
 	$(Q)-rm -rf *~ $(OBJS) $(BIN)
-	$(Q)make -C test clean
 
 mrproper: clean
 	@echo "Removing dependancies..."
 	$(Q)-rm -rf $(DEPENDS)
-	$(Q)make -C test mrproper
 
-test: $(BIN)
-	$(Q)make -C test test
+test: $(TESTBIN)
 
 createConfig:
 	@echo "Creating config/Main.xml from example..."
