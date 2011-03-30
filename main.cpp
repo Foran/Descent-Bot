@@ -13,7 +13,8 @@ int main(int argc, char **argv)
    
    CRdl rdl1("chaos.hog", "chaos1.rdl");
    CRdl rdl2("chaos.hog", "chaos2.rdl");
-   
+
+   CConnectionManager::get_Instance().Pulse();
 //   CConnection connection;
 //   connection.find_Game();
    

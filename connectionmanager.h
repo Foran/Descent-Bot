@@ -12,6 +12,8 @@ using namespace std;
 #include <unistd.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <time.h>
+#include <sys/time.h>
 
 #include "packets.h"
 
@@ -27,11 +29,14 @@ class CConnectionManager
    CConnectionManager &operator=(const CConnectionManager &source);
    
    static CConnectionManager get_Instance();
+   void Pulse();
  protected:
  private:
    static int mReferences;
    static int mSocket;
    static map<int, CConnection *> mConnections;
+   static map<struct sockaddr_in, string> mGames;
+   static map<string, time_t> mGameAges;
 };
 
 #endif

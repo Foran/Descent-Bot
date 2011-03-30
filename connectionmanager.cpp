@@ -3,6 +3,8 @@
 int CConnectionManager::mReferences = 0;
 int CConnectionManager::mSocket = -1;
 map<int, CConnection *> CConnectionManager::mConnections;
+map<struct sockaddr_in, string> CConnectionManager::mGames;
+map<string, time_t> CConnectionManager::mGameAges;
 
 CConnectionManager::CConnectionManager()
 {
@@ -33,6 +35,8 @@ CConnectionManager::~CConnectionManager()
 	 delete i->second;
       }
       mConnections.clear();
+      mGames.clear();
+      mGameAges.clear();
       if(mSocket >= 0) {
 	 close(mSocket);
 	 mSocket = -1;
@@ -49,4 +53,61 @@ CConnectionManager &CConnectionManager::operator=(const CConnectionManager &sour
 CConnectionManager CConnectionManager::get_Instance()
 {
    return CConnectionManager();
+}
+
+void CConnectionManager::Pulse()
+{
+   fd_set read;
+   struct timeval tv;
+   int result;
+   int max = mSocket;
+   char packetId;
+   struct sockaddr_in addr;
+   socklen_t len;
+
+   FD_ZERO(&read);
+   
+   FD_SET(mSocket, &read);
+   for(map<int, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
+      if(i->second != NULL) {
+	 FD_SET(i->first, &read);
+	 if(max > i->first) max = i->first;
+      }
+   }
+   
+   tv.tv_sec = 0;
+   tv.tv_usec = 10;
+   
+   result = select(max + 1, &read, NULL, NULL, &tv);
+   
+   if (result > 0) {
+      if(FD_ISSET(mSocket, &read)) {
+	 len = sizeof(addr);
+	 if(recvfrom(mSocket, &packetId, 1, MSG_PEEK, (struct sockaddr *)&addr, &len) > 0) {
+	    switch(packetId) {
+	     case UPID_GAME_INFO_LITE:
+	     case UPID_GAME_INFO:
+	     default:
+		 //throw the packet away
+		 recvfrom(mSocket, &packetId, 1, 0, (struct sockaddr *)&addr, &len);
+	       break;
+	    }
+	 }
+      }
+      for(map<int, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
+	 if(i->second != NULL && FD_ISSET(mSocket, &read)) {
+	    len = sizeof(addr);
+	    if(recvfrom(mSocket, &packetId, 1, MSG_PEEK, (struct sockaddr *)&addr, &len) > 0) {
+	       switch(packetId) {
+		case UPID_GAME_INFO_LITE:
+		case UPID_GAME_INFO:
+		default:
+		    //throw the packet away
+		    recvfrom(mSocket, &packetId, 1, 0, (struct sockaddr *)&addr, &len);
+		  break;
+	       }
+	    }
+	 }
+      }
+   }
 }
