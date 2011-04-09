@@ -3,8 +3,6 @@
 vector<CHog *> CHogManager::mHogs;
 unsigned int CHogManager::mReferences = 0;
 
-CHogManager HogManager;
-
 CHogManager::CHogManager()
 {
   mReferences++;
@@ -36,4 +34,9 @@ CHog &CHogManager::operator[](const string &filename)
   }
   
   return *hog;
+}
+
+CHogManager CHogManager::get_Instance()
+{
+	return CHogManager();
 }

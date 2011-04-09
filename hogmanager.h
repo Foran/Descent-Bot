@@ -16,12 +16,11 @@ public:
   ~CHogManager();
   
   CHog &operator[](const string &filename);
+   static CHogManager get_Instance();
 protected:
 private:
   static vector<CHog *> mHogs;
   static unsigned int mReferences;
 };
-
-extern CHogManager HogManager;
 
 #endif
