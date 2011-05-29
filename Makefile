@@ -34,6 +34,7 @@ $(TESTBIN):$(TESTOBJS)
 %.o: %.cpp %.d
 	@echo "Compiling $<..."
 	$(Q)$(CC) $(CFLAGS) $(DEFINES) -c $< -o $@
+	@cppcheck $<
 
 %.d: %.cpp
 	@echo "Generating $@..."
