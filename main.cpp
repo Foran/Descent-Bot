@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 {
   int retval = 0;
    CConnectionManager ConnectionManager;
+   CHogManager HogManager;
    
    struct sigaction sigIntHandler;
    sigIntHandler.sa_sigaction = NULL;
@@ -39,6 +40,8 @@ int main(int argc, char **argv)
    while(dbot_signal_stillwantstoplay) CConnectionManager::get_Instance().Pulse();
 //   CConnection connection;
 //   connection.find_Game();
+
+   cout << "Exiting gracefully" << endl;
    
    return retval;
 }

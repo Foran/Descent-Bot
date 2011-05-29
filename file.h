@@ -20,7 +20,7 @@ class CFile {
    CFile(const CHog &hog, const string &filename);
    CFile(const string &hog, const string &filename);
    CFile(const CFile &source);
-   ~CFile();
+   virtual ~CFile();
    
    CFile &operator=(const CFile &source);
    
