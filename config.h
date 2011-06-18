@@ -36,8 +36,11 @@ class CConfig_Logging_Logger
    
    CConfig_Logging_Logger();
    CConfig_Logging_Logger(const CConfig_Logging_Logger &source);
+   CConfig_Logging_Logger(const xmlNodePtr node);
    ~CConfig_Logging_Logger();
    CConfig_Logging_Logger &operator=(const CConfig_Logging_Logger &source);
+   
+   bool is_Valid() const;
 
    friend class CConfig_Logging;
 };
@@ -61,7 +64,7 @@ class CConfig_Logging
    CConfig_Logging &operator=(const CConfig_Logging &source);
 
    bool Load_Logging(const xmlNodePtr node);
-
+   
    friend class CConfig;
 };
 

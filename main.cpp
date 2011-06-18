@@ -27,7 +27,7 @@ int main(int argc, char **argv)
    sigIntHandler.sa_restorer = NULL;
    sigaction(SIGINT, &sigIntHandler, NULL);
    
-//   global_Config.Load("config/Main.xml");
+   global_Config.Load("config/Main.xml");
    
 //   vector<string> names = HogManager["chaos.hog"].get_Filenames();
 //   for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {

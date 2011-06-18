@@ -1,21 +1,33 @@
 #include "config.h"
 
+/***************************************
+ * Global instance of the CConfig class
+ **************************************/
 CConfig global_Config;
 
 unsigned int CConfig::mReferences = 0;
 
+/*******************************************
+ * Default constructor of the CConfig class
+ ******************************************/
 CConfig::CConfig()
 {
    Init();
    Reset();
 }
 
+/********************************************
+ * Constructor to load the config from a file
+ ********************************************/
 CConfig::CConfig(const string filename)
 {
    Init();
    Load(filename);
 }
 
+/***************************************
+ * Copy Constructor
+ **************************************/
 CConfig::CConfig(const CConfig &source)
 {
    Init();
@@ -92,14 +104,12 @@ bool CConfig_Logging::Load_Logging(const xmlNodePtr node)
       retval = true;
       for(xmlNode *cur_node = node->children; NULL != cur_node; cur_node = cur_node->next) {
 	 if(XML_ELEMENT_NODE == cur_node->type && static_cast<string>("Logger") == CConfig::xmlChar2string(cur_node->name)) {
-	    cout << "Scanning Configuration->Logging->" << cur_node->name << " for attributes" << endl;
-	    for(xmlAttr *attr = cur_node->properties; NULL != attr; attr = attr->next) {
-	       cout << "Configuration->Logging->" << cur_node->name << "[" << attr->name << "]=" << xmlGetProp(cur_node, attr->name) << endl;
+	    CConfig_Logging_Logger logger(cur_node);
+	    if(logger.is_Valid()) {
+	       retval &= true;
 	    }
-	    for(xmlNode *option_node = cur_node->children; NULL != option_node; option_node = option_node->next) {
-	       if(XML_ELEMENT_NODE == option_node->type && static_cast<string>("Option") == CConfig::xmlChar2string(option_node->name)) {
-		  cout << "Option " << xmlGetProp(option_node, (xmlChar *)"Name") << " = " << xmlGetProp(option_node, (xmlChar *)"Value") << endl;
-	       }
+	    else {
+	       retval &= false;
 	    }
 	 }
       }
@@ -142,6 +152,25 @@ CConfig_Logging &CConfig_Logging::operator=(const CConfig_Logging &source)
 CConfig_Logging_Logger::CConfig_Logging_Logger()
 {
    mLevel = 0;
+}
+
+CConfig_Logging_Logger::CConfig_Logging_Logger(const xmlNodePtr node)
+{
+   bool retval = false;
+   
+   if(XML_ELEMENT_NODE == node->type && static_cast<string>("Logger") == CConfig::xmlChar2string(node->name)) {
+      cout << "Scanning Configuration->Logging->" << node->name << " for attributes" << endl;
+      for(xmlAttr *attr = node->properties; NULL != attr; attr = attr->next) {
+	 cout << "Configuration->Logging->" << node->name << "[" << attr->name << "]=" << xmlGetProp(node, attr->name) << endl;
+      }
+      for(xmlNode *option_node = node->children; NULL != option_node; option_node = option_node->next) {
+	 if(XML_ELEMENT_NODE == option_node->type && static_cast<string>("Option") == CConfig::xmlChar2string(option_node->name)) {
+	    cout << "Option " << xmlGetProp(option_node, (xmlChar *)"Name") << " = " << xmlGetProp(option_node, (xmlChar *)"Value") << endl;
+	 }
+      }
+   }
+   
+   return retval;
 }
 
 string CConfig_Logging_Logger::get_Name() const
