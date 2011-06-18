@@ -66,6 +66,7 @@ private:
 	friend class CConfig;
 };
 
+/// This class represents the current configuration setup
 class CConfig 
 {
 public:

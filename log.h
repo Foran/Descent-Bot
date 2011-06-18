@@ -10,6 +10,7 @@ using namespace std;
 
 #include "log_driver.h"
 
+/// This class represents a logging chain target
 class CLog_Chain 
 {
  public:
@@ -30,6 +31,7 @@ class CLog_Chain
    CLog_Chain &operator=(const CLog_Chain &source);
 };
 
+/// This class manages all logging
 class CLog 
 {
  public:

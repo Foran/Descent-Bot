@@ -99,10 +99,24 @@ CXMLNode &CXMLNode::operator=(const CXMLNode &source) {
 	return *this;
 }
 
+/*********************************//**
+ * Allows the use of array indexing to
+ * lookup attributes.
+ * @param name The name of the attribute to extract.
+ * @return The value of the specified attribute.
+ * @see get_Attributes()
+ ************************************/
 string CXMLNode::operator[](string name) {
 	return mAttributes[name];
 }
 
+/*********************************//**
+ * Get property for the attributes list.
+ * Primarly used for enumerating through
+ * all attributes.
+ * @return A reference to the internal attribute map
+ * @see operator[](string name)
+ ************************************/
 map<string, string> &CXMLNode::get_Attributes() {
 	return mAttributes;
 }

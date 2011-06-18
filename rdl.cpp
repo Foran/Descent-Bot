@@ -1,6 +1,6 @@
 #include "rdl.h"
 
-/********************************
+/****************************//**
  * This method compartmentalizes
  * the loading of vertex data in
  * an rdl
@@ -13,6 +13,10 @@ istream &operator>>(istream &input, DESCENT_VERTEX &vertex)
    return input;
 }
 
+/***************************//**
+ * Handles formatting of serializing
+ * a DESCENT_CUBE
+ ******************************/
 ostream &operator<<(ostream &output, DESCENT_CUBE &cube) 
 {
    output << "Cube.Left = " << cube.left << endl;
@@ -25,7 +29,7 @@ ostream &operator<<(ostream &output, DESCENT_CUBE &cube)
    return output;
 }
 
-/********************************
+/****************************//**
  * This method compartmentalizes
  * the loading of cube data in
  * an rdl
@@ -292,29 +296,71 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube)
    return input;
 }
 
+/*************************************************//**
+ * Default Contructor
+ * @see CRdl(const string &filename)
+ * @see CRdl(const CHog &hog, const string &filename)
+ * @see CRdl(const string &hog, const string &filename)
+ * @see CRdl(const CRdl &source)
+ ****************************************************/
 CRdl::CRdl()
 {
    Init();
 }
 
+/*************************************************//**
+ * Contructor for standalone file
+ * @param filename the filename releative to the missions folder
+ * @see CRdl()
+ * @see CRdl(const CHog &hog, const string &filename)
+ * @see CRdl(const string &hog, const string &filename)
+ * @see CRdl(const CRdl &source)
+ ****************************************************/
 CRdl::CRdl(const string &filename)
 {
    Init();
    Load(filename);
 }
 
+/*************************************************//**
+ * Contructor for hog contained file
+ * @param hog The hog file that contains the rdl
+ * @param filename The name of the file within the hog
+ * @see CRdl()
+ * @see CRdl(const string &filename)
+ * @see CRdl(const string &hog, const string &filename)
+ * @see CRdl(const CRdl &source)
+ ****************************************************/
 CRdl::CRdl(const CHog &hog, const string &filename)
 {
    Init();
    Load(hog, filename);
 }
 
+/*************************************************//**
+ * Alternate contructor for hog contained file
+ * @param hog Path to the hog file that contains the rdl
+ * @param filename The name of the file within the hog
+ * @see CRdl()
+ * @see CRdl(const string &filename)
+ * @see CRdl(const CHog &hog, const string &filename)
+ * @see CRdl(const CRdl &source)
+ ****************************************************/
 CRdl::CRdl(const string &hog, const string &filename)
 {
    Init();
    Load(hog, filename);
 }
 
+
+/*************************************************//**
+ * Default Copy Constructor
+ * @param source The source instance to copy
+ * @see CRdl()
+ * @see CRdl(const string &filename)
+ * @see CRdl(const CHog &hog, const string &filename)
+ * @see CRdl(const string &hog, const string &filename)
+ ****************************************************/
 CRdl::CRdl(const CRdl &source)
 {
    Init();
