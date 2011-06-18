@@ -18,9 +18,9 @@ CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 
 .PHONY: all test
 
-all: $(BIN) documentation/html/index.html
+all: $(BIN)
 
-documentation/html/index.html:$(OBJS)
+documentation:$(OBJS)
 	@echo "Generating documentation..."
 	$(Q)doxygen
 
