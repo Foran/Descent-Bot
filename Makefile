@@ -18,7 +18,11 @@ CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 
 .PHONY: all test
 
-all: $(BIN)
+all: $(BIN) documentation/html/index.html
+
+documentation/html/index.html:$(OBJS)
+	@echo "Generating documentation..."
+	$(Q)doxygen
 
 $(BIN):$(OBJS)
 	@echo "Linking $@..."
@@ -53,6 +57,8 @@ clean:
 mrproper: clean
 	@echo "Removing dependancies..."
 	$(Q)-rm -rf $(DEPENDS) $(TESTDEPENDS)
+	@echo "Removing documentation..."
+	$(Q)-rm -rf documentation/*
 
 test: $(BIN) $(TESTBIN)
 	$(Q)./testdescent-bot
