@@ -34,6 +34,8 @@ class CXMLNode {
 		string get_InnerText();
 		/// Retrieves the tag's name
 		string get_Name();
+		/// Converts a string into an integer
+		int StringToInt(const string &value);
 	protected:
 	private:
 		map<string, string> mAttributes; ///< Internal dictionary of Attributes

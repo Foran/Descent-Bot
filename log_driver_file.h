@@ -1,10 +1,13 @@
 #ifndef __LOG_DRIVER_FILE_H__
 #define __LOG_DRIVER_FILE_H__
 
-#include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
+
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "log_driver.h"
 
@@ -23,8 +26,12 @@ class CLogDriverFile : public iLogDriver
    virtual int get_Level() const;
    virtual void set_Option(const string &name, const string &value);
    virtual string get_Option(const string &name);
-   virtual bool Write(LogType type, int level, const string &message);
+   virtual bool Write(int level, const string &message);
  protected:
+	 int mLevel;
+	 LogType mType;
+	 string mName;
+	 string mFilename;
  private:
 };
 

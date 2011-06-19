@@ -132,3 +132,7 @@ string CXMLNode::get_InnerText() {
 string CXMLNode::get_Name() {
 	return mName;
 }
+
+int CXMLNode::StringToInt(const string &value) {
+	return atoi(value.c_str());
+}

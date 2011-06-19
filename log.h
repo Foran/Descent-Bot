@@ -2,11 +2,14 @@
 #define __LOG_H__
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <map>
 #include <iostream>
 
 using namespace std;
+
+#include <time.h>
 
 #include "log_driver.h"
 
@@ -31,6 +34,13 @@ class CLog_Chain
    CLog_Chain &operator=(const CLog_Chain &source);
 };
 
+struct CLog_Cached_Entry {
+	LogType type;
+	int level;
+	string message;
+	time_t timestamp;
+};
+
 /// This class manages all logging
 class CLog 
 {
@@ -42,11 +52,19 @@ class CLog
    void Write(const LogType type, int level, const string &message);
  protected:
  private:
-   map<LogType, CLog_Chain *> mChains;
+	bool mCacheEnabled;
+	vector<CLog_Cached_Entry> mCache;
+	map<LogType, CLog_Chain *> mChains;
    
-   CLog(const CLog &source);
-   void operator=(const CLog &source);
+	CLog(const CLog &source);
+	void operator=(const CLog &source);
+
+	void FlushCache();
+
+	friend class CConfig;
 };
+
+extern string operator+(string input, int number);
 
 extern CLog global_Log;
 

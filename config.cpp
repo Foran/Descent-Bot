@@ -1,39 +1,50 @@
 #include "config.h"
 
-/***************************************
-* Global instance of the CConfig class
-**************************************/
+/**********************************//**
+ * Global instance of the CConfig class
+ *************************************/
 CConfig global_Config;
 
 unsigned int CConfig::mReferences = 0;
 
-/*******************************************
-* Default constructor of the CConfig class
-******************************************/
+/**************************************//**
+ * Default constructor of the CConfig class
+ * @see CConfig(const string filename)
+ * @see CConfig(const CConfig &source)
+ *****************************************/
 CConfig::CConfig()
 {
-	Init();
+	Initialize();
 	Reset();
 }
 
-/********************************************
-* Constructor to load the config from a file
-********************************************/
+/****************************************//**
+ * Constructor to load the config from a file
+ * @param filename The config file to load
+ * @see CConfig()
+ * @see CConfig(const CConfig &source)
+ *******************************************/
 CConfig::CConfig(const string filename)
 {
-	Init();
+	Initialize();
 	Load(filename);
 }
 
-/***************************************
-* Copy Constructor
-**************************************/
+/**********************************//**
+ * Copy Constructor
+ * @param source Source CConfig to clone
+ * @see CConfig()
+ * @see CConfig(const string filename)
+ *************************************/
 CConfig::CConfig(const CConfig &source)
 {
-	Init();
+	Initialize();
 	*this = source;
 }
 
+/**********************************//**
+ * Destructor
+ *************************************/
 CConfig::~CConfig()
 {
 	if(0 == --mReferences) {
@@ -41,6 +52,11 @@ CConfig::~CConfig()
 	}
 }
 
+/**********************************//**
+ * Assignment operator
+ * @param source Source CConfig to clone
+ * @return A reference to the current object
+ *************************************/
 CConfig &CConfig::operator=(const CConfig &source)
 {
 	Reset();
@@ -48,7 +64,7 @@ CConfig &CConfig::operator=(const CConfig &source)
 	return *this;
 }
 
-void CConfig::Init() 
+void CConfig::Initialize() 
 {
 	if(0 == mReferences++) {
 		LIBXML_TEST_VERSION
@@ -61,16 +77,20 @@ bool CConfig::Load(const string filename)
 	CXML document;
 
 	Reset();
+	global_Log.mCacheEnabled = true;
 	if(document.Load(filename)) {
 		retval = true;
+		global_Log.Write(LogType_Info, 10, "Starting new Instance of Descent-Bot");
 		if(static_cast<string>("Configuration") == document.get_Root().get_Name()) {
-			cout << "Found root config node (" << document.get_Root().get_Name() << ")" << endl;
+			global_Log.Write(LogType_Debug, 150, string("Found root config node (") + document.get_Root().get_Name() + ")");
 			for(vector<CXMLNode>::iterator child = document.get_Root().get_Children().begin(); child != document.get_Root().get_Children().end(); child++) {
-				cout << "Found child node (" << child->get_Name() << ")" << endl;
+				global_Log.Write(LogType_Debug, 150, string("Found child node (") + child->get_Name() + ")");
 				if(static_cast<string>("Logging") == child->get_Name()) retval &= Logging.Load_Logging(*child);
 			}
 		}
 	}
+	global_Log.FlushCache();
+	global_Log.mCacheEnabled = false;
 
 	return retval;
 }
@@ -107,7 +127,6 @@ bool CConfig_Logging::Load_Logging(CXMLNode &node)
 			}
 		}
 	}
-	global_Log.add_Logger(LogType_Debug, new CLogDriverRaw());
 
 	return retval;
 }
@@ -145,18 +164,30 @@ CConfig_Logging_Logger::CConfig_Logging_Logger()
 CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode &node)
 {
 	if(static_cast<string>("Logger") == node.get_Name()) {
-		cout << "Scanning Configuration->Logging->" << node.get_Name() << " for attributes" << endl;
+		global_Log.Write(LogType_Debug, 150, string("Scanning Configuration->Logging->") + node.get_Name() + " for attributes");
 		for(map<string, string>::iterator i = node.get_Attributes().begin(); i != node.get_Attributes().end(); i++) {
-			cout << "Configuration->Logging->" << node.get_Name() << "[" << i->first << "]=" << i->second << endl;
+			global_Log.Write(LogType_Debug, 150, string("Configuration->Logging->") + node.get_Name() + "[" + i->first + "]=" + i->second);
+		}
+		iLogDriver *driver = NULL;
+		if(node["Driver"] == "Raw") driver = new CLogDriverRaw();
+		else if(node["Driver"] == "File") driver = new CLogDriverFile();
+		if(driver) {
+			driver->set_Name(node["Name"]);
+			driver->set_Level(node["Level"]);
+			driver->set_Type(node["Type"]);
 		}
 		for(vector<CXMLNode>::iterator child = node.get_Children().begin(); child != node.get_Children().end(); child++) {
 			if(static_cast<string>("Option") == child->get_Name()) {
-				cout << "Option " << (*child)["Name"] << " = " << (*child)["Value"] << endl;
+				global_Log.Write(LogType_Debug, 150, string("Option ") + (*child)["Name"] + " = " + (*child)["Value"]);
+				if(driver) driver->set_Option((*child)["Name"], (*child)["Value"]);
 			}
+		}
+		if(driver) {
+			global_Log.add_Logger(driver->get_Type(), driver);
 		}
 	}
 	else {
-		cout << "Was passed a node not of type Logger but of type " << node.get_Name() << endl;
+		global_Log.Write(LogType_Debug, 50, string("Was passed a node not of type Logger but of type ") + node.get_Name());
 	}
 }
 
@@ -202,7 +233,7 @@ CConfig_Logging_Logger::~CConfig_Logging_Logger()
 
 bool CConfig_Logging_Logger::is_Valid() const
 {
-	bool retval = false;
+	bool retval = true;
 
 	return retval;
 }

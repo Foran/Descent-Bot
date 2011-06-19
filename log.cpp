@@ -26,12 +26,13 @@ void CLog_Chain::add_Logger(iLogDriver *log_driver)
 
 void CLog_Chain::Write(int level, const string &message){
    for(vector<iLogDriver *>::iterator i = mDrivers.begin(); i != mDrivers.end(); i++) {
-      if(level <= 100) dynamic_cast<iLogDriver *>(*i)->Write(mType, level, message);
+	   dynamic_cast<iLogDriver *>(*i)->Write(level, message);
    }
 }
 
 CLog::CLog()
 {
+	mCacheEnabled = false;
 }
 
 CLog::~CLog() 
@@ -53,9 +54,34 @@ void CLog::add_Logger(const LogType type, iLogDriver *log_driver)
    }
 }
 
-void CLog::Write(const LogType type, int level, const string &message)
+void CLog::Write(const LogType type, int level, const string &message) {
+	if(mCacheEnabled) {
+		CLog_Cached_Entry entry;
+		entry.type = type;
+		entry.level = level;
+		entry.message = message;
+		entry.timestamp = time(NULL);
+		mCache.push_back(entry);
+	}
+	else if(mChains.find(type) != mChains.end() && mChains[type] != NULL) {
+		mChains[type]->Write(level, message);
+	}
+}
+
+void CLog::FlushCache() {
+	bool temp = mCacheEnabled;
+	mCacheEnabled = false;
+
+	for(vector<CLog_Cached_Entry>::iterator i = mCache.begin(); i != mCache.end(); i++) {
+		Write(i->type, i->level, string("[Cached at ") + i->timestamp + "] " + i->message);
+	}
+
+	mCacheEnabled = temp;
+}
+
+string operator+(string input, int number) 
 {
-   if(mChains.find(type) != mChains.end() && mChains[type] != NULL) {
-      mChains[type]->Write(level, message);
-   }
+   stringstream ss;
+   ss << number;
+   return input + ss.str();
 }

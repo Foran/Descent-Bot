@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#include <stdlib.h>
+
 #include "log_driver.h"
 
 class CLogDriverRaw : public iLogDriver 
@@ -23,8 +25,11 @@ class CLogDriverRaw : public iLogDriver
    virtual int get_Level() const;
    virtual void set_Option(const string &name, const string &value);
    virtual string get_Option(const string &name);
-   virtual bool Write(LogType type, int level, const string &message);
+   virtual bool Write(int level, const string &message);
  protected:
+	 int mLevel;
+	 LogType mType;
+	 string mName;
  private:
 };
 

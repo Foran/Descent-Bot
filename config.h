@@ -86,7 +86,7 @@ protected:
 private:
 	static unsigned int mReferences;
 
-	void Init();
+	void Initialize();
 
 	friend class CConfig_Logging;
 };

@@ -14,6 +14,7 @@ ostream &operator<<(ostream &output, const LogType &type)
       break;
     case LogType_Debug:
       output << "Debug";
+	  break;
     case LogType_Info:
       output << "Info";
       break;
@@ -23,4 +24,16 @@ ostream &operator<<(ostream &output, const LogType &type)
    }
    
    return output;
+}
+
+LogType GetLogType(string type) {
+	LogType retval = LogType_Info;
+
+	if(type == "Fatal") retval = LogType_Fatal;
+	else if(type == "Error") retval = LogType_Error;
+	else if(type == "Warning") retval = LogType_Warning;
+	else if(type == "Debug") retval = LogType_Debug;
+	else if(type == "Info") retval = LogType_Info;
+
+	return retval;
 }
