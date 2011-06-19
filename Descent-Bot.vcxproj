@@ -105,6 +105,7 @@
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="testbase.cpp" />
     <ClCompile Include="testManager.cpp" />
+    <ClCompile Include="xml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="test_main.h" />
     <ClInclude Include="testbase.h" />
     <ClInclude Include="testManager.h" />
+    <ClInclude Include="xml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
