@@ -81,6 +81,7 @@ void CConnectionManager::Pulse()
    result = select(max + 1, &read, NULL, NULL, &tv);
    
    if (result > 0) {
+      global_Log.Write(LogType_Debug, 100, "Received a packet");
       if(FD_ISSET(mSocket, &read)) {
 	 len = sizeof(addr);
 	 if(recvfrom(mSocket, &packetId, 1, MSG_PEEK, (struct sockaddr *)&addr, &len) > 0) {

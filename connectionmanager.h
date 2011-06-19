@@ -16,8 +16,8 @@ using namespace std;
 #include <sys/time.h>
 
 #include "packets.h"
-
 #include "connection.h"
+#include "log.h"
 
 class CConnectionManager
 {
