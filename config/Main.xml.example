@@ -3,7 +3,7 @@
 	<Logging>
 		<Logger Name="Main Console" Type="Debug" Level="100" Driver="Raw" />
 		<Logger Name="System Log" Type="Debug" Level="300" Driver="File">
-			<Option Name="File" Value="System.Main.Log" />
+			<Option Name="File" Value="System.Main.log" />
 		</Logger>
 	</Logging>
 </Configuration>
