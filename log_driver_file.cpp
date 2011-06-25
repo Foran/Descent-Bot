@@ -1,5 +1,18 @@
+/****************************************************
+ * This work is licensed under the Creative
+ * Commons Attribution-NonCommercial-ShareAlike
+ * 3.0 Unported License. To view a copy of this
+ * license, visit
+ * http://creativecommons.org/licenses/by-nc-sa/3.0/
+ * or send a letter to Creative Commons, 444
+ * Castro Street, Suite 900, Mountain View,
+ * California, 94041, USA.
+ ***************************************************/
 #include "log_driver_file.h"
 
+/*******************************************//**
+ * Default Constructor
+ **********************************************/
 CLogDriverFile::CLogDriverFile() 
 {
 	mLevel = 100;
@@ -7,11 +20,21 @@ CLogDriverFile::CLogDriverFile()
 	mName = "Default File";
 }
 
+/*******************************************//**
+ * Setter for the Name property.
+ * @param name Unique name of the log driver instance.
+ * @see get_Name
+ **********************************************/
 void CLogDriverFile::set_Name(const string &name)
 {
 	mName = name;
 }
 
+/*******************************************//**
+ * Getter for the Name property.
+ * @returns Unique name of the log driver instance.
+ * @see get_Name
+ **********************************************/
 string CLogDriverFile::get_Name() const
 {
    return mName;
