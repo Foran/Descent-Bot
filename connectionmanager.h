@@ -19,6 +19,11 @@ using namespace std;
 #include "connection.h"
 #include "log.h"
 
+/// Singleton that manages all connection objects
+/********************************************//**
+ * Manages all instances of CConnection
+ * @see CConnection
+ ***********************************************/
 class CConnectionManager
 {
  public:

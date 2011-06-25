@@ -5,6 +5,7 @@
 
 using namespace std;
 
+/// This structure supports Long Fixed point math
 typedef struct DESCENT_FIXED 
 {
    union {
@@ -24,6 +25,7 @@ typedef struct DESCENT_FIXED
    friend ostream &operator<<(ostream &output, DESCENT_FIXED &fixed);
 } DESCENT_FIXED;
 
+/// This structure supports Short Fixed point math
 typedef struct DESCENT_SHORTFIXED
 {
    union {

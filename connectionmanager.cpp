@@ -6,6 +6,9 @@ map<int, CConnection *> CConnectionManager::mConnections;
 map<struct sockaddr_in, string> CConnectionManager::mGames;
 map<string, time_t> CConnectionManager::mGameAges;
 
+/***********************************************//**
+ * Default constructor
+ **************************************************/
 CConnectionManager::CConnectionManager()
 {
    if(0 == mReferences++) {
@@ -23,11 +26,18 @@ CConnectionManager::CConnectionManager()
    }
 }
 
+/***********************************************//**
+ * Copy constructor
+ * @param source object instance to copy
+ **************************************************/
 CConnectionManager::CConnectionManager(const CConnectionManager &source)
 {
    *this = source;
 }
 
+/***********************************************//**
+ * Destructor
+ **************************************************/
 CConnectionManager::~CConnectionManager()
 {
    if(--mReferences) {
@@ -44,6 +54,11 @@ CConnectionManager::~CConnectionManager()
    }
 }
 
+/***********************************************//**
+ * Copy Assignment operator
+ * @param source object instance to copy
+ * @returns a reference to this object
+ **************************************************/
 CConnectionManager &CConnectionManager::operator=(const CConnectionManager &source)
 {
    mReferences++;

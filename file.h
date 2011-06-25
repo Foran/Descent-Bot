@@ -13,10 +13,14 @@ class CHog;
 #include "hog.h"
 #include "fstreamptr.h"
 
+/// Generic file (plain or part of a HOG)
 class CFile {
  public:
+   /// Default constructor
    CFile();
+   /// Standalone file or file in missions/descent.hog
    CFile(const string &filename);
+   /// File in hog or missions/descent.hog
    CFile(const CHog &hog, const string &filename);
    CFile(const string &hog, const string &filename);
    CFile(const CFile &source);
