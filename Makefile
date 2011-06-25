@@ -20,7 +20,7 @@ CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
 
 all: $(BIN)
 
-documentation:$(OBJS)
+documentation:$(BIN)
 	@echo "Generating documentation..."
 	$(Q)doxygen
 
