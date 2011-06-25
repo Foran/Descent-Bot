@@ -26,7 +26,7 @@ using namespace std;
 
 /// This class represents a node tree in a xml document
 /**************************************//**
- * This class can only be instanciated by CXML
+ * This class can only be instantiated by CXML
  *****************************************/
 class CXMLNode {
 	public:
@@ -64,24 +64,38 @@ class CXMLNode {
 };
 
 /// This class represents a xml document
+/**************************************//**
+ * The class provides simple access to an
+ * XML document
+ *****************************************/
 class CXML {
 	public:
+		/// Default constructor
 		CXML();
+		/// Simple direct file constructor
 		CXML(const string &filename);
+		/// Default copy constructor
 		CXML(const CXML &source);
+		/// Destructor
 		~CXML();
 
+		/// Default assignment operator
 		CXML &operator=(const CXML &source);
 
-		void Initialize();
+		/// Load an xml from a file
 		bool Load(const string &filename);
+		/// Get the root XML Node as a CXMLNode object
 		CXMLNode &get_Root();
 	protected:
 	private:
-		CXMLNode mRoot;
-		static bool mFirstUse;
+		CXMLNode mRoot; /// The root node
+		static bool mFirstUse; /// Tracks first use to initialize LibXML2
 
+		/// Common class initialization
+		void Initialize();
+		/// Load a CXMLNode from xmlNodePtr
 		bool LoadNode(xmlNodePtr source, CXMLNode &destination);
+		/// Converts a xmlChar to a C++ string
 		string xmlChar2string(const xmlChar *value);
 };
 

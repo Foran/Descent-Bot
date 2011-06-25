@@ -12,10 +12,21 @@
 
 bool CXML::mFirstUse = true;
 
+/***********************************************//**
+ * @see CXML(const string &filename) Simple direct file constructor
+ * @see CXML(const CXML &source) Default copy constructor
+ **************************************************/
 CXML::CXML() {
 	Initialize();
 }
 
+
+/***********************************************//**
+ * Load the specified xml on construction of the object
+ * @filename Filename of the xml you wish to load
+ * @see CXML() Default constructor
+ * @see CXML(const CXML &source) Default copy constructor
+ **************************************************/
 CXML::CXML(const string &filename) {
 	Initialize();
 }
