@@ -11,6 +11,10 @@
 #ifndef __XML_H__
 #define __XML_H__
 
+#ifdef WIN32
+#define LIBXML_STATIC
+#endif
+
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 

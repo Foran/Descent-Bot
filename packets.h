@@ -15,9 +15,10 @@
 
 using namespace std;
 
-#include <netinet/in.h>
 #include <errno.h>
 #include <string.h>
+
+#include "network.h"
 
 /*************************************
  * UDP Packet ID's taken directly from
@@ -50,7 +51,11 @@ enum UDP_PacketType
 struct PACKET_Header
 {
    char Type;
+#ifdef WIN32
+};
+#else
 } __attribute__ ((__packed__, aligned(1)));
+#endif
 
 struct PACKET_Version_Deny 
 {
@@ -58,7 +63,11 @@ struct PACKET_Version_Deny
    short Major;
    short Minor;
    short Micro;
+#ifdef WIN32
+};
+#else
 } __attribute__ ((__packed__, aligned(1)));
+#endif
 
 struct PACKET_Request_Game_Info
 {
@@ -67,7 +76,11 @@ struct PACKET_Request_Game_Info
    short Major;
    short Minor;
    short Micro;
+#ifdef WIN32
+};
+#else
 } __attribute__ ((__packed__, aligned(1)));
+#endif
 
 struct PACKET_Request_Game_Info_Lite
 {
@@ -76,7 +89,11 @@ struct PACKET_Request_Game_Info_Lite
    short Major;
    short Minor;
    short Micro;
+#ifdef WIN32
+};
+#else
 } __attribute__ ((__packed__, aligned(1)));
+#endif
 
 struct PACKET_Game_Info_Lite
 {
@@ -96,7 +113,11 @@ struct PACKET_Game_Info_Lite
    char Max_Players;
    char Game_Flags;
    char Team_Vector;
+#ifdef WIN32
+};
+#else
 } __attribute__ ((__packed__, aligned(1)));
+#endif
 
 class CPacket_Request_Game_Info_Lite 
 {

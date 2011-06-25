@@ -20,7 +20,7 @@ using namespace std;
 
 #include "log_driver.h"
 
-class CLogDriverRaw : public iLogDriver 
+class CLogDriverRaw : public LogDriverBase 
 {
  public:
    CLogDriverRaw();

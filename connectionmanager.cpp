@@ -11,8 +11,8 @@
 #include "connectionmanager.h"
 
 int CConnectionManager::mReferences = 0;
-int CConnectionManager::mSocket = -1;
-map<int, CConnection *> CConnectionManager::mConnections;
+Descent_Socket CConnectionManager::mSocket = -1;
+map<Descent_Socket, CConnection *> CConnectionManager::mConnections;
 map<struct sockaddr_in, string> CConnectionManager::mGames;
 map<string, time_t> CConnectionManager::mGameAges;
 
@@ -25,7 +25,7 @@ CConnectionManager::CConnectionManager()
       mSocket = socket(PF_INET, SOCK_DGRAM, getprotobyname("udp")->p_proto);
       if(mSocket != -1) {
 	 int on = 1;
-	 setsockopt(mSocket, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on));
+	 setsockopt(mSocket, SOL_SOCKET, SO_BROADCAST, (char *)&on, sizeof(on));
 	 struct sockaddr_in addr;
 	 memset(&addr, 0, sizeof(addr));
 	 addr.sin_family = AF_INET;
@@ -51,15 +51,15 @@ CConnectionManager::CConnectionManager(const CConnectionManager &source)
 CConnectionManager::~CConnectionManager()
 {
    if(--mReferences) {
-      for(map<int, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
+      for(map<Descent_Socket, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
 	 delete i->second;
       }
       mConnections.clear();
       mGames.clear();
       mGameAges.clear();
       if(mSocket >= 0) {
-	 close(mSocket);
-	 mSocket = -1;
+		Descent_CloseSocket(mSocket);
+		mSocket = -1;
       }
    }
 }
@@ -93,10 +93,10 @@ void CConnectionManager::Pulse()
    FD_ZERO(&read);
    
    FD_SET(mSocket, &read);
-   for(map<int, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
+   for(map<Descent_Socket, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
       if(i->second != NULL) {
 	 FD_SET(i->first, &read);
-	 if(max > i->first) max = i->first;
+	 if(max > (int)i->first) max = i->first;
       }
    }
    
@@ -120,7 +120,7 @@ void CConnectionManager::Pulse()
 	    }
 	 }
       }
-      for(map<int, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
+      for(map<Descent_Socket, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
 	 if(i->second != NULL && FD_ISSET(mSocket, &read)) {
 	    len = sizeof(addr);
 	    if(recvfrom(mSocket, &packetId, 1, MSG_PEEK, (struct sockaddr *)&addr, &len) > 0) {

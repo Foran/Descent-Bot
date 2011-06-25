@@ -18,7 +18,7 @@ void CPacket_Request_Game_Info_Lite::Send(int socket, const struct sockaddr_in &
    packet.Major = 0;
    packet.Minor = 56;
    packet.Micro = 0;
-   sendto(socket, (void *)&packet, sizeof(packet), 0, (const struct sockaddr *)&addr, sizeof(addr));
+   sendto(socket, (char *)&packet, sizeof(packet), 0, (const struct sockaddr *)&addr, sizeof(addr));
    int err = errno;
    cout << strerror(err) << endl;
 }

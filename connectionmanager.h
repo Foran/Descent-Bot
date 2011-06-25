@@ -15,16 +15,10 @@
 
 using namespace std;
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <unistd.h>
 #include <string.h>
-#include <arpa/inet.h>
 #include <time.h>
-#include <sys/time.h>
 
+#include "network.h"
 #include "packets.h"
 #include "connection.h"
 #include "log.h"
@@ -48,8 +42,8 @@ class CConnectionManager
  protected:
  private:
    static int mReferences;
-   static int mSocket;
-   static map<int, CConnection *> mConnections;
+   static Descent_Socket mSocket;
+   static map<Descent_Socket, CConnection *> mConnections;
    static map<struct sockaddr_in, string> mGames;
    static map<string, time_t> mGameAges;
 };

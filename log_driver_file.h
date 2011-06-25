@@ -21,7 +21,7 @@ using namespace std;
 
 #include "log_driver.h"
 
-class CLogDriverFile : public iLogDriver 
+class CLogDriverFile : public LogDriverBase 
 {
  public:
    CLogDriverFile();

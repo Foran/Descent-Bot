@@ -60,6 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;ws2_32.lib;libxml2_a.lib;zlib.lib;iconv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,6 +81,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;ws2_32.lib;libxml2_a.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -98,13 +100,9 @@
     <ClCompile Include="math.cpp" />
     <ClCompile Include="mission.cpp" />
     <ClCompile Include="missionmanager.cpp" />
+    <ClCompile Include="network.cpp" />
     <ClCompile Include="packets.cpp" />
     <ClCompile Include="rdl.cpp" />
-    <ClCompile Include="test.cpp" />
-    <ClCompile Include="test_hog.cpp" />
-    <ClCompile Include="test_main.cpp" />
-    <ClCompile Include="testbase.cpp" />
-    <ClCompile Include="testManager.cpp" />
     <ClCompile Include="xml.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,13 +122,9 @@
     <ClInclude Include="math.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="missionmanager.h" />
+    <ClInclude Include="network.h" />
     <ClInclude Include="packets.h" />
     <ClInclude Include="rdl.h" />
-    <ClInclude Include="test.h" />
-    <ClInclude Include="test_hog.h" />
-    <ClInclude Include="test_main.h" />
-    <ClInclude Include="testbase.h" />
-    <ClInclude Include="testManager.h" />
     <ClInclude Include="xml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

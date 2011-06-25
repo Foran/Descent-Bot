@@ -8,34 +8,14 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef __CONNECTION_H__
-#define __CONNECTION_H__
-
-#include <iostream>
-
-using namespace std;
-
-#include <string.h>
-
 #include "network.h"
 
-#include "packets.h"
-
-class CConnection 
-{
- public:
-   void find_Game();
-   void ProcessInboundPackets();
- protected:
- private:
-     Descent_Socket mSocket;
-   
-   CConnection();
-   CConnection(const CConnection &source);
-   ~CConnection();
-   CConnection &operator=(const CConnection &source);
-   
-   friend class CConnectionManager;
-};
-
+void Descent_atoinet(const string &input, struct sockaddr_in &addr) {
+#ifdef WIN32
+	long inAddress;
+	inAddress = inet_addr(input.c_str());
+	addr.sin_addr.s_addr = inAddress;
+#else
+   inet_aton(input.c_str(), (struct in_addr *)&addr.sin_addr.s_addr);
 #endif
+}

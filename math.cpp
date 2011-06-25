@@ -12,12 +12,12 @@
 
 float DESCENT_FIXED::get_Value()
 {
-   return ((float)value.raw) / 65536.0;
+   return static_cast<double>(((float)value.raw) / 65536.0);
 }
 
 void DESCENT_FIXED::set_Value(float f)
 {
-   value.raw = f * 65536;
+   value.raw = static_cast<int>(f * 65536);
 }
 
 void DESCENT_FIXED::set_Value(int i)

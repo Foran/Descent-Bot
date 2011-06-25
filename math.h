@@ -29,7 +29,7 @@ typedef struct DESCENT_FIXED
    void set_Value(float f);
    void set_Value(int i);
  private:
-   friend class DESCENT_VERTEX;
+   friend struct DESCENT_VERTEX;
    friend class CRdl;
    friend istream &operator>>(istream &input, DESCENT_FIXED &fixed);
    friend ostream &operator<<(ostream &output, DESCENT_FIXED &fixed);
@@ -46,7 +46,7 @@ typedef struct DESCENT_SHORTFIXED
       } parts;
    } value;
  private:
-   friend class DESCENT_VERTEX;
+   friend struct DESCENT_VERTEX;
    friend class CRdl;
    friend istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed);
 } DESCENT_SHORTFIXED;

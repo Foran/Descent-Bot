@@ -178,7 +178,7 @@ CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode &node)
 		for(map<string, string>::iterator i = node.get_Attributes().begin(); i != node.get_Attributes().end(); i++) {
 			global_Log.Write(LogType_Debug, 150, string("Configuration->Logging->") + node.get_Name() + "[" + i->first + "]=" + i->second);
 		}
-		iLogDriver *driver = NULL;
+		LogDriverBase *driver = NULL;
 		if(node["Driver"] == "Raw") driver = new CLogDriverRaw();
 		else if(node["Driver"] == "File") driver = new CLogDriverFile();
 		if(driver) {

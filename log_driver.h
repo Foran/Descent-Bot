@@ -13,6 +13,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -25,21 +26,28 @@ enum LogType
 	LogType_Info
 };
 
-typedef struct iLogDriver
-{
-	virtual void set_Name(const string &name) = 0;
-	virtual string get_Name() const = 0;
-	virtual string get_Driver() const = 0;
-	virtual void set_Type(const string &type) = 0;
-	virtual void set_Type(const LogType &type) = 0;
-	virtual LogType get_Type() const = 0;
-	virtual void set_Level(const string &level) = 0;
-	virtual void set_Level(const int &level) = 0;
-	virtual int get_Level() const = 0;
-	virtual void set_Option(const string &name, const string &value) = 0;
-	virtual string get_Option(const string &name) = 0;
-	virtual bool Write(int level, const string &message) = 0;
-} iLogDriver;
+class LogDriverBase {
+	public:
+		virtual void set_Name(const string &name) = 0;
+		virtual string get_Name() const = 0;
+		virtual string get_Driver() const = 0;
+		virtual void set_Type(const string &type) = 0;
+		virtual void set_Type(const LogType &type) = 0;
+		virtual LogType get_Type() const = 0;
+		virtual void set_Level(const string &level) = 0;
+		virtual void set_Level(const int &level) = 0;
+		virtual int get_Level() const = 0;
+		virtual void set_Option(const string &name, const string &value) = 0;
+		virtual string get_Option(const string &name) = 0;
+		virtual bool Write(int level, const string &message) = 0;
+
+		//LogDriverBase &operator<<(LogDriverBase &source);
+		//stringstream &operator<<(stringstream &source);
+	protected:
+		//string getBuffer();
+	private:
+		stringstream mStringStream;
+};
 
 extern ostream &operator<<(ostream &output, const LogType &type);
 

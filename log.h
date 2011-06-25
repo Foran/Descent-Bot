@@ -32,11 +32,11 @@ class CLog_Chain
    
    LogType get_Type() const;
    
-   void add_Logger(iLogDriver *log_driver);
+   void add_Logger(LogDriverBase *log_driver);
    void Write(int level, const string &message);
  protected:
  private:
-     vector<iLogDriver *> mDrivers;
+     vector<LogDriverBase *> mDrivers;
    LogType mType;
 
    CLog_Chain();
@@ -58,7 +58,7 @@ class CLog
    CLog();
    ~CLog();
    
-   void add_Logger(const LogType type, iLogDriver *log_driver);
+   void add_Logger(const LogType type, LogDriverBase *log_driver);
    void Write(const LogType type, int level, const string &message);
  protected:
  private:
