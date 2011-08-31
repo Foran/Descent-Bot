@@ -11,3 +11,4 @@ Descent-Bot.vcproj.*.user
 ~AutoRecover.Descent-Bot.vcproj
 documentation/*
 logs/*.log
+Debug/*
