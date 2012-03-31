@@ -10,12 +10,7 @@
  ***************************************************/
 #include "config.h"
 
-/**********************************//**
- * Global instance of the CConfig class
- *************************************/
-CConfig global_Config;
-
-unsigned int CConfig::mReferences = 0;
+CConfig *CConfig::mConfig = NULL;
 
 /**************************************//**
  * Default constructor of the CConfig class
@@ -28,57 +23,24 @@ CConfig::CConfig()
 	Reset();
 }
 
-/****************************************//**
- * Constructor to load the config from a file
- * @param filename The config file to load
- * @see CConfig()
- * @see CConfig(const CConfig &source)
- *******************************************/
-CConfig::CConfig(const string filename)
-{
-	Initialize();
-	Load(filename);
-}
-
-/**********************************//**
- * Copy Constructor
- * @param source Source CConfig to clone
- * @see CConfig()
- * @see CConfig(const string filename)
- *************************************/
-CConfig::CConfig(const CConfig &source)
-{
-	Initialize();
-	*this = source;
-}
-
 /**********************************//**
  * Destructor
  *************************************/
 CConfig::~CConfig()
 {
-	if(0 == --mReferences) {
-		xmlCleanupParser();
-	}
+	xmlCleanupParser();
 }
 
-/**********************************//**
- * Assignment operator
- * @param source Source CConfig to clone
- * @return A reference to the current object
- *************************************/
-CConfig &CConfig::operator=(const CConfig &source)
-{
-	Reset();
-
-	return *this;
+CConfig &CConfig::getInstance() {
+	if(mConfig == NULL) {
+		mConfig = new CConfig();
+	}
+	return *mConfig;
 }
 
 void CConfig::Initialize() 
 {
-	if(0 == mReferences++) {
-		LIBXML_TEST_VERSION
-	}
+	LIBXML_TEST_VERSION
 }
 
 bool CConfig::Load(const string filename)

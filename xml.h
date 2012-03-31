@@ -11,7 +11,7 @@
 #ifndef __XML_H__
 #define __XML_H__
 
-#ifdef WIN32
+#ifdef _WIN32
 #define LIBXML_STATIC
 #endif
 

@@ -80,12 +80,9 @@ private:
 class CConfig 
 {
 public:
-	CConfig();
-	CConfig(const string filename);
-	CConfig(const CConfig &source);
 	~CConfig();
 
-	CConfig &operator=(const CConfig &source);
+	static CConfig &getInstance();
 
 	bool Load(const string filename);
 
@@ -94,13 +91,15 @@ public:
 	CConfig_Logging Logging;
 protected:
 private:
-	static unsigned int mReferences;
+	static CConfig *mConfig;
 
 	void Initialize();
 
 	friend class CConfig_Logging;
-};
 
-extern CConfig global_Config;
+	CConfig();
+	CConfig(const CConfig &source);
+	CConfig &operator=(const CConfig &source);
+};
 
 #endif

@@ -10,7 +10,7 @@
  ***************************************************/
 #ifndef __NETWORK_H__
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <WinSock2.h>
 
 typedef SOCKET Descent_Socket;

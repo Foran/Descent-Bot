@@ -11,7 +11,7 @@
 #include "network.h"
 
 void Descent_atoinet(const string &input, struct sockaddr_in &addr) {
-#ifdef WIN32
+#ifdef _WIN32
 	long inAddress;
 	inAddress = inet_addr(input.c_str());
 	addr.sin_addr.s_addr = inAddress;

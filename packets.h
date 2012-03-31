@@ -51,7 +51,7 @@ enum UDP_PacketType
 struct PACKET_Header
 {
    char Type;
-#ifdef WIN32
+#ifdef _WIN32
 };
 #else
 } __attribute__ ((__packed__, aligned(1)));
@@ -63,7 +63,7 @@ struct PACKET_Version_Deny
    short Major;
    short Minor;
    short Micro;
-#ifdef WIN32
+#ifdef _WIN32
 };
 #else
 } __attribute__ ((__packed__, aligned(1)));
@@ -76,7 +76,7 @@ struct PACKET_Request_Game_Info
    short Major;
    short Minor;
    short Micro;
-#ifdef WIN32
+#ifdef _WIN32
 };
 #else
 } __attribute__ ((__packed__, aligned(1)));
@@ -89,7 +89,7 @@ struct PACKET_Request_Game_Info_Lite
    short Major;
    short Minor;
    short Micro;
-#ifdef WIN32
+#ifdef _WIN32
 };
 #else
 } __attribute__ ((__packed__, aligned(1)));
@@ -113,7 +113,7 @@ struct PACKET_Game_Info_Lite
    char Max_Players;
    char Game_Flags;
    char Team_Vector;
-#ifdef WIN32
+#ifdef _WIN32
 };
 #else
 } __attribute__ ((__packed__, aligned(1)));
