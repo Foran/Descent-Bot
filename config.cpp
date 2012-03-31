@@ -10,7 +10,7 @@
  ***************************************************/
 #include "config.h"
 
-CConfig *CConfig::mConfig = NULL;
+CConfig *CConfig::mSingleton = NULL;
 
 /**************************************//**
  * Default constructor of the CConfig class
@@ -19,6 +19,7 @@ CConfig *CConfig::mConfig = NULL;
  *****************************************/
 CConfig::CConfig()
 {
+	atexit(clearInstance);
 	Initialize();
 	Reset();
 }
@@ -31,11 +32,24 @@ CConfig::~CConfig()
 	xmlCleanupParser();
 }
 
-CConfig &CConfig::getInstance() {
-	if(mConfig == NULL) {
-		mConfig = new CConfig();
+/**********************************//**
+ * Clear Instance called at exit
+ *************************************/
+void CConfig::clearInstance() {
+	if(mSingleton != NULL) {
+		delete mSingleton;
+		mSingleton = NULL;
 	}
-	return *mConfig;
+}
+
+/**********************************//**
+ * Singleton getter
+ *************************************/
+CConfig &CConfig::getInstance() {
+	if(mSingleton == NULL) {
+		mSingleton = new CConfig();
+	}
+	return *mSingleton;
 }
 
 void CConfig::Initialize() 

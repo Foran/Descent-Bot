@@ -91,10 +91,12 @@ public:
 	CConfig_Logging Logging;
 protected:
 private:
-	static CConfig *mConfig;
+	static CConfig *mSingleton;
 
 	void Initialize();
 
+	static void clearInstance();
+	
 	friend class CConfig_Logging;
 
 	CConfig();
