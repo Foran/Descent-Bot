@@ -58,8 +58,8 @@ CConnectionManager::~CConnectionManager()
       mGames.clear();
       mGameAges.clear();
       if(mSocket >= 0) {
-		Descent_CloseSocket(mSocket);
-		mSocket = -1;
+	 Descent_CloseSocket(mSocket);
+	 mSocket = -1;
       }
    }
 }
@@ -75,6 +75,10 @@ CConnectionManager &CConnectionManager::operator=(const CConnectionManager &sour
    return *this;
 }
 
+/***********************************************//**
+ * Singleton Accessor
+ * @returns a reference to the singleton instance of this object
+ **************************************************/
 CConnectionManager CConnectionManager::get_Instance()
 {
    return CConnectionManager();
