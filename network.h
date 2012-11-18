@@ -9,14 +9,13 @@
  * California, 94041, USA.
  ***************************************************/
 #ifndef __NETWORK_H__
+#define __NETWORK_H__
 
 #ifdef _WIN32
 #include <WinSock2.h>
 
 typedef SOCKET Descent_Socket;
 typedef int socklen_t;
-
-#define Descent_CloseSocket(socket) closesocket(socket)
 
 #else
 #include <sys/types.h>
@@ -29,14 +28,44 @@ typedef int socklen_t;
 
 typedef int Descent_Socket;
 
-#define Descent_CloseSocket(socket) close(socket)
-
 #endif
 
 #include<string>
 
 using namespace std;
 
-extern void Descent_atoinet(const string &input, struct sockaddr_in &addr);
+typedef struct INetwork 
+{
+   virtual Descent_Socket socket(int domain, int type, int protocol) = 0;
+   virtual int close(Descent_Socket socket) = 0;
+   virtual void atoinet(const string &input, struct sockaddr_in &addr) = 0;
+   virtual struct protoent *getprotobyname(const char *name) = 0;
+   virtual int setsockopt(Descent_Socket sockfd, int level, int optname, const void *optval, socklen_t optlen) = 0;
+   virtual ssize_t recvfrom(Descent_Socket sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen) = 0;
+   virtual int bind(Descent_Socket sockfd, const struct sockaddr *addr, socklen_t addrlen) = 0;
+   virtual int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout) = 0;
+} INetwork;
+
+class CNetwork : INetwork 
+{
+ public:
+   static INetwork &get_Instance();
+   
+   virtual Descent_Socket socket(int domain, int type, int protocol);
+   virtual int close(Descent_Socket socket);
+   virtual void atoinet(const string &input, struct sockaddr_in &addr);
+   virtual struct protoent *getprotobyname(const char *name);
+   virtual int setsockopt(Descent_Socket sockfd, int level, int optname, const void *optval, socklen_t optlen);
+   virtual ssize_t recvfrom(Descent_Socket sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen);
+   virtual int bind(Descent_Socket sockfd, const struct sockaddr *addr, socklen_t addrlen);
+   virtual int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+ protected:
+ private:
+   static CNetwork mSingleton;
+   CNetwork();
+   CNetwork(const CNetwork &source);
+   ~CNetwork();
+   CNetwork &operator=(const CNetwork &source);
+};
 
 #endif
