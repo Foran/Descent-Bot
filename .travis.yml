@@ -3,4 +3,6 @@ compiler:
   - gcc
   - clang
 # Change this to your needs
+install:
+  - sudo apt install liblua5.1-0-dev
 script: make
