@@ -39,7 +39,8 @@ $(TESTBIN):$(TESTOBJS)
 %.o: %.cpp %.d
 	@echo "Compiling $<..."
 	$(Q)$(CC) $(CFLAGS) $(DEFINES) -c $< -o $@
-	@cppcheck $<
+	#temporarly disable the static analysis
+	#@cppcheck $<
 
 %.d: %.cpp
 	@echo "Generating $@..."
