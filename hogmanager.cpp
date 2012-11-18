@@ -20,33 +20,33 @@ CHogManager::CHogManager()
 
 CHogManager::~CHogManager()
 {
-  if(--mReferences == 0) {
-    for(vector<CHog *>::iterator i = mHogs.begin(); i != mHogs.end(); i++) {
-      delete *i;
+   if(--mReferences == 0) {
+      for(auto& hog : mHogs) {
+      delete hog;
     }
   }
 }
 
 CHog &CHogManager::operator[](const string &filename)
 {
-  CHog *hog = NULL;
-  
-  for(vector<CHog *>::iterator i = mHogs.begin(); i != mHogs.end(); i++) {
-    if((**i).mFilename == filename) {
-      hog = *i;
-      break;
-    }
-  }
-  
-  if(hog == NULL) {
-    hog = new CHog(filename);
-    mHogs.push_back(hog);
-  }
-  
-  return *hog;
+   CHog *retval = NULL;
+   
+   for(auto& hog : mHogs) {
+      if(hog->mFilename == filename) {
+	 retval = hog;
+	 break;
+      }
+   }
+   
+   if(retval == NULL) {
+      retval = new CHog(filename);
+      mHogs.push_back(retval);
+   }
+   
+   return *retval;
 }
 
 CHogManager CHogManager::get_Instance()
 {
-	return CHogManager();
+   return CHogManager();
 }

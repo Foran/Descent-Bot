@@ -51,8 +51,8 @@ CConnectionManager::CConnectionManager(const CConnectionManager &source)
 CConnectionManager::~CConnectionManager()
 {
    if(--mReferences) {
-      for(map<Descent_Socket, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
-	 delete i->second;
+      for(auto& pair : mConnections) {
+	 delete pair.second;
       }
       mConnections.clear();
       mGames.clear();
@@ -97,10 +97,10 @@ void CConnectionManager::Pulse()
    FD_ZERO(&read);
    
    FD_SET(mSocket, &read);
-   for(map<Descent_Socket, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
-      if(i->second != NULL) {
-	 FD_SET(i->first, &read);
-	 if(max > (int)i->first) max = i->first;
+   for(auto& pair : mConnections) {
+      if(pair.second != NULL) {
+	 FD_SET(pair.first, &read);
+	 if(max > (int)pair.first) max = pair.first;
       }
    }
    
@@ -109,7 +109,7 @@ void CConnectionManager::Pulse()
    
    result = select(max + 1, &read, NULL, NULL, &tv);
    
-   if (result > 0) {
+   if(result > 0) {
       global_Log.Write(LogType_Debug, 100, "Received a packet");
       if(FD_ISSET(mSocket, &read)) {
 	 len = sizeof(addr);
@@ -124,8 +124,8 @@ void CConnectionManager::Pulse()
 	    }
 	 }
       }
-      for(map<Descent_Socket, CConnection *>::iterator i = mConnections.begin(); i != mConnections.end(); i++) {
-	 if(i->second != NULL && FD_ISSET(mSocket, &read)) {
+      for(auto& pair : mConnections) {
+	 if(pair.second != NULL && FD_ISSET(mSocket, &read)) {
 	    len = sizeof(addr);
 	    if(recvfrom(mSocket, &packetId, 1, MSG_PEEK, (struct sockaddr *)&addr, &len) > 0) {
 	       switch(packetId) {
