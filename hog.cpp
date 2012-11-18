@@ -26,8 +26,8 @@ CHog::CHog(const CHog &source)
 
 CHog::~CHog()
 {
-  for(vector<CFile *>::iterator i = mFiles.begin(); i != mFiles.end(); i++) {
-    delete *i;
+  for(auto& file : mFiles) {
+    delete file;
   }
 }
 
@@ -44,24 +44,24 @@ bool CHog::operator==(const CHog &source)
 
 CFile CHog::operator[](const string &name) const
 {
-  CFile file;
+  CFile retval;
   
-  for(vector<CFile *>::const_iterator i = mFiles.begin(); i != mFiles.end(); i++) {
-    if((**i).mFilename == name) {
-      file = **i;
+  for(auto& file : mFiles) {
+    if(file->mFilename == name) {
+      retval = *file;
       break;
     }
   }
   
-  return file;
+  return retval;
 }
 
 vector<string> CHog::get_Filenames() const
 {
   vector<string> retval;
    
-  for(vector<CFile *>::const_iterator i = mFiles.begin(); i != mFiles.end(); i++) {
-    retval.push_back((*i)->mFilename);
+  for(auto& file : mFiles) {
+    retval.push_back(file->mFilename);
   }
   
   return retval;
