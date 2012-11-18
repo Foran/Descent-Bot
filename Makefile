@@ -9,7 +9,8 @@ TESTOBJS=	test_main.o testbase.o test_hog.o test.o testManager.o
 TESTSOURCES=$(TESTOBJS:.o=.cpp)
 TESTDEPENDS=$(TESTSOURCES:.cpp=.d)
 DEFINES=-DDEBUG -DVERSION=\"0.01a\"
-LIBS=-lxml2 -llua5.1
+LIBS=-lxml2
+# -llua5.1
 CC=g++
 BIN=descent-bot
 TESTBIN=testdescent-bot
