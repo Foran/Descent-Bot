@@ -13,7 +13,7 @@ LIBS=-lxml2 -llua5.1
 CC=g++
 BIN=descent-bot
 TESTBIN=testdescent-bot
-CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2
+CFLAGS=-Wall -pedantic -g -I/usr/include/libxml2 -std=c++0x
 #-fpack-struct -fno-exceptions
 
 .PHONY: all test
