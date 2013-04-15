@@ -30,7 +30,7 @@ Descent_Socket CNetwork::socket(int domain, int type, int protocol)
    return (Descent_Socket)::socket(domain, type, protocol);
 }
 
-int CNetwork::close(Descent_Socket socket) 
+int CNetwork::close(Descent_Socket socket)
 {
    int retval = 0;
 #ifdef _WIN32
@@ -54,25 +54,25 @@ void CNetwork::atoinet(const string &input, struct sockaddr_in &addr)
 
 struct protoent *CNetwork::getprotobyname(const char *name)
 {
-   return getprotobyname(name);
+   return ::getprotobyname(name);
 }
 
 int CNetwork::setsockopt(Descent_Socket sockfd, int level, int optname, const void *optval, socklen_t optlen)
 {
-   return setsockopt(sockfd, level, optname, optval, optlen);
+   return ::setsockopt(sockfd, level, optname, optval, optlen);
 }
 
 ssize_t CNetwork::recvfrom(Descent_Socket sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen)
 {
-   return recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
+   return ::recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
 }
 
 int CNetwork::bind(Descent_Socket sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
-   return bind(sockfd, addr, addrlen);
+   return ::bind(sockfd, addr, addrlen);
 }
 
 int CNetwork::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)
 {
-   return select(nfds, readfds, writefds, exceptfds, timeout);
+   return ::select(nfds, readfds, writefds, exceptfds, timeout);
 }
