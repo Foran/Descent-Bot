@@ -12,3 +12,8 @@ Descent-Bot.vcproj.*.user
 documentation/*
 logs/*.log
 Debug/*
+bazel-Descent-Bot
+bazel-bin
+bazel-genfiles
+bazel-out
+bazel-testlogs

@@ -8,7 +8,15 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "main.h"
+#include <iostream>
+
+using namespace std;
+
+#include "log.h"
+#include "hogmanager.h"
+#include "rdl.h"
+#include "config.h"
+#include "connectionmanager.h"
 
 #ifndef _WIN32
 /**************************

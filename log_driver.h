@@ -28,6 +28,7 @@ enum LogType
 
 class LogDriverBase {
 	public:
+                virtual ~LogDriverBase() { }
 		virtual void set_Name(const string &name) = 0;
 		virtual string get_Name() const = 0;
 		virtual string get_Driver() const = 0;
