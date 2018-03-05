@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef CONFIG_H_
-#define CONFIG_H_
+#ifndef SRC_LIB_CONFIG_CONFIG_H_
+#define SRC_LIB_CONFIG_CONFIG_H_
 
 #include <map>
 #include <string>
@@ -21,6 +21,11 @@
 #include "./log_driver_file.h"
 #include "./log_driver_raw.h"
 #include "./xml.h"
+
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace CONFIG {
 
 class CConfig;
 class CConfig_Logging;
@@ -97,4 +102,9 @@ class CConfig {
   CConfig &operator=(const CConfig &source);
 };
 
-#endif  // CONFIG_H_
+}  // namespace CONFIG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
+
+#endif  // SRC_LIB_CONFIG_CONFIG_H_
