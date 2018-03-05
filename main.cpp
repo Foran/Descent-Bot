@@ -15,7 +15,7 @@ using namespace std;
 #include "log.h"
 #include "hogmanager.h"
 #include "rdl.h"
-#include "config.h"
+#include "src/lib/config/config.h"
 #include "connectionmanager.h"
 
 #ifndef _WIN32
