@@ -13,7 +13,6 @@ addons:
       - coreutils
       - pkg-config
 
-
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq liblua5.1-0-dev
@@ -21,6 +20,5 @@ before_install:
   - sudo dpkg -i bazel_0.11.0-linux-x86_64.deb
 
 script:
-  - bazel run @cpplint_archive//:cpplint $(find $(pwd) | grep -E "[.](h|cc|cpp)$")
   - bazel build //...
   - bazel test //... --test_output=streamed
