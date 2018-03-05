@@ -71,7 +71,7 @@ bool CConfig::Load(const string filename)
 	 global_Log.Write(LogType_Debug, 150, string("Found root config node (") + document.get_Root().get_Name() + ")");
 	 for(auto& child : document.get_Root().get_Children()) {
 	    global_Log.Write(LogType_Debug, 150, string("Found child node (") + child.get_Name() + ")");
-	    if(static_cast<string>("Logging") == child.get_Name()) retval &= Logging.Load_Logging(child);
+	    if(static_cast<string>("Logging") == child.get_Name()) retval &= Logging.Load_Logging(&child);
 	 }
       }
    }
@@ -81,29 +81,29 @@ bool CConfig::Load(const string filename)
    return retval;
 }
 
-LogType CConfig_Logging::get_LogType(CXMLNode &node)
+LogType CConfig_Logging::get_LogType(CXMLNode *node)
 {
 	LogType retval = LogType_Fatal;
-	if(static_cast<string>("Logger") == node.get_Name()) {
-		if(node["Type"] == "Fatal") retval = LogType_Fatal;
-		else if(node["Type"] == "Error") retval = LogType_Error;
-		else if(node["Type"] == "Warning") retval = LogType_Warning;
-		else if(node["Type"] == "Debug") retval = LogType_Debug;
-		else if(node["Type"] == "Info") retval = LogType_Info;
+	if(static_cast<string>("Logger") == node->get_Name()) {
+		if((*node)["Type"] == "Fatal") retval = LogType_Fatal;
+		else if((*node)["Type"] == "Error") retval = LogType_Error;
+		else if((*node)["Type"] == "Warning") retval = LogType_Warning;
+		else if((*node)["Type"] == "Debug") retval = LogType_Debug;
+		else if((*node)["Type"] == "Info") retval = LogType_Info;
 	}
 
 	return retval;
 }
 
-bool CConfig_Logging::Load_Logging(CXMLNode &node)
+bool CConfig_Logging::Load_Logging(CXMLNode *node)
 {
    bool retval = false;
    
-   if(static_cast<string>("Logging") == node.get_Name()) {
+   if(static_cast<string>("Logging") == node->get_Name()) {
       retval = true;
-      for(auto& child : node.get_Children()) {
+      for(auto& child : node->get_Children()) {
 	 if(static_cast<string>("Logger") == child.get_Name()) {
-	    CConfig_Logging_Logger logger(child);
+	    CConfig_Logging_Logger logger(&child);
 	    if(logger.is_Valid()) {
 	       retval &= true;
 	    }
@@ -147,22 +147,22 @@ CConfig_Logging_Logger::CConfig_Logging_Logger()
 	mLevel = 0;
 }
 
-CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode &node)
+CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode *node)
 {
-   if(static_cast<string>("Logger") == node.get_Name()) {
-      global_Log.Write(LogType_Debug, 150, string("Scanning Configuration->Logging->") + node.get_Name() + " for attributes");
-      for(auto& pair : node.get_Attributes()) {
-	 global_Log.Write(LogType_Debug, 150, string("Configuration->Logging->") + node.get_Name() + "[" + pair.first + "]=" + pair.second);
+   if(static_cast<string>("Logger") == node->get_Name()) {
+      global_Log.Write(LogType_Debug, 150, string("Scanning Configuration->Logging->") + node->get_Name() + " for attributes");
+      for(auto& pair : node->get_Attributes()) {
+	 global_Log.Write(LogType_Debug, 150, string("Configuration->Logging->") + node->get_Name() + "[" + pair.first + "]=" + pair.second);
       }
       LogDriverBase *driver = NULL;
-      if(node["Driver"] == "Raw") driver = new CLogDriverRaw();
-      else if(node["Driver"] == "File") driver = new CLogDriverFile();
+      if((*node)["Driver"] == "Raw") driver = new CLogDriverRaw();
+      else if((*node)["Driver"] == "File") driver = new CLogDriverFile();
       if(driver) {
-	 driver->set_Name(node["Name"]);
-	 driver->set_Level(node["Level"]);
-	 driver->set_Type(node["Type"]);
+	 driver->set_Name((*node)["Name"]);
+	 driver->set_Level((*node)["Level"]);
+	 driver->set_Type((*node)["Type"]);
       }
-      for(auto& child : node.get_Children()) {
+      for(auto& child : node->get_Children()) {
 	 if(static_cast<string>("Option") == child.get_Name()) {
 	    global_Log.Write(LogType_Debug, 150, string("Option ") + child["Name"] + " = " + child["Value"]);
 	    if(driver) driver->set_Option(child["Name"], child["Value"]);
@@ -173,7 +173,7 @@ CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode &node)
       }
    }
    else {
-      global_Log.Write(LogType_Debug, 50, string("Was passed a node not of type Logger but of type ") + node.get_Name());
+      global_Log.Write(LogType_Debug, 50, string("Was passed a node not of type Logger but of type ") + node->get_Name());
    }
 }
 
