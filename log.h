@@ -23,6 +23,16 @@ using namespace std;
 
 #include "log_driver.h"
 
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace CONFIG {
+class CConfig;
+}
+}
+}
+}
+
 /// This class represents a logging chain target
 class CLog_Chain 
 {
@@ -71,7 +81,7 @@ class CLog
 
 	void FlushCache();
 
-	friend class CConfig;
+	friend class ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
 };
 
 extern string operator+(string input, int number);

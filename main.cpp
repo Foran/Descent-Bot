@@ -15,7 +15,7 @@ using namespace std;
 #include "log.h"
 #include "hogmanager.h"
 #include "rdl.h"
-#include "config.h"
+#include "src/lib/config/config.h"
 #include "connectionmanager.h"
 
 #ifndef _WIN32
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 #endif
 	
 
-	CConfig::getInstance().Load("config/Main.xml");
+	::DESCENT_BOT::SRC::LIB::CONFIG::CConfig::getInstance().Load("config/Main.xml");
 
 	//   vector<string> names = HogManager["chaos.hog"].get_Filenames();
 	//   for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {

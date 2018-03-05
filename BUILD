@@ -63,26 +63,6 @@ cc_library(
 )
 
 cc_library(
-  name = "config",
-  srcs = [
-    "config.cpp",
-  ],
-  hdrs = [
-    "config.h",
-  ],
-  deps = [
-    ":xml",
-    ":log",
-    ":log-raw",
-    ":log-file",
-  ],
-  copts = [
-    "-I/usr/include/libxml2",
-  ],
-  visibility = ["//visibility:public"],
-)
-
-cc_library(
   name = "connection",
   srcs = [
     "connection.cpp",
@@ -159,7 +139,7 @@ cc_binary(
   deps = [
     ":level-data",
     ":log",
-    ":config",
+    "//src/lib/config:libconfig",
     ":connection",
   ],
   copts = [
