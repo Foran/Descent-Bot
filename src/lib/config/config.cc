@@ -18,6 +18,8 @@ namespace SRC {
 namespace LIB {
 namespace CONFIG {
 
+using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverFile;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverRaw;
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
 using PROTO::Config;
 

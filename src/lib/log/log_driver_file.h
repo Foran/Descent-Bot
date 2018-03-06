@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,41 +10,49 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef __LOG_DRIVER_FILE_H__
-#define __LOG_DRIVER_FILE_H__
-
-#include <fstream>
-#include <string>
-
-using namespace std;
+#ifndef SRC_LIB_LOG_LOG_DRIVER_FILE_H_
+#define SRC_LIB_LOG_LOG_DRIVER_FILE_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "log_driver.h"
+#include <fstream>
+#include <string>
 
-class CLogDriverFile : public LogDriverBase 
-{
+#include "src/lib/log/log_driver.h"
+
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LOG {
+
+class CLogDriverFile : public LogDriverBase {
  public:
-   CLogDriverFile();
-   virtual void set_Name(const string &name);
-   virtual string get_Name() const;
-   virtual string get_Driver() const;
-   virtual void set_Type(const string &type);
-   virtual void set_Type(const LogType &type);
-   virtual LogType get_Type() const;
-   virtual void set_Level(const string &level);
-   virtual void set_Level(const int &level);
-   virtual int get_Level() const;
-   virtual void set_Option(const string &name, const string &value);
-   virtual string get_Option(const string &name);
-   virtual bool Write(int level, const string &message);
+  CLogDriverFile();
+  virtual void set_Name(const ::std::string &name);
+  virtual ::std::string get_Name() const;
+  virtual ::std::string get_Driver() const;
+  virtual void set_Type(const ::std::string &type);
+  virtual void set_Type(const LogType &type);
+  virtual LogType get_Type() const;
+  virtual void set_Level(const ::std::string &level);
+  virtual void set_Level(const int &level);
+  virtual int get_Level() const;
+  virtual void set_Option(const ::std::string &name,
+                          const ::std::string &value);
+  virtual ::std::string get_Option(const ::std::string &name);
+  virtual bool Write(int level, const ::std::string &message);
+
  protected:
-	 int mLevel;
-	 LogType mType;
-	 string mName;
-	 string mFilename;
- private:
+  int mLevel;
+  LogType mType;
+  ::std::string mName;
+  ::std::string mFilename;
 };
 
-#endif
+}  // namespace LOG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
+
+#endif  // SRC_LIB_LOG_LOG_DRIVER_FILE_H_
