@@ -1,0 +1,32 @@
+cc_library(
+  name='liblevelmodel',
+  srcs=[
+    'mission.cc',
+    'missionmanager.cc',
+    'hog.cc',
+    'hogmanager.cc',
+    'file.cc',
+    'fstreamptr.cc',
+    'rdl.cc',
+  ],
+  hdrs=[
+    'mission.h',
+    'missionmanager.h',
+    'hog.h',
+    'hogmanager.h',
+    'file.h',
+    'fstreamptr.h',
+    'rdl.h',
+  ],
+  copts=[
+    '-pedantic',
+    '-I/usr/include/libxml2',
+    '-std=c++11',
+  ],
+  deps=[
+    '//src/lib/log:liblog',
+    '//src/lib/math:libmath',
+  ],
+  visibility=['//visibility:public'],
+)
+

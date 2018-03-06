@@ -1,42 +1,10 @@
-cc_library(
-  name='level-data',
-  srcs=[
-    'mission.cpp',
-    'missionmanager.cpp',
-    'hog.cpp',
-    'hogmanager.cpp',
-    'file.cpp',
-    'fstreamptr.cpp',
-    'rdl.cpp',
-  ],
-  hdrs=[
-    'mission.h',
-    'missionmanager.h',
-    'hog.h',
-    'hogmanager.h',
-    'file.h',
-    'fstreamptr.h',
-    'rdl.h',
-  ],
-  copts=[
-    '-pedantic',
-    '-I/usr/include/libxml2',
-    '-std=c++11',
-  ],
-  deps=[
-    '//src/lib/log:liblog',
-    '//src/lib/math:libmath',
-  ],
-  visibility=['//visibility:public'],
-)
-
 cc_binary(
   name='descent-bot',
   srcs=[
     'main.cpp',
   ],
   deps=[
-    ':level-data',
+    '//src/lib/levelmodel:liblevelmodel',
     '//src/lib/log:liblog',
     '//src/lib/config:libconfig',
     '//src/lib/network:libconnection',

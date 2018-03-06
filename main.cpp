@@ -12,10 +12,10 @@
 
 using namespace std;
 
-#include "src/lib/log/log.h"
-#include "hogmanager.h"
-#include "rdl.h"
 #include "src/lib/config/config.h"
+#include "src/lib/levelmodel/hogmanager.h"
+#include "src/lib/levelmodel/rdl.h"
+#include "src/lib/log/log.h"
 #include "src/lib/network/connectionmanager.h"
 
 #ifndef _WIN32
