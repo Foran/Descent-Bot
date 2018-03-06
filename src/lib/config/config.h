@@ -17,10 +17,10 @@
 #include <string>
 #include <vector>
 
-#include "./log.h"
-#include "./log_driver_file.h"
-#include "./log_driver_raw.h"
-#include "./xml.h"
+#include "src/lib/log/log.h"
+#include "src/lib/log/log_driver_file.h"
+#include "src/lib/log/log_driver_raw.h"
+#include "src/lib/config/xml.h"
 
 namespace DESCENT_BOT {
 namespace SRC {

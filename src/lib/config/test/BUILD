@@ -1,0 +1,18 @@
+cc_test(
+  name='config_tests',
+  size='small',
+  srcs=[
+    'configUnitTests.cc',
+  ],
+  data=[
+    'basic.conf',
+  ],
+  deps=[
+    '@gtest//:gtest_main',
+    '//src/lib/config:libconfig',
+  ],
+  copts=[
+    '-Iexternal/gtest/include',
+    '-I/usr/include/libxml2',
+  ],
+)

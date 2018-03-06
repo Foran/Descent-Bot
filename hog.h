@@ -18,7 +18,7 @@ using namespace std;
 
 class CFile;
 
-#include "log.h"
+#include "src/lib/log/log.h"
 #include "file.h"
 #include "fstreamptr.h"
 

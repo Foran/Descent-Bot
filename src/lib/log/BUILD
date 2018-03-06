@@ -1,0 +1,45 @@
+cc_library(
+  name='liblog',
+  srcs=[
+    'log.cc',
+    'log_driver.cc',
+  ],
+  hdrs=[
+    'log.h',
+    'log_driver.h',
+  ],
+  visibility=['//visibility:public',],
+)
+
+cc_library(
+  name='liblog-file',
+  srcs=[
+    'log_driver_file.cc',
+  ],
+  hdrs=[
+    'log_driver_file.h',
+  ],
+  deps=[
+    ':liblog',
+  ],
+  visibility=[
+    '//src/lib/config:__pkg__',
+  ],
+)
+
+cc_library(
+  name='liblog-raw',
+  srcs=[
+    'log_driver_raw.cc',
+  ],
+  hdrs=[
+    'log_driver_raw.h',
+  ],
+  deps=[
+    ':liblog',
+  ],
+  visibility=[
+    '//src/lib/config:__pkg__',
+  ],
+)
+

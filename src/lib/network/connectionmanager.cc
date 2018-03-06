@@ -10,6 +10,8 @@
  ***************************************************/
 #include "connectionmanager.h"
 
+using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+
 int CConnectionManager::mReferences = 0;
 Descent_Socket CConnectionManager::mSocket = -1;
 map<Descent_Socket, CConnection *> CConnectionManager::mConnections;

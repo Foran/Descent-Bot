@@ -22,9 +22,9 @@ using namespace std;
 #include "hog.h"
 #include "hogmanager.h"
 #include "file.h"
-#include "log.h"
+#include "src/lib/log/log.h"
 #include "fstreamptr.h"
-#include "math.h"
+#include "src/lib/math/math.h"
 
 typedef struct DESCENT_VERTEX 
 {

@@ -11,11 +11,15 @@
  * California, 94041, USA.
  ***************************************************/
 #include "src/lib/config/config.h"
+#include "src/lib/config/config.pb.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
 namespace CONFIG {
+
+using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using PROTO::Config;
 
 CConfig *CConfig::mSingleton = NULL;
 

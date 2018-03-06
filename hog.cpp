@@ -10,6 +10,8 @@
  ***************************************************/
 #include "hog.h"
 
+using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+
 CHog::CHog()
 {
 }

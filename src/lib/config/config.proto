@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package DESCENT_BOT.SRC.LIB.CONFIG.PROTO;
+
+message Config {
+  message Logger {
+    string name = 1;
+    enum LogType {
+      UNKNOWN = 0;
+      INFO = 1;
+      DEBUG = 2;
+      WARNING = 3;
+      ERROR = 4;
+      FATAL = 5;
+    }
+    LogType type = 2;
+    uint32 level = 3;
+    string driver = 4;
+    message Option {
+      string name = 1;
+      string value = 2;
+    }
+    repeated Option options = 5;
+  }
+  repeated Logger loggers = 1;
+}

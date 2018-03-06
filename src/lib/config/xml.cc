@@ -8,7 +8,16 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "xml.h"
+#include "src/lib/config/xml.h"
+
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace CONFIG {
+
+using ::std::string;
+using ::std::vector;
+using ::std::map;
 
 bool CXML::mFirstUse = true;
 
@@ -157,3 +166,8 @@ string CXMLNode::get_Name() {
 int CXMLNode::StringToInt(const string &value) {
 	return atoi(value.c_str());
 }
+
+}  // namespace CONFIG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
