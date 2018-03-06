@@ -10,6 +10,8 @@
  ***************************************************/
 #include "rdl.h"
 
+using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+
 /****************************//**
  * This method compartmentalizes
  * the loading of vertex data in

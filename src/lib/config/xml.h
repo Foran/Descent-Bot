@@ -22,7 +22,10 @@
 #include <map>
 #include <vector>
 
-using namespace std;
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace CONFIG {
 
 /// This class represents a node tree in a xml document
 /**************************************//**
@@ -39,23 +42,23 @@ class CXMLNode {
 		CXMLNode &operator=(const CXMLNode &source);
 
 		/// Attribute accessor
-		string operator[](string name);
+		::std::string operator[](::std::string name);
 		/// Retrieves a dictionary of all attributes
-		map<string, string> &get_Attributes();
+		::std::map<::std::string, ::std::string> &get_Attributes();
 		/// Retrieves the list of child nodes
-		vector<CXMLNode> &get_Children();
+		::std::vector<CXMLNode> &get_Children();
 		/// Retrieves the node's inner text
-		string get_InnerText();
+		::std::string get_InnerText();
 		/// Retrieves the tag's name
-		string get_Name();
+		::std::string get_Name();
 		/// Converts a string into an integer
-		int StringToInt(const string &value);
+		int StringToInt(const ::std::string &value);
 	protected:
 	private:
-		map<string, string> mAttributes; ///< Internal dictionary of Attributes
-		vector<CXMLNode> mChildren; ///< Internal list of child node
-		string mInnerText; ///< Internal container for inner text
-		string mName; ///< Internal container for tag name
+		::std::map<::std::string, ::std::string> mAttributes; ///< Internal dictionary of Attributes
+		::std::vector<CXMLNode> mChildren; ///< Internal list of child node
+		::std::string mInnerText; ///< Internal container for inner text
+		::std::string mName; ///< Internal container for tag name
 
 		/// Private default constructor to restrict node creation access
 		CXMLNode();
@@ -73,7 +76,7 @@ class CXML {
 		/// Default constructor
 		CXML();
 		/// Simple direct file constructor
-		CXML(const string &filename);
+		CXML(const ::std::string &filename);
 		/// Default copy constructor
 		CXML(const CXML &source);
 		/// Destructor
@@ -83,7 +86,7 @@ class CXML {
 		CXML &operator=(const CXML &source);
 
 		/// Load an xml from a file
-		bool Load(const string &filename);
+		bool Load(const ::std::string &filename);
 		/// Get the root XML Node as a CXMLNode object
 		CXMLNode &get_Root();
 	protected:
@@ -94,9 +97,14 @@ class CXML {
 		/// Common class initialization
 		void Initialize();
 		/// Load a CXMLNode from xmlNodePtr
-		bool LoadNode(xmlNodePtr source, CXMLNode &destination);
+		bool LoadNode(::xmlNodePtr source, CXMLNode &destination);
 		/// Converts a xmlChar to a C++ string
-		string xmlChar2string(const xmlChar *value);
+		::std::string xmlChar2string(const ::xmlChar *value);
 };
+
+}  // namespace CONFIG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
 
 #endif

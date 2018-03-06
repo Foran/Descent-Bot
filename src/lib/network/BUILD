@@ -1,0 +1,29 @@
+cc_library(
+  name='libconnection',
+  srcs=[
+    'connection.cc',
+    'connectionmanager.cc',
+  ],
+  hdrs=[
+    'connection.h',
+    'connectionmanager.h',
+  ],
+  deps=[
+    ':libnetwork',
+    "//src/lib/log:liblog",
+  ],
+  visibility=['//visibility:public'],
+)
+
+cc_library(
+  name='libnetwork',
+  srcs=[
+    'network.cc',
+    'packets.cc',
+  ],
+  hdrs=[
+    'network.h',
+    'packets.h',
+  ],
+)
+

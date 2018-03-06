@@ -1,0 +1,10 @@
+cc_library(
+  name='libmath',
+  srcs=[
+    'math.cc',
+  ],
+  hdrs=[
+    'math.h',
+  ],
+  visibility=['//visibility:public'],
+)

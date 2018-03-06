@@ -10,6 +10,8 @@
  ***************************************************/
 #include "file.h"
 
+using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+
 CFile::CFile()
 {
   mHog = NULL;

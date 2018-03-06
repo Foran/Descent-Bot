@@ -17,7 +17,7 @@
 
 using namespace std;
 
-#include "log.h"
+#include "src/lib/log/log.h"
 
 class fstreamptr {
 public:

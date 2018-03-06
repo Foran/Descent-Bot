@@ -1,19 +1,50 @@
+proto_library(
+  name='libconfig_proto',
+  srcs=[
+    'config.proto',
+  ],
+)
+
+cc_proto_library(
+  name='libconfig_cc_proto',
+  deps=[
+    ':libconfig_proto',
+  ],
+)
+
 cc_library(
-  name = "libconfig",
+  name = "libxml",
   srcs = [
-    "config.cc",
+    "xml.cc",
   ],
   hdrs = [
-    "config.h",
-  ],
-  deps = [
-    "//:xml",
-    "//:log",
-    "//:log-raw",
-    "//:log-file",
+    "xml.h",
   ],
   copts = [
     "-I/usr/include/libxml2",
   ],
-  visibility = ["//visibility:public"],
+  linkopts = [
+    "-lxml2",
+  ],
+)
+
+cc_library(
+  name = 'libconfig',
+  srcs = [
+    'config.cc',
+  ],
+  hdrs = [
+    'config.h',
+  ],
+  deps = [
+    ':libconfig_cc_proto',
+    ':libxml',
+    '//src/lib/log:liblog',
+    '//src/lib/log:liblog-raw',
+    '//src/lib/log:liblog-file',
+  ],
+  copts = [
+    '-I/usr/include/libxml2',
+  ],
+  visibility = ['//visibility:public'],
 )

@@ -28,10 +28,8 @@ namespace SRC {
 namespace LIB {
 namespace CONFIG {
 class CConfig;
-}
-}
-}
-}
+}  // namespace CONFIG
+namespace LOG {
 
 /// This class represents a logging chain target
 class CLog_Chain 
@@ -87,5 +85,10 @@ class CLog
 extern string operator+(string input, int number);
 
 extern CLog global_Log;
+
+}  // namespace LOG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
 
 #endif

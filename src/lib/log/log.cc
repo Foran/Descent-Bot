@@ -10,6 +10,11 @@
  ***************************************************/
 #include "log.h"
 
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LOG {
+
 CLog global_Log;
 
 CLog_Chain::CLog_Chain(const LogType type)
@@ -95,3 +100,8 @@ string operator+(string input, int number)
    ss << number;
    return input + ss.str();
 }
+
+}  // namespace LOG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT

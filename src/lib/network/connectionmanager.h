@@ -21,7 +21,7 @@ using namespace std;
 #include "network.h"
 #include "packets.h"
 #include "connection.h"
-#include "log.h"
+#include "src/lib/log/log.h"
 
 /// Singleton that manages all connection objects
 /********************************************//**
