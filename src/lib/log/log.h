@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,8 +10,10 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef __LOG_H__
-#define __LOG_H__
+#ifndef SRC_LIB_LOG_LOG_H_
+#define SRC_LIB_LOG_LOG_H_
+
+#include <time.h>
 
 #include <string>
 #include <sstream>
@@ -17,11 +21,7 @@
 #include <map>
 #include <iostream>
 
-using namespace std;
-
-#include <time.h>
-
-#include "log_driver.h"
+#include "src/lib/log/log_driver.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
@@ -32,57 +32,55 @@ class CConfig;
 namespace LOG {
 
 /// This class represents a logging chain target
-class CLog_Chain 
-{
+class CLog_Chain {
  public:
-   CLog_Chain(const LogType type);
-   ~CLog_Chain();
-   
-   LogType get_Type() const;
-   
-   void add_Logger(LogDriverBase *log_driver);
-   void Write(int level, const string &message);
- protected:
- private:
-     vector<LogDriverBase *> mDrivers;
-   LogType mType;
+  explicit CLog_Chain(const LogType type);
+  ~CLog_Chain();
 
-   CLog_Chain();
-   CLog_Chain(const CLog_Chain &source);
-   CLog_Chain &operator=(const CLog_Chain &source);
+  LogType get_Type() const;
+
+  void add_Logger(LogDriverBase *log_driver);
+  void Write(int level, const ::std::string &message);
+
+ private:
+  vector<LogDriverBase *> mDrivers;
+  LogType mType;
+
+  CLog_Chain();
+  CLog_Chain(const CLog_Chain &source);
+  CLog_Chain &operator=(const CLog_Chain &source);
 };
 
 struct CLog_Cached_Entry {
-	LogType type;
-	int level;
-	string message;
-	time_t timestamp;
+  LogType type;
+  int level;
+  ::std::string message;
+  time_t timestamp;
 };
 
 /// This class manages all logging
-class CLog 
-{
+class CLog {
  public:
-   CLog();
-   ~CLog();
-   
-   void add_Logger(const LogType type, LogDriverBase *log_driver);
-   void Write(const LogType type, int level, const string &message);
- protected:
+  CLog();
+  ~CLog();
+
+  void add_Logger(const LogType type, LogDriverBase *log_driver);
+  void Write(const LogType type, int level, const ::std::string &message);
+
  private:
-	bool mCacheEnabled;
-	vector<CLog_Cached_Entry> mCache;
-	map<LogType, CLog_Chain *> mChains;
-   
-	CLog(const CLog &source);
-	void operator=(const CLog &source);
+  bool mCacheEnabled;
+  ::std::vector<CLog_Cached_Entry> mCache;
+  ::std::map<LogType, CLog_Chain *> mChains;
 
-	void FlushCache();
+  CLog(const CLog &source);
+  void operator=(const CLog &source);
 
-	friend class ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
+  void FlushCache();
+
+  friend class ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
 };
 
-extern string operator+(string input, int number);
+extern ::std::string operator+(::std::string input, int number);
 
 extern CLog global_Log;
 
@@ -91,4 +89,4 @@ extern CLog global_Log;
 }  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif
+#endif  // SRC_LIB_LOG_LOG_H_

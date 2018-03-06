@@ -10,6 +10,11 @@
  ***************************************************/
 #include "log_driver_raw.h"
 
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LOG {
+
 CLogDriverRaw::CLogDriverRaw() 
 {
 	mLevel = 100;
@@ -79,3 +84,8 @@ bool CLogDriverRaw::Write(int level, const string &message)
    
    return retval;
 }
+
+}  // namespace LOG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT

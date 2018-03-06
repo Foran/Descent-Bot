@@ -95,7 +95,7 @@ bool CXML::LoadNode(xmlNodePtr source, CXMLNode *destination) {
          nullptr != node; node = node->next) {
       if (XML_ELEMENT_NODE == node->type) {
         CXMLNode child;
-        retval &= LoadNode(node, child);
+        retval &= LoadNode(node, &child);
         if (retval) {
           destination->mChildren.push_back(child);
         }
