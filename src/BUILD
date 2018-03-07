@@ -1,7 +1,7 @@
 cc_binary(
   name='descent-bot',
   srcs=[
-    'main.cpp',
+    'main.cc',
   ],
   deps=[
     '//src/lib/levelmodel:liblevelmodel',
