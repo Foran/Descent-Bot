@@ -19,6 +19,7 @@
 #include "src/lib/network/connectionmanager.h"
 
 using ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
+using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CHogManager;
 using ::std::cout;
 using ::std::endl;
 

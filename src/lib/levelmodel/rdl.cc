@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,9 +10,14 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "rdl.h"
+#include "src/lib/levelmodel/rdl.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LEVELMODEL {
 
 /****************************//**
  * This method compartmentalizes
@@ -522,3 +529,8 @@ void CRdl::Init()
 {
    memset(&mHeader, 0, sizeof(mHeader));
 }
+
+}  // namespace LEVELMODEL
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
