@@ -21,6 +21,15 @@ namespace CONFIG {
 using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverFile;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverRaw;
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogDriverBase;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Info;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Warning;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Error;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Fatal;
+using ::std::string;
+using ::std::vector;
 using PROTO::Config;
 
 CConfig *CConfig::mSingleton = NULL;

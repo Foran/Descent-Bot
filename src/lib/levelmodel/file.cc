@@ -13,6 +13,13 @@
 #include "src/lib/levelmodel/file.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
+using ::std::cout;
+using ::std::endl;
+using ::std::fstream;
+using ::std::ios;
+using ::std::streampos;
+using ::std::string;
 
 namespace DESCENT_BOT {
 namespace SRC {

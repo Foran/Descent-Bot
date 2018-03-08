@@ -12,6 +12,10 @@
  ***************************************************/
 #include "src/lib/log/log.h"
 
+using ::std::make_pair;
+using ::std::string;
+using ::std::stringstream;
+
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {

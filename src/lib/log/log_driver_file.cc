@@ -10,6 +10,10 @@
  ***************************************************/
 #include "src/lib/log/log_driver_file.h"
 
+using ::std::endl;
+using ::std::ofstream;
+using ::std::string;
+
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {

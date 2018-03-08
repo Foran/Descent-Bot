@@ -13,6 +13,7 @@
 #include "src/lib/levelmodel/rdl.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
 
 namespace DESCENT_BOT {
 namespace SRC {

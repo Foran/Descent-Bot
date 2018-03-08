@@ -11,6 +11,7 @@
 #include "connectionmanager.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
 
 int CConnectionManager::mReferences = 0;
 Descent_Socket CConnectionManager::mSocket = -1;

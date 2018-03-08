@@ -33,7 +33,7 @@ class CConfig_Logging;
 class CConfig_Logging_Logger {
  public:
   ::std::string get_Name() const;
-  LogType get_Type() const;
+  ::DESCENT_BOT::SRC::LIB::LOG::LogType get_Type() const;
   int get_Level() const;
   ::std::string get_Driver() const;
   ::std::string operator[](const ::std::string &key);
@@ -41,7 +41,7 @@ class CConfig_Logging_Logger {
 
  private:
   ::std::string mName;
-  LogType mType;
+  ::DESCENT_BOT::SRC::LIB::LOG::LogType mType;
   int mLevel;
   ::std::string mDriver;
   ::std::map<::std::string, ::std::string> mOptions;
@@ -70,7 +70,7 @@ class CConfig_Logging {
   CConfig_Logging(const CConfig_Logging &source);
   ~CConfig_Logging();
 
-  LogType get_LogType(CXMLNode *node);
+  ::DESCENT_BOT::SRC::LIB::LOG::LogType get_LogType(CXMLNode *node);
   CConfig_Logging &operator=(const CConfig_Logging &source);
   bool Load_Logging(CXMLNode *node);
 

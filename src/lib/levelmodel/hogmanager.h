@@ -30,11 +30,11 @@ class CHogManager {
   CHogManager();
   ~CHogManager();
 
-  CHog &operator[](const string &filename);
+  CHog &operator[](const ::std::string &filename);
   static CHogManager get_Instance();
 
  private:
-  static vector<CHog *> mHogs;
+  static ::std::vector<CHog *> mHogs;
   static unsigned int mReferences;
 };
 

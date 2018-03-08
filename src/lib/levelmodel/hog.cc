@@ -13,6 +13,14 @@
 #include "src/lib/levelmodel/hog.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
+using ::std::cout;
+using ::std::endl;
+using ::std::ios;
+using ::std::ios_base;
+using ::std::streampos;
+using ::std::string;
+using ::std::vector;
 
 namespace DESCENT_BOT {
 namespace SRC {

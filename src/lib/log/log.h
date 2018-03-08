@@ -43,7 +43,7 @@ class CLog_Chain {
   void Write(int level, const ::std::string &message);
 
  private:
-  vector<LogDriverBase *> mDrivers;
+  ::std::vector<LogDriverBase *> mDrivers;
   LogType mType;
 
   CLog_Chain();
@@ -55,7 +55,7 @@ struct CLog_Cached_Entry {
   LogType type;
   int level;
   ::std::string message;
-  time_t timestamp;
+  ::time_t timestamp;
 };
 
 /// This class manages all logging

@@ -50,7 +50,7 @@ namespace LEVELMODEL {
 class CHog {
  public:
   CHog();
-  explicit CHog(const string &filename);
+  explicit CHog(const ::std::string &filename);
   CHog(const CHog &source);
 
   ~CHog();
@@ -58,17 +58,17 @@ class CHog {
   CHog &operator=(const CHog &source);
   bool operator==(const CHog &source);
 
-  CFile operator[](const string &name) const;
+  CFile operator[](const ::std::string &name) const;
 
-  bool Load(const string &filename);
+  bool Load(const ::std::string &filename);
 
-  vector<string> get_Filenames() const;
+  ::std::vector<::std::string> get_Filenames() const;
 
  private:
-  string mFilename;
-  vector<CFile *> mFiles;
+  ::std::string mFilename;
+  ::std::vector<CFile *> mFiles;
   fstreamptr get_Stream() const;
-  fstreamptr get_Stream(const string &name) const;
+  fstreamptr get_Stream(const ::std::string &name) const;
 
   friend class CFile;
   friend class CHogManager;
