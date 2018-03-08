@@ -17,6 +17,9 @@
 #include <vector>
 #include <iostream>
 
+// TODO(foran): move forward declaration down int
+//              the main namespace block to avoid
+//              duplicate declarations
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
