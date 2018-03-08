@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,32 +10,40 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef __FSTREAMPTR_H__
-#define __FSTREAMPTR_H__
+#ifndef SRC_LIB_LEVELMODEL_FSTREAMPTR_H_
+#define SRC_LIB_LEVELMODEL_FSTREAMPTR_H_
 
 #include <fstream>
 #include <iostream>
 #include <map>
 
-using namespace std;
-
 #include "src/lib/log/log.h"
 
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LEVELMODEL {
+
 class fstreamptr {
-public:
+ public:
   fstreamptr();
   fstreamptr(const fstreamptr &source);
-  fstreamptr(const char *filename, const ios_base::openmode mode);
+  fstreamptr(const char *filename, const ::ios_base::openmode mode);
   ~fstreamptr();
-  
+
   fstreamptr &operator=(const fstreamptr &source);
-  
-  fstream &operator*();
-  fstream const &operator*() const;
-protected:
-private:
-  fstream *mPtr;
-  static map<fstream *, int> mReferences;
+
+  ::std::fstream &operator*();
+  ::std::fstream const &operator*() const;
+
+ private:
+  ::std::fstream *mPtr;
+  static ::std::map<::std::fstream *, int> mReferences;
 };
 
-#endif
+}  // namespace LEVELMODEL
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
+
+#endif  // SRC_LIB_LEVELMODEL_FSTREAMPTR_H_
