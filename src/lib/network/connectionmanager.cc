@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,10 +10,17 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "connectionmanager.h"
+#include "src/lib/network/connectionmanager.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
+using ::std::map;
+using ::std::string;
+
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace NETWORK {
 
 int CConnectionManager::mReferences = 0;
 Descent_Socket CConnectionManager::mSocket = -1;
@@ -19,11 +28,10 @@ map<Descent_Socket, CConnection *> CConnectionManager::mConnections;
 map<struct sockaddr_in, string> CConnectionManager::mGames;
 map<string, time_t> CConnectionManager::mGameAges;
 
-/***********************************************//**
+/**
  * Default constructor
  **************************************************/
-CConnectionManager::CConnectionManager()
-{
+CConnectionManager::CConnectionManager() {
    if(0 == mReferences++) {
       mSocket = CNetwork::get_Instance().socket(PF_INET, SOCK_DGRAM, CNetwork::get_Instance().getprotobyname("udp")->p_proto);
       if(mSocket != -1) {
@@ -39,20 +47,18 @@ CConnectionManager::CConnectionManager()
    }
 }
 
-/***********************************************//**
+/**
  * Copy constructor
  * @param source object instance to copy
  **************************************************/
-CConnectionManager::CConnectionManager(const CConnectionManager &source)
-{
-   *this = source;
+CConnectionManager::CConnectionManager(const CConnectionManager &source) {
+  *this = source;
 }
 
-/***********************************************//**
+/**
  * Destructor
  **************************************************/
-CConnectionManager::~CConnectionManager()
-{
+CConnectionManager::~CConnectionManager() {
    if(--mReferences) {
       for(auto& pair : mConnections) {
 	 delete pair.second;
@@ -67,28 +73,25 @@ CConnectionManager::~CConnectionManager()
    }
 }
 
-/***********************************************//**
+/**
  * Copy Assignment operator
  * @param source object instance to copy
  * @returns a reference to this object
  **************************************************/
-CConnectionManager &CConnectionManager::operator=(const CConnectionManager &source)
-{
-   mReferences++;
-   return *this;
+CConnectionManager &CConnectionManager::operator=(const CConnectionManager &source) {
+  mReferences++;
+  return *this;
 }
 
-/***********************************************//**
+/**
  * Singleton Accessor
  * @returns a reference to the singleton instance of this object
  **************************************************/
-CConnectionManager CConnectionManager::get_Instance()
-{
-   return CConnectionManager();
+CConnectionManager CConnectionManager::get_Instance() {
+  return CConnectionManager();
 }
 
-void CConnectionManager::Pulse()
-{
+void CConnectionManager::Pulse() {
    fd_set read;
    struct timeval tv;
    int result;
@@ -144,3 +147,8 @@ void CConnectionManager::Pulse()
       }
    }
 }
+
+}  // namespace NETWORK
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT

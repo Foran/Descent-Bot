@@ -67,7 +67,8 @@ class CFile {
 
  private:
   CHog *mHog;
-  CFile(const CHog &hog, const ::std::string &filename, ::std::streampos offset, int length);
+  CFile(const CHog &hog, const ::std::string &filename,
+        ::std::streampos offset, int length);
 
   friend class CHog;
 };

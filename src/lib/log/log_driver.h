@@ -42,7 +42,8 @@ class LogDriverBase {
   virtual void set_Level(const ::std::string &level) = 0;
   virtual void set_Level(const int &level) = 0;
   virtual int get_Level() const = 0;
-  virtual void set_Option(const ::std::string &name, const ::std::string &value) = 0;
+  virtual void set_Option(const ::std::string &name,
+                          const ::std::string &value) = 0;
   virtual ::std::string get_Option(const ::std::string &name) = 0;
   virtual bool Write(int level, const ::std::string &message) = 0;
 

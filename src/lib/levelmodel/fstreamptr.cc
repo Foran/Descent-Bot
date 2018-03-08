@@ -35,7 +35,8 @@ fstreamptr::fstreamptr(const fstreamptr &source) {
   *this = source;
 }
 
-fstreamptr::fstreamptr(const char *filename, const ::std::ios_base::openmode mode) {
+fstreamptr::fstreamptr(const char *filename,
+                       const ::std::ios_base::openmode mode) {
   mPtr = new fstream(filename, mode);
   mReferences[mPtr] = 1;
   cout << "Initial fstreamptr(filename, mode) called" << endl;
