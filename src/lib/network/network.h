@@ -43,7 +43,7 @@ typedef struct INetwork {
   virtual Descent_Socket socket(int domain, int type, int protocol) = 0;
   virtual int close(Descent_Socket socket) = 0;
   virtual void atoinet(const ::std::string &input,
-                       struct sockaddr_in &addr) = 0;
+                       struct sockaddr_in *addr) = 0;
   virtual struct protoent *getprotobyname(const char *name) = 0;
   virtual int setsockopt(Descent_Socket sockfd, int level, int optname,
                          const void *optval, socklen_t optlen) = 0;
@@ -62,7 +62,7 @@ class CNetwork : INetwork {
 
   virtual Descent_Socket socket(int domain, int type, int protocol);
   virtual int close(Descent_Socket socket);
-  virtual void atoinet(const ::std::string &input, struct sockaddr_in &addr);
+  virtual void atoinet(const ::std::string &input, struct sockaddr_in *addr);
   virtual struct protoent *getprotobyname(const char *name);
   virtual int setsockopt(Descent_Socket sockfd, int level, int optname,
                          const void *optval, socklen_t optlen);

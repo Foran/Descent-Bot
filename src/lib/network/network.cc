@@ -45,13 +45,13 @@ int CNetwork::close(Descent_Socket socket) {
    return retval;
 }
 
-void CNetwork::atoinet(const string &input, struct sockaddr_in &addr) {
+void CNetwork::atoinet(const string &input, struct sockaddr_in *addr) {
 #ifdef _WIN32
    long inAddress;
    inAddress = inet_addr(input.c_str());
-   addr.sin_addr.s_addr = inAddress;
+   addr->sin_addr.s_addr = inAddress;
 #else
-   inet_aton(input.c_str(), (struct in_addr *)&addr.sin_addr.s_addr);
+   inet_aton(input.c_str(), (struct in_addr *)&addr->sin_addr.s_addr);
 #endif
 }
 

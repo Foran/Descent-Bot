@@ -34,7 +34,7 @@ void CConnection::find_Game() {
   memset(&addr, 0, sizeof(addr));
   addr.sin_family = AF_INET;
   addr.sin_port = htons(42424);
-  CNetwork::get_Instance().atoinet("192.168.2.32", addr);
+  CNetwork::get_Instance().atoinet("192.168.2.32", &addr);
   CPacket_Request_Game_Info_Lite request_packet;
   request_packet.Send(mSocket, addr);
   PACKET_Game_Info_Lite packet;

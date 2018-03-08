@@ -13,7 +13,7 @@
 #include "src/lib/levelmodel/hog.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::std::cout;
 using ::std::endl;
 using ::std::ios;
@@ -90,15 +90,16 @@ bool CHog::Load(const string &filename) {
     mFilename = filename;
     if (!(*file).eof() && (*file).read(signature, 3)) {
       if (signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
-        global_Log.Write(LogType_Debug, 100, "Found a valid signature");
+        global_Log.Write(LogType::LogType_Debug, 100,
+                         "Found a valid signature");
         while (!(*file).eof() && (*file).read(file_name, 13)) {
           string name = file_name;
           if (!(*file).eof() &&
               (*file).read(reinterpret_cast<char *>(&file_size), 4)) {
             streampos pos = (*file).tellg();
             mFiles.push_back(new CFile(*this, name, pos, file_size));
-            global_Log.Write(LogType_Debug, 60, "Found file: " + name +
-                                                " in hog");
+            global_Log.Write(LogType::LogType_Debug, 60, "Found file: " + name +
+                                                         " in hog");
             (*file).seekg(file_size, ios_base::cur);
           }
         }
@@ -114,8 +115,9 @@ bool CHog::Load(const string &filename) {
 fstreamptr CHog::get_Stream() const {
   fstreamptr file(("missions/" + mFilename).c_str(), ios::in | ios::binary);
 
-  global_Log.Write(LogType_Debug, 200, "Attempting to open Hog (" + mFilename +
-                                       ") Stream..." + ((*file).is_open() ?
+  global_Log.Write(LogType::LogType_Debug, 200, "Attempting to open Hog (" +
+                                                mFilename + ") Stream..." +
+                                                ((*file).is_open() ?
                                                         "Success" :
                                                         "Failure"));
 
@@ -128,7 +130,7 @@ fstreamptr CHog::get_Stream(const string &name) const {
   if ((*file).is_open()) {
     cout << "Before: " << (*file).tellg() << endl;
     (*file).seekg((*this)[name].mPos, ios_base::beg);
-    global_Log.Write(LogType_Debug, 200, "Attempting to open Hog (" +
+    global_Log.Write(LogType::LogType_Debug, 200, "Attempting to open Hog (" +
                                          mFilename + ") Entry (" + name +
                                          ") Stream..." + (!(*file).eof() ?
                                                           "Success" :

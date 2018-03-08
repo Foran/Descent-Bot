@@ -23,11 +23,6 @@ using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverRaw;
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogDriverBase;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Info;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Warning;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Error;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Fatal;
 using ::std::string;
 using ::std::vector;
 using PROTO::Config;
@@ -85,13 +80,13 @@ bool CConfig::Load(const string filename) {
   global_Log.mCacheEnabled = true;
   if (document.Load(filename)) {
     retval = true;
-    global_Log.Write(LogType_Info, 10, "Starting new Instance of Descent-Bot");
+    global_Log.Write(LogType::LogType_Info, 10, "Starting new Instance of Descent-Bot");
     if (string("Configuration") == document.get_Root().get_Name()) {
-      global_Log.Write(LogType_Debug, 150,
+      global_Log.Write(LogType::LogType_Debug, 150,
                        string("Found root config node (") +
                        document.get_Root().get_Name() + ")");
       for (auto& child : document.get_Root().get_Children()) {
-        global_Log.Write(LogType_Debug, 150,
+        global_Log.Write(LogType::LogType_Debug, 150,
                          string("Found child node (") + child.get_Name() + ")");
         if (string("Logging") == child.get_Name()) {
           retval &= Logging.Load_Logging(&child);
@@ -106,14 +101,14 @@ bool CConfig::Load(const string filename) {
 }
 
 LogType CConfig_Logging::get_LogType(CXMLNode *node) {
-  LogType retval = LogType_Fatal;
+  LogType retval = LogType::LogType_Fatal;
 
   if (static_cast<string>("Logger") == node->get_Name()) {
-    if ((*node)["Type"] == "Fatal") retval = LogType_Fatal;
-    else if ((*node)["Type"] == "Error") retval = LogType_Error;
-    else if ((*node)["Type"] == "Warning") retval = LogType_Warning;
-    else if ((*node)["Type"] == "Debug") retval = LogType_Debug;
-    else if ((*node)["Type"] == "Info") retval = LogType_Info;
+    if ((*node)["Type"] == "Fatal") retval = LogType::LogType_Fatal;
+    else if ((*node)["Type"] == "Error") retval = LogType::LogType_Error;
+    else if ((*node)["Type"] == "Warning") retval = LogType::LogType_Warning;
+    else if ((*node)["Type"] == "Debug") retval = LogType::LogType_Debug;
+    else if ((*node)["Type"] == "Info") retval = LogType::LogType_Info;
   }
 
   return retval;
@@ -165,11 +160,11 @@ CConfig_Logging_Logger::CConfig_Logging_Logger() {
 
 CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode *node) {
   if (static_cast<string>("Logger") == node->get_Name()) {
-    global_Log.Write(LogType_Debug, 150,
+    global_Log.Write(LogType::LogType_Debug, 150,
                      string("Scanning Configuration->Logging->") +
                      node->get_Name() + " for attributes");
     for (auto& pair : node->get_Attributes()) {
-      global_Log.Write(LogType_Debug, 150,
+      global_Log.Write(LogType::LogType_Debug, 150,
                        string("Configuration->Logging->") + node->get_Name() +
                        "[" + pair.first + "]=" + pair.second);
     }
@@ -183,7 +178,7 @@ CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode *node) {
     }
     for (auto& child : node->get_Children()) {
       if (static_cast<string>("Option") == child.get_Name()) {
-        global_Log.Write(LogType_Debug, 150,
+        global_Log.Write(LogType::LogType_Debug, 150,
                          string("Option ") + child["Name"] + " = " +
                          child["Value"]);
         if (driver) driver->set_Option(child["Name"], child["Value"]);
@@ -193,7 +188,7 @@ CConfig_Logging_Logger::CConfig_Logging_Logger(CXMLNode *node) {
       global_Log.add_Logger(driver->get_Type(), driver);
     }
   } else {
-    global_Log.Write(LogType_Debug, 50,
+    global_Log.Write(LogType::LogType_Debug, 50,
                      string("Was passed a node not of type Logger but of "
                             "type ") + node->get_Name());
   }
