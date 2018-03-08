@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,14 +10,20 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef __MISSIONMANAGER_H__
-#define __MISSIONMANAGER_H__
+#ifndef SRC_LIB_LEVELMODEL_MISSIONMANAGER_H_
+#define SRC_LIB_LEVELMODEL_MISSIONMANAGER_H_
 
-class CMissionManager
-{
- public:
- protected:
- private:
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LEVELMODEL {
+
+class CMissionManager {
 };
 
-#endif
+}  // namespace LEVELMODEL
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
+
+#endif  // SRC_LIB_LEVELMODEL_MISSIONMANAGER_H_
