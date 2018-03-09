@@ -111,7 +111,7 @@ void CConnectionManager::Pulse() {
   for (auto& pair : mConnections) {
     if (pair.second != NULL) {
       FD_SET(pair.first, &read);
-      if (max > <static_cast<int>(pair.first)) max = pair.first;
+      if (max > static_cast<int>(pair.first)) max = pair.first;
     }
   }
 
