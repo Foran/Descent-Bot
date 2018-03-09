@@ -13,6 +13,7 @@
 #include "src/lib/levelmodel/rdl.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 
 namespace DESCENT_BOT {
 namespace SRC {
@@ -486,7 +487,7 @@ istream &operator>>(istream &input, CRdl &rdl) {
       cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX)
            << ", file.tellg() returned " << input.tellg() << endl;
       for (unsigned int i = 0; i < vertexCount; i++) {
-        global_Log.Write(LogType_Debug, 200, "Added a vertex");
+        global_Log.Write(LogType::LogType_Debug, 200, "Added a vertex");
         DESCENT_VERTEX vertex;
         if (!(input >> vertex)) break;
         rdl.mDescentVerticies.push_back(vertex);

@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,11 +10,18 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "log_driver.h"
+#include "src/lib/log/log_driver.h"
 
-ostream &operator<<(ostream &output, const LogType &type) 
-{
-   switch(type) {
+using ::std::ostream;
+using ::std::string;
+
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace LOG {
+
+ostream &operator<<(ostream &output, const LogType &type) {
+  switch (type) {
     case LogType_Fatal:
       output << "Fatal";
       break;
@@ -24,26 +33,31 @@ ostream &operator<<(ostream &output, const LogType &type)
       break;
     case LogType_Debug:
       output << "Debug";
-	  break;
+      break;
     case LogType_Info:
       output << "Info";
       break;
     default:
       output << "Unknown";
       break;
-   }
-   
-   return output;
+  }
+
+  return output;
 }
 
 LogType GetLogType(string type) {
-	LogType retval = LogType_Info;
+  LogType retval = LogType_Info;
 
-	if(type == "Fatal") retval = LogType_Fatal;
-	else if(type == "Error") retval = LogType_Error;
-	else if(type == "Warning") retval = LogType_Warning;
-	else if(type == "Debug") retval = LogType_Debug;
-	else if(type == "Info") retval = LogType_Info;
+  if (type == "Fatal") retval = LogType_Fatal;
+  else if (type == "Error") retval = LogType_Error;
+  else if (type == "Warning") retval = LogType_Warning;
+  else if (type == "Debug") retval = LogType_Debug;
+  else if (type == "Info") retval = LogType_Info;
 
-	return retval;
+  return retval;
 }
+
+}  // namespace LOG
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT

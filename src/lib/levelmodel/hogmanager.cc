@@ -12,6 +12,9 @@
  ***************************************************/
 #include "src/lib/levelmodel/hogmanager.h"
 
+using ::std::string;
+using ::std::vector;
+
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {

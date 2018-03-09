@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -8,34 +10,40 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef __CONNECTION_H__
-#define __CONNECTION_H__
-
-#include <iostream>
-
-using namespace std;
+#ifndef SRC_LIB_NETWORK_CONNECTION_H_
+#define SRC_LIB_NETWORK_CONNECTION_H_
 
 #include <string.h>
 
-#include "network.h"
+#include <iostream>
 
-#include "packets.h"
+#include "src/lib/network/network.h"
+#include "src/lib/network/packets.h"
 
-class CConnection 
-{
+namespace DESCENT_BOT {
+namespace SRC {
+namespace LIB {
+namespace NETWORK {
+
+class CConnection {
  public:
-   void find_Game();
-   void ProcessInboundPackets();
- protected:
+  void find_Game();
+  void ProcessInboundPackets();
+
  private:
-     Descent_Socket mSocket;
-   
-   CConnection();
-   CConnection(const CConnection &source);
-   ~CConnection();
-   CConnection &operator=(const CConnection &source);
-   
-   friend class CConnectionManager;
+  Descent_Socket mSocket;
+
+  CConnection();
+  CConnection(const CConnection &source);
+  ~CConnection();
+  CConnection &operator=(const CConnection &source);
+
+  friend class CConnectionManager;
 };
 
-#endif
+}  // namespace NETWORK
+}  // namespace LIB
+}  // namespace SRC
+}  // namespace DESCENT_BOT
+
+#endif  // SRC_LIB_NETWORK_CONNECTION_H_

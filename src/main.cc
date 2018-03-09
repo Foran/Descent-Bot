@@ -20,6 +20,7 @@
 
 using ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
 using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CHogManager;
+using ::DESCENT_BOT::SRC::LIB::NETWORK::CConnectionManager;
 using ::std::cout;
 using ::std::endl;
 

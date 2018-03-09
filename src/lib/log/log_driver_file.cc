@@ -1,4 +1,6 @@
 /****************************************************
+ * Copyright 2018 Ben M. Ward
+ *
  * This work is licensed under the Creative
  * Commons Attribution-NonCommercial-ShareAlike
  * 3.0 Unported License. To view a copy of this
@@ -9,6 +11,10 @@
  * California, 94041, USA.
  ***************************************************/
 #include "src/lib/log/log_driver_file.h"
+
+using ::std::endl;
+using ::std::ofstream;
+using ::std::string;
 
 namespace DESCENT_BOT {
 namespace SRC {

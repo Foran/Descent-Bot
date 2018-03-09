@@ -28,7 +28,7 @@ class fstreamptr {
  public:
   fstreamptr();
   fstreamptr(const fstreamptr &source);
-  fstreamptr(const char *filename, const ::ios_base::openmode mode);
+  fstreamptr(const char *filename, const ::std::ios_base::openmode mode);
   ~fstreamptr();
 
   fstreamptr &operator=(const fstreamptr &source);

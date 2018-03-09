@@ -45,29 +45,30 @@ class CFile {
   /// Default constructor
   CFile();
   /// Standalone file or file in missions/descent.hog
-  explicit CFile(const string &filename);
+  explicit CFile(const ::std::string &filename);
   /// File in hog or missions/descent.hog
-  CFile(const CHog &hog, const string &filename);
-  CFile(const string &hog, const string &filename);
+  CFile(const CHog &hog, const ::std::string &filename);
+  CFile(const ::std::string &hog, const ::std::string &filename);
   CFile(const CFile &source);
   virtual ~CFile();
 
   CFile &operator=(const CFile &source);
 
-  void Load(const string &filename);
-  void Load(const CHog &hog, const string &filename);
-  void Load(const string &hog, const string &filename);
+  void Load(const ::std::string &filename);
+  void Load(const CHog &hog, const ::std::string &filename);
+  void Load(const ::std::string &hog, const ::std::string &filename);
 
  protected:
   fstreamptr get_Stream();
-  bool eof(fstream &file);
-  string mFilename;
-  streampos mPos;
+  bool eof(::std::fstream &file);
+  ::std::string mFilename;
+  ::std::streampos mPos;
   int mLength;
 
  private:
   CHog *mHog;
-  CFile(const CHog &hog, const string &filename, streampos offset, int length);
+  CFile(const CHog &hog, const ::std::string &filename,
+        ::std::streampos offset, int length);
 
   friend class CHog;
 };
