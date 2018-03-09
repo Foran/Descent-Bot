@@ -80,7 +80,8 @@ bool CConfig::Load(const string filename) {
   global_Log.mCacheEnabled = true;
   if (document.Load(filename)) {
     retval = true;
-    global_Log.Write(LogType::LogType_Info, 10, "Starting new Instance of Descent-Bot");
+    global_Log.Write(LogType::LogType_Info, 10,
+                     "Starting new Instance of Descent-Bot");
     if (string("Configuration") == document.get_Root().get_Name()) {
       global_Log.Write(LogType::LogType_Debug, 150,
                        string("Found root config node (") +

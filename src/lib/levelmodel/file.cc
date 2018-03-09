@@ -100,8 +100,8 @@ fstreamptr CFile::get_Stream() {
       (*file).open(("missions/" + mFilename).c_str(), ios::in | ios::binary);
       mPos = (*file).tellg();
     } else {
-      global_Log.Write(LogType::LogType_Debug, 200, "Opening " + mFilename + " from " +
-                                           mHog->mFilename);
+      global_Log.Write(LogType::LogType_Debug, 200, "Opening " + mFilename +
+                                                    " from " + mHog->mFilename);
       file = mHog->get_Stream(mFilename);
       cout << ((*file).is_open() ? "True" : "False") << endl;
     }
