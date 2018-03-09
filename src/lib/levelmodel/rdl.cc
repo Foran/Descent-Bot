@@ -14,6 +14,16 @@
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_SHORTFIXED;
+using ::std::cout;
+using ::std::dec;
+using ::std::endl;
+using ::std::hex;
+using ::std::ios;
+using ::std::ios_base;
+using ::std::istream;
+using ::std::ostream;
+using ::std::string;
 
 namespace DESCENT_BOT {
 namespace SRC {

@@ -32,11 +32,12 @@ namespace LIB {
 namespace LEVELMODEL {
 
 typedef struct DESCENT_VERTEX {
-  DESCENT_FIXED x, y, z;
+  ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_FIXED x, y, z;
 
  private:
   friend class CRdl;
-  friend istream &operator>>(istream &input, DESCENT_VERTEX &vertex);
+  friend ::std::istream &operator>>(::std::istream &input,
+                                    DESCENT_VERTEX &vertex);
 } DESCENT_VERTEX;
 
 typedef struct DESCENT_CUBE {
@@ -53,13 +54,13 @@ typedef struct DESCENT_CUBE {
     char energyCenterNumber;
     int16_t value;
   } energyCenter;
-  DESCENT_SHORTFIXED staticLight;
+  ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_SHORTFIXED staticLight;
   unsigned char walls[6];
 
  private:
   friend class CRdl;
-  friend istream &operator>>(istream &input, DESCENT_CUBE &cube);
-  friend ostream &operator<<(ostream &output, DESCENT_CUBE &cube);
+  friend ::std::istream &operator>>(::std::istream &input, DESCENT_CUBE &cube);
+  friend ::std::ostream &operator<<(::std::ostream &output, DESCENT_CUBE &cube);
 } DESCENT_CUBE;
 
 typedef struct RDL_HEADER {
@@ -71,8 +72,8 @@ typedef struct RDL_HEADER {
 
  private:
   friend class CRdl;
-  friend istream &operator>>(istream &input, RDL_HEADER &header);
-  friend ostream &operator<<(ostream &output, RDL_HEADER &header);
+  friend ::std::istream &operator>>(::std::istream &input, RDL_HEADER &header);
+  friend ::std::ostream &operator<<(::std::ostream &output, RDL_HEADER &header);
 } RDL_HEADER;
 
 typedef struct RDL_GAMEDATA_HEADER {
@@ -116,35 +117,37 @@ typedef struct RDL_GAMEDATA_HEADER {
 
  private:
   friend class CRdl;
-  friend istream &operator>>(istream &input, RDL_GAMEDATA_HEADER &header);
-  friend ostream &operator<<(ostream &output, RDL_GAMEDATA_HEADER &header);
+  friend ::std::istream &operator>>(::std::istream &input,
+                                    RDL_GAMEDATA_HEADER &header);
+  friend ::std::ostream &operator<<(::std::ostream &output,
+                                    RDL_GAMEDATA_HEADER &header);
 } RDL_GAMEDATA_HEADER;
 
 class CRdl : public CFile {
  public:
   CRdl();
-  explicit CRdl(const string &filename);
-  CRdl(const CHog &hog, const string &filename);
-  CRdl(const string &hog, const string &filename);
+  explicit CRdl(const ::std::string &filename);
+  CRdl(const CHog &hog, const ::std::string &filename);
+  CRdl(const ::std::string &hog, const ::std::string &filename);
   CRdl(const CRdl &source);
   ~CRdl();
 
   CRdl &operator=(const CRdl &source);
 
   void Reset();
-  void Load(const string &filename);
-  void Load(const CHog &hog, const string &filename);
-  void Load(const string &hog, const string &filename);
+  void Load(const ::std::string &filename);
+  void Load(const CHog &hog, const ::std::string &filename);
+  void Load(const ::std::string &hog, const ::std::string &filename);
 
  private:
   RDL_HEADER mHeader;
-  vector<DESCENT_VERTEX> mDescentVerticies;
-  vector<DESCENT_CUBE> mDescentCubes;
+  ::std::vector<DESCENT_VERTEX> mDescentVerticies;
+  ::std::vector<DESCENT_CUBE> mDescentCubes;
   RDL_GAMEDATA_HEADER mGameDataHeader;
 
   void Init();
   void doLoad();
-  friend istream &operator>>(istream &input, CRdl &rdl);
+  friend ::std::istream &operator>>(::std::istream &input, CRdl &rdl);
 };
 
 }  // namespace LEVELMODEL
