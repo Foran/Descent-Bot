@@ -48,9 +48,9 @@ class CConnectionManager {
  private:
   static int mReferences;
   static Descent_Socket mSocket;
-  static map<Descent_Socket, CConnection *> mConnections;
-  static map<struct sockaddr_in, string> mGames;
-  static map<string, time_t> mGameAges;
+  static ::std::map<Descent_Socket, CConnection *> mConnections;
+  static ::std::map<struct sockaddr_in, ::std::string> mGames;
+  static ::std::map<::std::string, time_t> mGameAges;
 };
 
 }  // namespace NETWORK

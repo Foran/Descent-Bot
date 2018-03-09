@@ -12,16 +12,22 @@
  ***************************************************/
 #include "src/lib/network/connection.h"
 
+using ::std::cout;
+using ::std::endl;
+
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
 CConnection::CConnection() {
-  mSocket = CNetwork::get_Instance().socket(PF_INET, SOCK_DGRAM, CNetwork::get_Instance().getprotobyname("udp")->p_proto);
+  mSocket = CNetwork::get_Instance().socket(PF_INET, SOCK_DGRAM,
+                      CNetwork::get_Instance().getprotobyname("udp")->p_proto);
   if (mSocket != -1) {
     int on = 1;
-    CNetwork::get_Instance().setsockopt(mSocket, SOL_SOCKET, SO_BROADCAST, (char *)&on, sizeof(on));
+    CNetwork::get_Instance().setsockopt(mSocket, SOL_SOCKET, SO_BROADCAST,
+                                        reinterpret_cast<char *>(&on),
+                                        sizeof(on));
   }
 }
 
@@ -39,9 +45,14 @@ void CConnection::find_Game() {
   request_packet.Send(mSocket, addr);
   PACKET_Game_Info_Lite packet;
   socklen_t len;
-  CNetwork::get_Instance().recvfrom(mSocket, (char *)&packet, 1, MSG_PEEK, (struct sockaddr *)&addr, &len);
+  CNetwork::get_Instance().recvfrom(mSocket, reinterpret_cast<char *>(&packet),
+                                    1, MSG_PEEK, (struct sockaddr *)&addr,
+                                    &len);
   if (packet.Type == UPID_GAME_INFO_LITE) {
-    CNetwork::get_Instance().recvfrom(mSocket, (char *)&packet, sizeof(packet), 0, (struct sockaddr *)&addr, &len);
+    CNetwork::get_Instance().recvfrom(mSocket,
+                                      reinterpret_cast<char *>(&packet),
+                                      sizeof(packet), 0,
+                                      (struct sockaddr *)&addr, &len);
     cout << packet.Game_Name << endl;
     cout << packet.Mission_Title << endl;
     cout << packet.Mission_Name << endl;
