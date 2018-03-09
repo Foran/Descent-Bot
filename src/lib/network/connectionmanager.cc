@@ -13,7 +13,7 @@
 #include "src/lib/network/connectionmanager.h"
 
 using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::std::map;
 using ::std::string;
 
@@ -116,7 +116,7 @@ void CConnectionManager::Pulse() {
    result = CNetwork::get_Instance().select(max + 1, &read, NULL, NULL, &tv);
    
    if(result > 0) {
-      global_Log.Write(LogType_Debug, 100, "Received a packet");
+      global_Log.Write(LogType::LogType_Debug, 100, "Received a packet");
       if(FD_ISSET(mSocket, &read)) {
 	 len = sizeof(addr);
 	 if(CNetwork::get_Instance().recvfrom(mSocket, &packetId, 1, MSG_PEEK, (struct sockaddr *)&addr, &len) > 0) {
