@@ -1,0 +1,14 @@
+cc_test(
+  name='packet_tests',
+  size='small',
+  srcs=[
+    'packetUnitTests.cc',
+  ],
+  deps=[
+    '@gtest//:gtest_main',
+    '//src/lib/network:libnetwork',
+  ],
+  copts=[
+    '-Iexternal/gtest/include',
+  ],
+)
