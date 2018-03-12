@@ -48,5 +48,10 @@ TEST_F(PacketTest, DefaultConstructor) {
   PACKET_Game_Info_Lite *packet =
                          reinterpret_cast<PACKET_Game_Info_Lite *>(buffer);
   EXPECT_EQ(UDP_PacketType::UPID_GAME_INFO_LITE, packet->Type);
+  EXPECT_EQ(0, packet->Major);
+  EXPECT_EQ(56, packet->Minor);
+  EXPECT_EQ(0, packet->Micro);
   EXPECT_EQ(string("foran's game"), string(packet->Game_Name));
+  EXPECT_EQ(string("Total Chaos"), string(packet->Mission_Title));
+  EXPECT_EQ(string("CHAOS"), string(packet->Mission_Name));
 }
