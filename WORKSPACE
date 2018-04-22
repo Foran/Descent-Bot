@@ -44,3 +44,19 @@ http_archive(
     strip_prefix = "protobuf-master",
     urls = ["https://github.com/google/protobuf/archive/master.zip"],
 )
+
+new_http_archive(
+    name = "org_xmlsoft_libxml2",
+    sha256 = "f63c5e7d30362ed28b38bfa1ac6313f9a80230720b7fb6c80575eeab3ff5900c",
+    strip_prefix = "libxml2-2.9.7",
+    url = "http://xmlsoft.org/sources/libxml2-2.9.7.tar.gz",
+    build_file = "thirdparty/libxml2.BUILD"
+)
+
+new_http_archive(
+    name = "com_googleapis_zlib",
+    build_file = "thirdparty/zlib.BUILD",
+    sha256 = "36658cb768a54c1d4dec43c3116c27ed893e88b02ecfcb44f2166f9c0b7f2a0d",
+    strip_prefix = "zlib-1.2.8",
+    url = "http://bazel-mirror.storage.googleapis.com/zlib.net/zlib-1.2.8.tar.gz",
+)
