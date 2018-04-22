@@ -20,11 +20,8 @@ cc_library(
   hdrs = [
     "xml.h",
   ],
-  copts = [
-    "-I/usr/include/libxml2",
-  ],
-  linkopts = [
-    "-lxml2",
+  deps = [
+    "@org_xmlsoft_libxml2//:libxml2"
   ],
 )
 
