@@ -26,8 +26,8 @@ namespace NETWORK {
 /**
  * Default constructor
  **************************************************/
-CConnectionManager::CConnectionManager(const CContext &context) {
-  mContext = &context;
+CConnectionManager::CConnectionManager(CContext *context) {
+  mContext = context;
   mSocket = -1;
   mSocket = CNetwork::get_Instance().socket(PF_INET, SOCK_DGRAM,
               CNetwork::get_Instance().getprotobyname("udp")->p_proto);

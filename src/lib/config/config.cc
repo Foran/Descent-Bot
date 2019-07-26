@@ -33,7 +33,8 @@ using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
  * @see CConfig(const string filename)
  * @see CConfig(const CConfig &source)
  *****************************************/
-CConfig::CConfig(const CContext &context) {
+CConfig::CConfig(CContext *context) {
+  mContext = context;
   Initialize();
   Reset();
 }

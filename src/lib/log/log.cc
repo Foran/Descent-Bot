@@ -46,9 +46,9 @@ void CLog_Chain::Write(int level, const string &message) {
   }
 }
 
-CLog::CLog(const CContext &context) {
+CLog::CLog(CContext *context) {
   mCacheEnabled = false;
-  mContext = &context;
+  mContext = context;
 }
 
 CLog::~CLog() {

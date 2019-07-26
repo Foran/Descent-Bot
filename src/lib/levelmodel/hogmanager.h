@@ -29,7 +29,7 @@ namespace LEVELMODEL {
 
 class CHogManager : public DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  explicit CHogManager(const DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
+  explicit CHogManager(DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
   ~CHogManager();
 
   ::std::string getName() const override;

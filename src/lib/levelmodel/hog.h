@@ -49,8 +49,8 @@ namespace LEVELMODEL {
 
 class CHog {
  public:
-  explicit CHog(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
-  CHog(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context,
+  explicit CHog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+  CHog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
        const ::std::string &filename);
   CHog(const CHog &source);
 

@@ -334,7 +334,7 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const CContext &context) : CFile(context) {
+CRdl::CRdl(CContext *context) : CFile(context) {
   Init();
 }
 
@@ -346,7 +346,7 @@ CRdl::CRdl(const CContext &context) : CFile(context) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const CContext &context, const string &filename) : CFile(context) {
+CRdl::CRdl(CContext *context, const string &filename) : CFile(context) {
   Init();
   Load(filename);
 }
@@ -360,7 +360,7 @@ CRdl::CRdl(const CContext &context, const string &filename) : CFile(context) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const CContext &context, const CHog &hog,
+CRdl::CRdl(CContext *context, const CHog &hog,
            const string &filename) : CFile(context) {
   Init();
   Load(hog, filename);
@@ -375,7 +375,7 @@ CRdl::CRdl(const CContext &context, const CHog &hog,
  * @see CRdl(const CHog &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const CContext &context, const string &hog,
+CRdl::CRdl(CContext *context, const string &hog,
            const string &filename) : CFile(context) {
   Init();
   Load(hog, filename);

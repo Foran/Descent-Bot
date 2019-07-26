@@ -28,12 +28,12 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-CHog::CHog(const CContext &context) {
-  mContext = &context;
+CHog::CHog(CContext *context) {
+  mContext = context;
 }
 
-CHog::CHog(const CContext &context, const string &filename) {
-  mContext = &context;
+CHog::CHog(CContext *context, const string &filename) {
+  mContext = context;
   Load(filename);
 }
 
@@ -57,7 +57,7 @@ bool CHog::operator==(const CHog &source) {
 }
 
 CFile CHog::operator[](const string &name) const {
-  CFile retval(*mContext);
+  CFile retval(mContext);
 
   for (auto& file : mFiles) {
     if (file->mFilename == name) {
@@ -101,7 +101,7 @@ bool CHog::Load(const string &filename) {
           if (!(*file).eof() &&
               (*file).read(reinterpret_cast<char *>(&file_size), 4)) {
             streampos pos = (*file).tellg();
-            mFiles.push_back(new CFile(*mContext, *this, name, pos, file_size));
+            mFiles.push_back(new CFile(mContext, *this, name, pos, file_size));
             dynamic_cast<CLog*>(
               mContext->getComponent("Log"))->Write(
                 LogType::LogType_Debug, 60, "Found file: " + name +

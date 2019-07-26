@@ -43,14 +43,14 @@ namespace LEVELMODEL {
 class CFile {
  public:
   /// Default constructor
-  explicit CFile(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
+  explicit CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
   /// Standalone file or file in missions/descent.hog
-  CFile(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context,
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
         const ::std::string &filename);
   /// File in hog or missions/descent.hog
-  CFile(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context,
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
         const CHog &hog, const ::std::string &filename);
-  CFile(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context,
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
         const ::std::string &hog, const ::std::string &filename);
   CFile(const CFile &source);
   virtual ~CFile();
@@ -71,7 +71,7 @@ class CFile {
 
  private:
   CHog *mHog;
-  CFile(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context,
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
         const CHog &hog, const ::std::string &filename,
         ::std::streampos offset, int length);
 

@@ -27,30 +27,30 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-CFile::CFile(const CContext &context) {
-  mContext = &context;
+CFile::CFile(CContext *context) {
+  mContext = context;
   mHog = nullptr;
 }
 
-CFile::CFile(const CContext &context, const string &filename) {
-  mContext = &context;
+CFile::CFile(CContext *context, const string &filename) {
+  mContext = context;
   Load(filename);
 }
 
-CFile::CFile(const CContext &context, const CHog &hog, const string &filename) {
-  mContext = &context;
+CFile::CFile(CContext *context, const CHog &hog, const string &filename) {
+  mContext = context;
   Load(hog, filename);
 }
 
-CFile::CFile(const CContext &context, const string &hog,
+CFile::CFile(CContext *context, const string &hog,
              const string &filename) {
-  mContext = &context;
+  mContext = context;
 //  mHog = &CHogManager::get_Instance()[hog];
 }
 
-CFile::CFile(const CContext &context, const CHog &hog, const string &filename,
+CFile::CFile(CContext *context, const CHog &hog, const string &filename,
              streampos offset, int length) {
-  mContext = &context;
+  mContext = context;
   mHog = const_cast<CHog *>(&hog);
   mFilename = filename;
   mPos = offset;

@@ -45,10 +45,10 @@ void dbot_signal_handler(int s) {
 int main(int argc, char **argv) {
   int retval = 0;
   CApplicationContext applicationContext;
-  CLog log(applicationContext.getContext());
-  CConnectionManager connectionManager(applicationContext.getContext());
-  CHogManager hogManager(applicationContext.getContext());
-  CConfig config(applicationContext.getContext());
+  CLog log(&applicationContext.getContext());
+  CConnectionManager connectionManager(&applicationContext.getContext());
+  CHogManager hogManager(&applicationContext.getContext());
+  CConfig config(&applicationContext.getContext());
 
   applicationContext.registerComponent(&log);
   applicationContext.registerComponent(&connectionManager);

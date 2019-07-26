@@ -22,8 +22,8 @@ namespace LEVELMODEL {
 
 using DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
 
-CHogManager::CHogManager(const CContext &context) {
-  mContext = &context;
+CHogManager::CHogManager(CContext *context) {
+  mContext = context;
 }
 
 CHogManager::~CHogManager() {
@@ -47,7 +47,7 @@ CHog &CHogManager::operator[](const string &filename) {
   }
 
   if (retval == nullptr) {
-    retval = new CHog(*mContext, filename);
+    retval = new CHog(mContext, filename);
     mHogs.push_back(retval);
   }
 

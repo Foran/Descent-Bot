@@ -28,7 +28,7 @@ namespace CONFIG {
 
 class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  explicit CConfig(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext & context);
+  explicit CConfig(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
   ~CConfig();
 
   ::std::string getName() const override;
@@ -36,6 +36,7 @@ class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   void Reset();
 
  private:
+  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
   PROTO::Config mConfig;
 
   void Initialize();
