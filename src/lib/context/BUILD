@@ -1,0 +1,42 @@
+cc_library(
+  name='libcomponent',
+  hdrs=[
+    'component.h',
+  ],
+  visibility=[
+    '//visibility:public',
+  ],
+)
+
+cc_library(
+  name='libcontext',
+  srcs=[
+    'context.cc',
+  ],
+  hdrs=[
+    'context.h',
+  ],
+  deps=[
+    ':libcomponent',
+  ],
+  visibility=[
+    '//visibility:public',
+  ],
+)
+
+cc_library(
+  name='libapplication_context',
+  srcs=[
+    'application_context.cc',
+  ],
+  hdrs=[
+    'application_context.h',
+  ],
+  deps=[
+    ':libcontext',
+  ],
+  visibility=[
+    '//src:__pkg__',
+  ],
+)
+

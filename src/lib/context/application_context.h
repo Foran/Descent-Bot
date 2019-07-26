@@ -10,44 +10,37 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_CONFIG_CONFIG_H_
-#define SRC_LIB_CONFIG_CONFIG_H_
+#ifndef SRC_LIB_CONTEXT_APPLICATION_CONTEXT_H_
+#define SRC_LIB_CONTEXT_APPLICATION_CONTEXT_H_
 
 #include <map>
 #include <string>
-#include <vector>
 
-#include "src/lib/config/config.pb.h"
-#include "src/lib/context/component.h"
 #include "src/lib/context/context.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
-namespace CONFIG {
+namespace CONTEXT {
 
-class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
+class CApplicationContext : public CContext {
  public:
-  CConfig(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext & context);
-  ~CConfig();
+  CApplicationContext();
+  virtual ~CApplicationContext() override;
 
-  ::std::string getName() const override;
-  bool Load(const ::std::string filename);
-  void Reset();
-
+  CContext &getContext();
+  void registerComponent(CComponent *component);
+  void registerComponent(const ::std::string &name, CComponent *component);
+ protected:
  private:
-  PROTO::Config mConfig;
-
-  void Initialize();
-  void clearInstance();
-
-  CConfig(const CConfig &source);
-  CConfig &operator=(const CConfig &source);
+  CApplicationContext(const CContext &source) = delete;
+  CApplicationContext(const CContext &&source) = delete;
+  CApplicationContext &operator=(const CContext &source) = delete;
 };
 
-}  // namespace CONFIG
+}  // namespace CONTEXT
 }  // namespace LIB
 }  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_CONFIG_CONFIG_H_
+#endif  // SRC_LIB_CONTEXT_APPLICATION_CONTEXT_H_

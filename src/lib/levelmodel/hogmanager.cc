@@ -20,19 +20,20 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-vector<CHog *> CHogManager::mHogs;
-unsigned int CHogManager::mReferences = 0;
+using DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
 
-CHogManager::CHogManager() {
-  mReferences++;
+CHogManager::CHogManager(CContext &context) {
+  mContext = &context;
 }
 
 CHogManager::~CHogManager() {
-  if (--mReferences == 0) {
-    for (auto& hog : mHogs) {
-      delete hog;
-    }
+  for (auto& hog : mHogs) {
+    delete hog;
   }
+}
+
+string CHogManager::getName() const {
+  return "HogManager";
 }
 
 CHog &CHogManager::operator[](const string &filename) {
@@ -46,15 +47,11 @@ CHog &CHogManager::operator[](const string &filename) {
   }
 
   if (retval == nullptr) {
-    retval = new CHog(filename);
+    retval = new CHog(*mContext, filename);
     mHogs.push_back(retval);
   }
 
   return *retval;
-}
-
-CHogManager CHogManager::get_Instance() {
-  return CHogManager();
 }
 
 }  // namespace LEVELMODEL

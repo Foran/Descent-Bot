@@ -1,0 +1,9 @@
+filegroup(
+  name='config',
+  srcs=[
+    'Main.conf',
+  ],
+  visibility=[
+    '//visibility:public',
+  ],
+)

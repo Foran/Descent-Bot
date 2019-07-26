@@ -1,0 +1,16 @@
+loggers: {
+  name: 'Main Console',
+  type: Logger.LogType.DEBUG,
+  level: 100,
+  driver: 'Raw'
+},
+loggers: {
+  name: 'System Log',
+  type: Logger.LogType.DEBUG,
+  level: 300,
+  driver: 'File',
+  options: {
+    name='File',
+    value='System.Main.log'
+  }
+}

@@ -12,7 +12,8 @@
  ***************************************************/
 #include "src/lib/network/connectionmanager.h"
 
-using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::std::map;
 using ::std::string;
@@ -22,32 +23,26 @@ namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
-int CConnectionManager::mReferences = 0;
-Descent_Socket CConnectionManager::mSocket = -1;
-map<Descent_Socket, CConnection *> CConnectionManager::mConnections;
-map<struct sockaddr_in, string> CConnectionManager::mGames;
-map<string, time_t> CConnectionManager::mGameAges;
-
 /**
  * Default constructor
  **************************************************/
-CConnectionManager::CConnectionManager() {
-  if (0 == mReferences++) {
-    mSocket = CNetwork::get_Instance().socket(PF_INET, SOCK_DGRAM,
-                CNetwork::get_Instance().getprotobyname("udp")->p_proto);
-    if (mSocket != -1) {
-      int on = 1;
-      CNetwork::get_Instance().setsockopt(mSocket, SOL_SOCKET, SO_BROADCAST,
-                                          reinterpret_cast<char *>(&on),
-                                          sizeof(on));
-      struct sockaddr_in addr;
-      memset(&addr, 0, sizeof(addr));
-      addr.sin_family = AF_INET;
-      addr.sin_port = htons(42424);
-      addr.sin_addr.s_addr = INADDR_ANY;
-      CNetwork::get_Instance().bind(mSocket, (struct sockaddr *)&addr,
-                                    sizeof(addr));
-    }
+CConnectionManager::CConnectionManager(CContext &context) {
+  mContext = &context;
+  mSocket = -1;
+  mSocket = CNetwork::get_Instance().socket(PF_INET, SOCK_DGRAM,
+              CNetwork::get_Instance().getprotobyname("udp")->p_proto);
+  if (mSocket != -1) {
+    int on = 1;
+    CNetwork::get_Instance().setsockopt(mSocket, SOL_SOCKET, SO_BROADCAST,
+                                        reinterpret_cast<char *>(&on),
+                                        sizeof(on));
+    struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(42424);
+    addr.sin_addr.s_addr = INADDR_ANY;
+    CNetwork::get_Instance().bind(mSocket, (struct sockaddr *)&addr,
+                                  sizeof(addr));
   }
 }
 
@@ -63,17 +58,15 @@ CConnectionManager::CConnectionManager(const CConnectionManager &source) {
  * Destructor
  **************************************************/
 CConnectionManager::~CConnectionManager() {
-  if (--mReferences) {
-    for (auto& pair : mConnections) {
-      delete pair.second;
-    }
-    mConnections.clear();
-    mGames.clear();
-    mGameAges.clear();
-    if (mSocket >= 0) {
-      CNetwork::get_Instance().close(mSocket);
-      mSocket = -1;
-    }
+  for (auto& pair : mConnections) {
+    delete pair.second;
+  }
+  mConnections.clear();
+  mGames.clear();
+  mGameAges.clear();
+  if (mSocket >= 0) {
+    CNetwork::get_Instance().close(mSocket);
+    mSocket = -1;
   }
 }
 
@@ -84,16 +77,11 @@ CConnectionManager::~CConnectionManager() {
  **************************************************/
 CConnectionManager &CConnectionManager::operator=(
                                         const CConnectionManager &source) {
-  mReferences++;
   return *this;
 }
 
-/**
- * Singleton Accessor
- * @returns a reference to the singleton instance of this object
- **************************************************/
-CConnectionManager CConnectionManager::get_Instance() {
-  return CConnectionManager();
+::std::string CConnectionManager::getName() const {
+  return "ConnectionManager";
 }
 
 void CConnectionManager::Pulse() {
@@ -121,7 +109,7 @@ void CConnectionManager::Pulse() {
   result = CNetwork::get_Instance().select(max + 1, &read, NULL, NULL, &tv);
 
   if (result > 0) {
-    global_Log.Write(LogType::LogType_Debug, 100, "Received a packet");
+    dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(LogType::LogType_Debug, 100, "Received a packet");
     if (FD_ISSET(mSocket, &read)) {
       len = sizeof(addr);
       if (CNetwork::get_Instance().recvfrom(mSocket, &packetId, 1, MSG_PEEK,

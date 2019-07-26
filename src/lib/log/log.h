@@ -21,6 +21,8 @@
 #include <map>
 #include <iostream>
 
+#include "src/lib/context/component.h"
+#include "src/lib/context/context.h"
 #include "src/lib/log/log_driver.h"
 
 namespace DESCENT_BOT {
@@ -59,16 +61,18 @@ struct CLog_Cached_Entry {
 };
 
 /// This class manages all logging
-class CLog {
+class CLog : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  CLog();
+  CLog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
   ~CLog();
 
+  ::std::string getName() const override;
   void add_Logger(const LogType type, LogDriverBase *log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
 
  private:
   bool mCacheEnabled;
+  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
   ::std::vector<CLog_Cached_Entry> mCache;
   ::std::map<LogType, CLog_Chain *> mChains;
 
@@ -81,8 +85,6 @@ class CLog {
 };
 
 extern ::std::string operator+(::std::string input, int number);
-
-extern CLog global_Log;
 
 }  // namespace LOG
 }  // namespace LIB

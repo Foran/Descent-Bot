@@ -49,8 +49,8 @@ namespace LEVELMODEL {
 
 class CHog {
  public:
-  CHog();
-  explicit CHog(const ::std::string &filename);
+  CHog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
+  CHog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const ::std::string &filename);
   CHog(const CHog &source);
 
   ~CHog();
@@ -65,6 +65,7 @@ class CHog {
   ::std::vector<::std::string> get_Filenames() const;
 
  private:
+  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
   ::std::string mFilename;
   ::std::vector<CFile *> mFiles;
   fstreamptr get_Stream() const;

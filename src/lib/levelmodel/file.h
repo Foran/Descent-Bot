@@ -43,12 +43,12 @@ namespace LEVELMODEL {
 class CFile {
  public:
   /// Default constructor
-  CFile();
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
   /// Standalone file or file in missions/descent.hog
-  explicit CFile(const ::std::string &filename);
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const ::std::string &filename);
   /// File in hog or missions/descent.hog
-  CFile(const CHog &hog, const ::std::string &filename);
-  CFile(const ::std::string &hog, const ::std::string &filename);
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const CHog &hog, const ::std::string &filename);
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const ::std::string &hog, const ::std::string &filename);
   CFile(const CFile &source);
   virtual ~CFile();
 
@@ -59,6 +59,7 @@ class CFile {
   void Load(const ::std::string &hog, const ::std::string &filename);
 
  protected:
+  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
   fstreamptr get_Stream();
   bool eof(::std::fstream &file);
   ::std::string mFilename;
@@ -67,7 +68,7 @@ class CFile {
 
  private:
   CHog *mHog;
-  CFile(const CHog &hog, const ::std::string &filename,
+  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const CHog &hog, const ::std::string &filename,
         ::std::streampos offset, int length);
 
   friend class CHog;

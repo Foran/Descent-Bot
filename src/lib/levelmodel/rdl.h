@@ -125,10 +125,10 @@ typedef struct RDL_GAMEDATA_HEADER {
 
 class CRdl : public CFile {
  public:
-  CRdl();
-  explicit CRdl(const ::std::string &filename);
-  CRdl(const CHog &hog, const ::std::string &filename);
-  CRdl(const ::std::string &hog, const ::std::string &filename);
+  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
+  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const ::std::string &filename);
+  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const CHog &hog, const ::std::string &filename);
+  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context, const ::std::string &hog, const ::std::string &filename);
   CRdl(const CRdl &source);
   ~CRdl();
 

@@ -18,6 +18,8 @@
 
 class CHog;
 
+#include "src/lib/context/component.h"
+#include "src/lib/context/context.h"
 #include "src/lib/levelmodel/hog.h"
 
 namespace DESCENT_BOT {
@@ -25,17 +27,16 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-class CHogManager {
+class CHogManager : public DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  CHogManager();
+  CHogManager(DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
   ~CHogManager();
 
+  ::std::string getName() const override;
   CHog &operator[](const ::std::string &filename);
-  static CHogManager get_Instance();
-
  private:
-  static ::std::vector<CHog *> mHogs;
-  static unsigned int mReferences;
+  DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::std::vector<CHog *> mHogs;
 };
 
 }  // namespace LEVELMODEL

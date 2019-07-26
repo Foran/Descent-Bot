@@ -13,19 +13,6 @@ cc_proto_library(
 )
 
 cc_library(
-  name = "libxml",
-  srcs = [
-    "xml.cc",
-  ],
-  hdrs = [
-    "xml.h",
-  ],
-  deps = [
-    "@org_xmlsoft_libxml2//:libxml2"
-  ],
-)
-
-cc_library(
   name = 'libconfig',
   srcs = [
     'config.cc',
@@ -35,13 +22,11 @@ cc_library(
   ],
   deps = [
     ':libconfig_cc_proto',
-    ':libxml',
+    '//src/lib/context:libcomponent',
+    '//src/lib/context:libcontext',
     '//src/lib/log:liblog',
     '//src/lib/log:liblog-raw',
     '//src/lib/log:liblog-file',
-  ],
-  copts = [
-    '-I/usr/include/libxml2',
   ],
   visibility = ['//visibility:public'],
 )
