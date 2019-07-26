@@ -28,7 +28,7 @@ namespace CONFIG {
 
 class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  CConfig(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext & context);
+  explicit CConfig(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext & context);
   ~CConfig();
 
   ::std::string getName() const override;

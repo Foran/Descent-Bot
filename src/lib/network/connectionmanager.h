@@ -38,7 +38,8 @@ namespace NETWORK {
  ***********************************************/
 class CConnectionManager : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  CConnectionManager(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
+  explicit CConnectionManager(
+    const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
   CConnectionManager(const CConnectionManager &source);
   ~CConnectionManager();
 

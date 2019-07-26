@@ -22,7 +22,7 @@ namespace LEVELMODEL {
 
 using DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
 
-CHogManager::CHogManager(CContext &context) {
+CHogManager::CHogManager(const CContext &context) {
   mContext = &context;
 }
 

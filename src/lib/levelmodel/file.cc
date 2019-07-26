@@ -27,28 +27,29 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-CFile::CFile(CContext &context) {
+CFile::CFile(const CContext &context) {
   mContext = &context;
   mHog = nullptr;
 }
 
-CFile::CFile(CContext &context, const string &filename) {
+CFile::CFile(const CContext &context, const string &filename) {
   mContext = &context;
   Load(filename);
 }
 
-CFile::CFile(CContext &context, const CHog &hog, const string &filename) {
+CFile::CFile(const CContext &context, const CHog &hog, const string &filename) {
   mContext = &context;
   Load(hog, filename);
 }
 
-CFile::CFile(CContext &context, const string &hog, const string &filename) {
+CFile::CFile(const CContext &context, const string &hog,
+             const string &filename) {
   mContext = &context;
 //  mHog = &CHogManager::get_Instance()[hog];
 }
 
-CFile::CFile(CContext &context, const CHog &hog, const string &filename, streampos offset,
-             int length) {
+CFile::CFile(const CContext &context, const CHog &hog, const string &filename,
+             streampos offset, int length) {
   mContext = &context;
   mHog = const_cast<CHog *>(&hog);
   mFilename = filename;
@@ -102,13 +103,15 @@ fstreamptr CFile::get_Stream() {
 
   if (mFilename.length() > 0) {
     if (mHog == nullptr) {
-      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(LogType::LogType_Debug, 200, "Opening " + mFilename +
-                                           " in direct mode");
+      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(
+        LogType::LogType_Debug, 200, "Opening " + mFilename +
+                                     " in direct mode");
       (*file).open(("missions/" + mFilename).c_str(), ios::in | ios::binary);
       mPos = (*file).tellg();
     } else {
-      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(LogType::LogType_Debug, 200, "Opening " + mFilename +
-                                                    " from " + mHog->mFilename);
+      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(
+        LogType::LogType_Debug, 200, "Opening " + mFilename +
+                                     " from " + mHog->mFilename);
       file = mHog->get_Stream(mFilename);
       cout << ((*file).is_open() ? "True" : "False") << endl;
     }

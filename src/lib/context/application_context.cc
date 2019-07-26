@@ -34,7 +34,8 @@ void CApplicationContext::registerComponent(CComponent *component) {
   registerComponent(component->getName(), component);
 }
 
-void CApplicationContext::registerComponent(const ::std::string &name, CComponent *component) {
+void CApplicationContext::registerComponent(const ::std::string &name,
+                                            CComponent *component) {
   CContext::registerComponent(name, component);
 }
 

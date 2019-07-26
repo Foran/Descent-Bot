@@ -63,7 +63,7 @@ struct CLog_Cached_Entry {
 /// This class manages all logging
 class CLog : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  CLog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
+  explicit CLog(const ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext &context);
   ~CLog();
 
   ::std::string getName() const override;

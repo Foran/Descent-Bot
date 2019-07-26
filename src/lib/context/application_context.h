@@ -26,15 +26,15 @@ namespace CONTEXT {
 class CApplicationContext : public CContext {
  public:
   CApplicationContext();
-  virtual ~CApplicationContext() override;
+  ~CApplicationContext() override;
 
   CContext &getContext();
   void registerComponent(CComponent *component);
   void registerComponent(const ::std::string &name, CComponent *component);
  protected:
  private:
-  CApplicationContext(const CContext &source) = delete;
-  CApplicationContext(const CContext &&source) = delete;
+  explicit CApplicationContext(const CContext &source) = delete;
+  explicit CApplicationContext(const CContext &&source) = delete;
   CApplicationContext &operator=(const CContext &source) = delete;
 };
 

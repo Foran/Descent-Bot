@@ -65,7 +65,8 @@ int main(int argc, char **argv) {
   sigaction(SIGINT, &sigIntHandler, nullptr);
 #endif
 
-  dynamic_cast<CConfig*>(applicationContext.getComponent("Config"))->Load("config/Main.config");
+  dynamic_cast<CConfig*>(
+    applicationContext.getComponent("Config"))->Load("config/Main.config");
 
   // vector<string> names = HogManager["chaos.hog"].get_Filenames();
   // for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {
@@ -75,10 +76,12 @@ int main(int argc, char **argv) {
   // CRdl rdl1(applicationContext, "chaos.hog", "chaos1.rdl");
   // CRdl rdl2("chaos.hog", "chaos2.rdl");
 #ifdef _WIN32
-  while (1) dynamic_cast<CConnectionManager*>(applicationContext.getComponent("ConnectionManager"))->Pulse();
+  while (1) dynamic_cast<CConnectionManager*>(
+    applicationContext.getComponent("ConnectionManager"))->Pulse();
 #else
   while (dbot_signal_stillwantstoplay) {
-    dynamic_cast<CConnectionManager*>(applicationContext.getComponent("ConnectionManager"))->Pulse();
+    dynamic_cast<CConnectionManager*>(
+      applicationContext.getComponent("ConnectionManager"))->Pulse();
   }
 #endif
   // CConnection connection;

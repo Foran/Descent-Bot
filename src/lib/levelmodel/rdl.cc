@@ -334,7 +334,7 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(CContext &context) : CFile(context) {
+CRdl::CRdl(const CContext &context) : CFile(context) {
   Init();
 }
 
@@ -346,7 +346,7 @@ CRdl::CRdl(CContext &context) : CFile(context) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(CContext &context, const string &filename) : CFile(context) {
+CRdl::CRdl(const CContext &context, const string &filename) : CFile(context) {
   Init();
   Load(filename);
 }
@@ -360,7 +360,8 @@ CRdl::CRdl(CContext &context, const string &filename) : CFile(context) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(CContext &context, const CHog &hog, const string &filename) : CFile(context) {
+CRdl::CRdl(const CContext &context, const CHog &hog,
+           const string &filename) : CFile(context) {
   Init();
   Load(hog, filename);
 }
@@ -374,7 +375,8 @@ CRdl::CRdl(CContext &context, const CHog &hog, const string &filename) : CFile(c
  * @see CRdl(const CHog &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(CContext &context, const string &hog, const string &filename) : CFile(context) {
+CRdl::CRdl(const CContext &context, const string &hog,
+           const string &filename) : CFile(context) {
   Init();
   Load(hog, filename);
 }
@@ -498,7 +500,8 @@ istream &operator>>(istream &input, CRdl &rdl) {
       cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX)
            << ", file.tellg() returned " << input.tellg() << endl;
       for (unsigned int i = 0; i < vertexCount; i++) {
-        dynamic_cast<CLog*>(rdl.mContext->getComponent("Log"))->Write(LogType::LogType_Debug, 200, "Added a vertex");
+        dynamic_cast<CLog*>(rdl.mContext->getComponent("Log"))->Write(
+          LogType::LogType_Debug, 200, "Added a vertex");
         DESCENT_VERTEX vertex;
         if (!(input >> vertex)) break;
         rdl.mDescentVerticies.push_back(vertex);
