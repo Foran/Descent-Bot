@@ -10,38 +10,38 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LEVELMODEL_HOGMANAGER_H_
-#define SRC_LIB_LEVELMODEL_HOGMANAGER_H_
+#ifndef SRC_LIB_CONTEXT_CONTEXT_H_
+#define SRC_LIB_CONTEXT_CONTEXT_H_
 
+#include <map>
 #include <string>
-#include <vector>
-
-class CHog;
 
 #include "src/lib/context/component.h"
-#include "src/lib/context/context.h"
-#include "src/lib/levelmodel/hog.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
-namespace LEVELMODEL {
+namespace CONTEXT {
 
-class CHogManager : public DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
+class CContext {
  public:
-  explicit CHogManager(DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
-  ~CHogManager();
+  CComponent *getComponent(const ::std::string &name);
+ protected:
+  CContext();
+  virtual ~CContext();
 
-  ::std::string getName() const override;
-  CHog &operator[](const ::std::string &filename);
+  void registerComponent(const ::std::string &name, CComponent *component);
  private:
-  DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
-  ::std::vector<CHog *> mHogs;
+  ::std::map<::std::string, CComponent *> mComponentMap;
+
+  CContext(const CContext &source) = delete;
+  CContext(const CContext &&source) = delete;
+  CContext &operator=(const CContext &source) = delete;
 };
 
-}  // namespace LEVELMODEL
+}  // namespace CONTEXT
 }  // namespace LIB
 }  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LEVELMODEL_HOGMANAGER_H_
+#endif  // SRC_LIB_CONTEXT_CONTEXT_H_

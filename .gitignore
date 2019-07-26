@@ -4,7 +4,7 @@
 descent-bot
 testdescent-bot
 Descent-Bot.kdev4
-config/*.xml
+config/*.conf
 Descent-Bot.ncb
 Descent-Bot.suo
 Descent-Bot.vcproj.*.user

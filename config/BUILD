@@ -1,0 +1,9 @@
+filegroup(
+  name='config',
+  srcs=glob([
+    '*.conf',
+  ]),
+  visibility=[
+    '//visibility:public',
+  ],
+)

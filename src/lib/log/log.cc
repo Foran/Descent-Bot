@@ -15,13 +15,12 @@
 using ::std::make_pair;
 using ::std::string;
 using ::std::stringstream;
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
 
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
 namespace LOG {
-
-CLog global_Log;
 
 CLog_Chain::CLog_Chain(const LogType type) {
   mType = type;
@@ -47,8 +46,9 @@ void CLog_Chain::Write(int level, const string &message) {
   }
 }
 
-CLog::CLog() {
+CLog::CLog(CContext *context) {
   mCacheEnabled = false;
+  mContext = context;
 }
 
 CLog::~CLog() {
@@ -57,6 +57,10 @@ CLog::~CLog() {
       delete pair.second;
     }
   }
+}
+
+string CLog::getName() const {
+  return "Log";
 }
 
 void CLog::add_Logger(const LogType type, LogDriverBase *log_driver) {

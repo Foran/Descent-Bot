@@ -13,13 +13,17 @@
 #include <iostream>
 
 #include "src/lib/config/config.h"
+#include "src/lib/context/application_context.h"
 #include "src/lib/levelmodel/hogmanager.h"
 #include "src/lib/levelmodel/rdl.h"
 #include "src/lib/log/log.h"
 #include "src/lib/network/connectionmanager.h"
 
 using ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CApplicationContext;
 using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CHogManager;
+// using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CRdl;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::NETWORK::CConnectionManager;
 using ::std::cout;
 using ::std::endl;
@@ -40,8 +44,16 @@ void dbot_signal_handler(int s) {
 
 int main(int argc, char **argv) {
   int retval = 0;
-  CConnectionManager ConnectionManager;
-  CHogManager HogManager;
+  CApplicationContext applicationContext;
+  CLog log(&applicationContext.getContext());
+  CConnectionManager connectionManager(&applicationContext.getContext());
+  CHogManager hogManager(&applicationContext.getContext());
+  CConfig config(&applicationContext.getContext());
+
+  applicationContext.registerComponent(&log);
+  applicationContext.registerComponent(&connectionManager);
+  applicationContext.registerComponent(&hogManager);
+  applicationContext.registerComponent(&config);
 
 #ifndef _WIN32
   struct sigaction sigIntHandler;
@@ -53,20 +65,23 @@ int main(int argc, char **argv) {
   sigaction(SIGINT, &sigIntHandler, nullptr);
 #endif
 
-  CConfig::getInstance().Load("config/Main.xml");
+  dynamic_cast<CConfig*>(
+    applicationContext.getComponent("Config"))->Load("config/Main.config");
 
   // vector<string> names = HogManager["chaos.hog"].get_Filenames();
   // for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {
   //   cout << *i << endl;
   // }
 
-  // CRdl rdl1("chaos.hog", "chaos1.rdl");
+  // CRdl rdl1(applicationContext, "chaos.hog", "chaos1.rdl");
   // CRdl rdl2("chaos.hog", "chaos2.rdl");
 #ifdef _WIN32
-  while (1) CConnectionManager::get_Instance().Pulse();
+  while (1) dynamic_cast<CConnectionManager*>(
+    applicationContext.getComponent("ConnectionManager"))->Pulse();
 #else
   while (dbot_signal_stillwantstoplay) {
-    CConnectionManager::get_Instance().Pulse();
+    dynamic_cast<CConnectionManager*>(
+      applicationContext.getComponent("ConnectionManager"))->Pulse();
   }
 #endif
   // CConnection connection;

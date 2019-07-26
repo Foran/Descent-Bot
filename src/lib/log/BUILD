@@ -8,6 +8,10 @@ cc_library(
     'log.h',
     'log_driver.h',
   ],
+  deps=[
+    '//src/lib/context:libcomponent',
+    '//src/lib/context:libcontext',
+  ],
   visibility=['//visibility:public',],
 )
 

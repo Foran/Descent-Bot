@@ -12,7 +12,8 @@
  ***************************************************/
 #include "src/lib/levelmodel/rdl.h"
 
-using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_SHORTFIXED;
 using ::std::cout;
@@ -333,7 +334,7 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl() {
+CRdl::CRdl(CContext *context) : CFile(context) {
   Init();
 }
 
@@ -345,7 +346,7 @@ CRdl::CRdl() {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const string &filename) {
+CRdl::CRdl(CContext *context, const string &filename) : CFile(context) {
   Init();
   Load(filename);
 }
@@ -359,7 +360,8 @@ CRdl::CRdl(const string &filename) {
  * @see CRdl(const string &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const CHog &hog, const string &filename) {
+CRdl::CRdl(CContext *context, const CHog &hog,
+           const string &filename) : CFile(context) {
   Init();
   Load(hog, filename);
 }
@@ -373,7 +375,8 @@ CRdl::CRdl(const CHog &hog, const string &filename) {
  * @see CRdl(const CHog &hog, const string &filename)
  * @see CRdl(const CRdl &source)
  ****************************************************/
-CRdl::CRdl(const string &hog, const string &filename) {
+CRdl::CRdl(CContext *context, const string &hog,
+           const string &filename) : CFile(context) {
   Init();
   Load(hog, filename);
 }
@@ -387,7 +390,7 @@ CRdl::CRdl(const string &hog, const string &filename) {
  * @see CRdl(const CHog &hog, const string &filename)
  * @see CRdl(const string &hog, const string &filename)
  ****************************************************/
-CRdl::CRdl(const CRdl &source) {
+CRdl::CRdl(const CRdl &source) : CFile(source) {
   Init();
   *this = source;
 }
@@ -497,7 +500,8 @@ istream &operator>>(istream &input, CRdl &rdl) {
       cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX)
            << ", file.tellg() returned " << input.tellg() << endl;
       for (unsigned int i = 0; i < vertexCount; i++) {
-        global_Log.Write(LogType::LogType_Debug, 200, "Added a vertex");
+        dynamic_cast<CLog*>(rdl.mContext->getComponent("Log"))->Write(
+          LogType::LogType_Debug, 200, "Added a vertex");
         DESCENT_VERTEX vertex;
         if (!(input >> vertex)) break;
         rdl.mDescentVerticies.push_back(vertex);

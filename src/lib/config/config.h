@@ -17,87 +17,31 @@
 #include <string>
 #include <vector>
 
-#include "src/lib/log/log.h"
-#include "src/lib/log/log_driver_file.h"
-#include "src/lib/log/log_driver_raw.h"
-#include "src/lib/config/xml.h"
+#include "src/lib/config/config.pb.h"
+#include "src/lib/context/component.h"
+#include "src/lib/context/context.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
 namespace CONFIG {
 
-class CConfig;
-class CConfig_Logging;
-
-class CConfig_Logging_Logger {
+class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
  public:
-  ::std::string get_Name() const;
-  ::DESCENT_BOT::SRC::LIB::LOG::LogType get_Type() const;
-  int get_Level() const;
-  ::std::string get_Driver() const;
-  ::std::string operator[](const ::std::string &key);
-  ::std::vector<::std::string> get_Option_Names();
-
- private:
-  ::std::string mName;
-  ::DESCENT_BOT::SRC::LIB::LOG::LogType mType;
-  int mLevel;
-  ::std::string mDriver;
-  ::std::map<::std::string, ::std::string> mOptions;
-
-  CConfig_Logging_Logger();
-  CConfig_Logging_Logger(const CConfig_Logging_Logger &source);
-  explicit CConfig_Logging_Logger(CXMLNode *node);
-  ~CConfig_Logging_Logger();
-  CConfig_Logging_Logger &operator=(const CConfig_Logging_Logger &source);
-
-  bool is_Valid() const;
-
-  friend class CConfig_Logging;
-};
-
-
-class CConfig_Logging {
- public:
-  CConfig_Logging_Logger &operator[](const ::std::string &index) const;
-  ::std::vector<::std::string> get_Names() const;
-
- private:
-  ::std::map<::std::string, CConfig_Logging_Logger *> mLoggers;
-
-  CConfig_Logging();
-  CConfig_Logging(const CConfig_Logging &source);
-  ~CConfig_Logging();
-
-  ::DESCENT_BOT::SRC::LIB::LOG::LogType get_LogType(CXMLNode *node);
-  CConfig_Logging &operator=(const CConfig_Logging &source);
-  bool Load_Logging(CXMLNode *node);
-
-  friend class CConfig;
-};
-
-/// This class represents the current configuration setup
-class CConfig {
- public:
+  explicit CConfig(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
   ~CConfig();
 
-  static CConfig &getInstance();
-
+  ::std::string getName() const override;
   bool Load(const ::std::string filename);
   void Reset();
 
-  CConfig_Logging Logging;
-
  private:
-  static CConfig *mSingleton;
+  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  PROTO::Config mConfig;
 
   void Initialize();
-  static void clearInstance();
+  void clearInstance();
 
-  friend class CConfig_Logging;
-
-  CConfig();
   CConfig(const CConfig &source);
   CConfig &operator=(const CConfig &source);
 };

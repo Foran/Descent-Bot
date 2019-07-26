@@ -4,12 +4,16 @@ cc_binary(
     'main.cc',
   ],
   deps=[
+    '//src/lib/config:libconfig',
+    '//src/lib/context:libapplication_context',
     '//src/lib/levelmodel:liblevelmodel',
     '//src/lib/log:liblog',
-    '//src/lib/config:libconfig',
     '//src/lib/network:libconnection',
   ],
   copts=[
-    '-I/usr/include/libxml2',
+    '--std=c++17',
+  ],
+  data=[
+    '//config:config',
   ],
 )

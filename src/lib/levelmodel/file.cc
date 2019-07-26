@@ -12,7 +12,8 @@
  ***************************************************/
 #include "src/lib/levelmodel/file.h"
 
-using ::DESCENT_BOT::SRC::LIB::LOG::global_Log;
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::std::cout;
 using ::std::endl;
@@ -26,24 +27,30 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-CFile::CFile() {
+CFile::CFile(CContext *context) {
+  mContext = context;
   mHog = nullptr;
 }
 
-CFile::CFile(const string &filename) {
+CFile::CFile(CContext *context, const string &filename) {
+  mContext = context;
   Load(filename);
 }
 
-CFile::CFile(const CHog &hog, const string &filename) {
+CFile::CFile(CContext *context, const CHog &hog, const string &filename) {
+  mContext = context;
   Load(hog, filename);
 }
 
-CFile::CFile(const string &hog, const string &filename) {
-  mHog = &CHogManager::get_Instance()[hog];
+CFile::CFile(CContext *context, const string &hog,
+             const string &filename) {
+  mContext = context;
+//  mHog = &CHogManager::get_Instance()[hog];
 }
 
-CFile::CFile(const CHog &hog, const string &filename, streampos offset,
-             int length) {
+CFile::CFile(CContext *context, const CHog &hog, const string &filename,
+             streampos offset, int length) {
+  mContext = context;
   mHog = const_cast<CHog *>(&hog);
   mFilename = filename;
   mPos = offset;
@@ -61,6 +68,7 @@ CFile::~CFile() {
 }
 
 CFile &CFile::operator=(const CFile &source) {
+  mContext = source.mContext;
   mHog = source.mHog;
   mFilename = source.mFilename;
   mLength = source.mLength;
@@ -84,7 +92,7 @@ void CFile::Load(const CHog &hog, const string &filename) {
 }
 
 void CFile::Load(const string &hog, const string &filename) {
-  mHog = &CHogManager::get_Instance()[hog];
+//  mHog = &CHogManager::get_Instance()[hog];
   mFilename = filename;
   mLength = (*mHog)[filename].mLength;
   mPos = (*mHog)[filename].mPos;
@@ -95,13 +103,15 @@ fstreamptr CFile::get_Stream() {
 
   if (mFilename.length() > 0) {
     if (mHog == nullptr) {
-      global_Log.Write(LogType::LogType_Debug, 200, "Opening " + mFilename +
-                                           " in direct mode");
+      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(
+        LogType::LogType_Debug, 200, "Opening " + mFilename +
+                                     " in direct mode");
       (*file).open(("missions/" + mFilename).c_str(), ios::in | ios::binary);
       mPos = (*file).tellg();
     } else {
-      global_Log.Write(LogType::LogType_Debug, 200, "Opening " + mFilename +
-                                                    " from " + mHog->mFilename);
+      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(
+        LogType::LogType_Debug, 200, "Opening " + mFilename +
+                                     " from " + mHog->mFilename);
       file = mHog->get_Stream(mFilename);
       cout << ((*file).is_open() ? "True" : "False") << endl;
     }
