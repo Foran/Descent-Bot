@@ -109,9 +109,8 @@ void CConnectionManager::Pulse() {
   result = CNetwork::get_Instance().select(max + 1, &read, NULL, NULL, &tv);
 
   if (result > 0) {
-    dynamic_cast<CLog*>(
-      mContext->getComponent("Log"))->Write(
-        LogType::LogType_Debug, 100, "Received a packet");
+    CLog::fromContext(mContext)->Write(
+      LogType::LogType_Debug, 100, "Received a packet");
     if (FD_ISSET(mSocket, &read)) {
       len = sizeof(addr);
       if (CNetwork::get_Instance().recvfrom(mSocket, &packetId, 1, MSG_PEEK,

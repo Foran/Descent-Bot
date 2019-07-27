@@ -45,15 +45,18 @@ void dbot_signal_handler(int s) {
 int main(int argc, char **argv) {
   int retval = 0;
   CApplicationContext applicationContext;
+
   CLog log(&applicationContext.getContext());
+  applicationContext.registerComponent(&log);
+
+  CConfig config(&applicationContext.getContext());
+  applicationContext.registerComponent(&config);
+
   CConnectionManager connectionManager(&applicationContext.getContext());
   CHogManager hogManager(&applicationContext.getContext());
-  CConfig config(&applicationContext.getContext());
 
-  applicationContext.registerComponent(&log);
   applicationContext.registerComponent(&connectionManager);
   applicationContext.registerComponent(&hogManager);
-  applicationContext.registerComponent(&config);
 
 #ifndef _WIN32
   struct sigaction sigIntHandler;
@@ -66,7 +69,10 @@ int main(int argc, char **argv) {
 #endif
 
   dynamic_cast<CConfig*>(
-    applicationContext.getComponent("Config"))->Load("config/Main.config");
+    applicationContext.getComponent("Config"))->Load("config/Main.conf");
+
+  CLog::fromContext(&applicationContext)->Write(
+    ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug, 100, "Initialized");
 
   // vector<string> names = HogManager["chaos.hog"].get_Filenames();
   // for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {

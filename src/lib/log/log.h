@@ -36,21 +36,23 @@ namespace LOG {
 /// This class represents a logging chain target
 class CLog_Chain {
  public:
-  explicit CLog_Chain(const LogType type);
+  CLog_Chain(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+             const LogType type);
   ~CLog_Chain();
 
   LogType get_Type() const;
 
-  void add_Logger(LogDriverBase *log_driver);
+  void add_Logger(CLogDriverBase *log_driver);
   void Write(int level, const ::std::string &message);
 
  private:
-  ::std::vector<LogDriverBase *> mDrivers;
+  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::std::vector<CLogDriverBase *> mDrivers;
   LogType mType;
 
-  CLog_Chain();
-  CLog_Chain(const CLog_Chain &source);
-  CLog_Chain &operator=(const CLog_Chain &source);
+  CLog_Chain() = delete;
+  CLog_Chain(const CLog_Chain &source) = delete;
+  CLog_Chain &operator=(const CLog_Chain &source) = delete;
 };
 
 struct CLog_Cached_Entry {
@@ -67,12 +69,13 @@ class CLog : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   ~CLog();
 
   ::std::string getName() const override;
-  void add_Logger(const LogType type, LogDriverBase *log_driver);
+  void add_Logger(const LogType type, CLogDriverBase *log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
 
+  static CLog *fromContext(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
  private:
-  bool mCacheEnabled;
   ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  bool mCacheEnabled;
   ::std::vector<CLog_Cached_Entry> mCache;
   ::std::map<LogType, CLog_Chain *> mChains;
 
