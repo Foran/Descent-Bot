@@ -15,6 +15,7 @@
 using ::std::make_pair;
 using ::std::string;
 using ::std::stringstream;
+
 using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
 
 namespace DESCENT_BOT {
@@ -98,6 +99,11 @@ void CLog::FlushCache() {
   }
 
   mCacheEnabled = temp;
+}
+
+
+CLog *CLog::fromContext(CContext *context) {
+  return dynamic_cast<CLog *>(context->getComponent("Log"));
 }
 
 string operator+(string input, int number) {

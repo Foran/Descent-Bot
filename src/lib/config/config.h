@@ -35,12 +35,12 @@ class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   bool Load(const ::std::string filename);
   void Reset();
 
+  static CConfig *fromContext(
+    ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+
  private:
   ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
   PROTO::Config mConfig;
-
-  void Initialize();
-  void clearInstance();
 
   CConfig(const CConfig &source) = delete;
   CConfig &operator=(const CConfig &source) = delete;

@@ -72,6 +72,7 @@ class CLog : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   void add_Logger(const LogType type, CLogDriverBase *log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
 
+  static CLog *fromContext(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
  private:
   ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
   bool mCacheEnabled;
