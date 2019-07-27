@@ -16,6 +16,8 @@ using ::std::endl;
 using ::std::ofstream;
 using ::std::string;
 
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
@@ -24,7 +26,7 @@ namespace LOG {
 /**
  * Default Constructor
  **********************************************/
-CLogDriverFile::CLogDriverFile() {
+CLogDriverFile::CLogDriverFile(CContext *context) : CLogDriverBase(context) {
   mLevel = 100;
   mType = LogType_Debug;
   mName = "Default File";

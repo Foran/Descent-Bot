@@ -42,8 +42,8 @@ class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   void Initialize();
   void clearInstance();
 
-  CConfig(const CConfig &source);
-  CConfig &operator=(const CConfig &source);
+  CConfig(const CConfig &source) = delete;
+  CConfig &operator=(const CConfig &source) = delete;
 };
 
 }  // namespace CONFIG

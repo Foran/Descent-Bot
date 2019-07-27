@@ -16,12 +16,14 @@ using ::std::cout;
 using ::std::endl;
 using ::std::string;
 
+using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
 namespace LOG {
 
-CLogDriverRaw::CLogDriverRaw() {
+CLogDriverRaw::CLogDriverRaw(CContext *context) : CLogDriverBase(context) {
   mLevel = 100;
   mType = LogType_Debug;
   mName = "Default Raw";

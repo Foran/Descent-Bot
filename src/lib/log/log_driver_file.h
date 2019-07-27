@@ -19,6 +19,7 @@
 #include <fstream>
 #include <string>
 
+#include "src/lib/context/context.h"
 #include "src/lib/log/log_driver.h"
 
 namespace DESCENT_BOT {
@@ -26,9 +27,9 @@ namespace SRC {
 namespace LIB {
 namespace LOG {
 
-class CLogDriverFile : public LogDriverBase {
+class CLogDriverFile : public CLogDriverBase {
  public:
-  CLogDriverFile();
+  explicit CLogDriverFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
   virtual void set_Name(const ::std::string &name);
   virtual ::std::string get_Name() const;
   virtual ::std::string get_Driver() const;

@@ -22,7 +22,8 @@ namespace SRC {
 namespace LIB {
 namespace LOG {
 
-CLog_Chain::CLog_Chain(const LogType type) {
+CLog_Chain::CLog_Chain(CContext *context, const LogType type) {
+  mContext = context;
   mType = type;
 }
 
@@ -36,13 +37,13 @@ LogType CLog_Chain::get_Type() const {
   return mType;
 }
 
-void CLog_Chain::add_Logger(LogDriverBase *log_driver) {
+void CLog_Chain::add_Logger(CLogDriverBase *log_driver) {
   if (log_driver) mDrivers.push_back(log_driver);
 }
 
 void CLog_Chain::Write(int level, const string &message) {
   for (auto& driver : mDrivers) {
-    dynamic_cast<LogDriverBase *>(driver)->Write(level, message);
+    dynamic_cast<CLogDriverBase *>(driver)->Write(level, message);
   }
 }
 
@@ -63,10 +64,10 @@ string CLog::getName() const {
   return "Log";
 }
 
-void CLog::add_Logger(const LogType type, LogDriverBase *log_driver) {
+void CLog::add_Logger(const LogType type, CLogDriverBase *log_driver) {
   if (log_driver) {
     if (mChains.find(type) == mChains.end()) {
-      mChains.insert(make_pair(type, new CLog_Chain(type)));
+      mChains.insert(make_pair(type, new CLog_Chain(mContext, type)));
     }
     if (mChains[type] != NULL) {
       mChains[type]->add_Logger(log_driver);
