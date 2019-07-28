@@ -17,7 +17,7 @@
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
-using ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_SHORTFIXED;
+using ::DESCENT_BOT::LIB::MATH::DESCENT_SHORTFIXED;
 using ::std::cout;
 using ::std::dec;
 using ::std::endl;

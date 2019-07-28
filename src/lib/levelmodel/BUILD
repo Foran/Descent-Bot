@@ -27,7 +27,7 @@ cc_library(
     '//lib/context:libcontext',
     '//lib/context:libcomponent',
     '//src/lib/log:liblog',
-    '//src/lib/math:libmath',
+    '//lib/math:libmath',
   ],
   visibility=['//visibility:public'],
 )

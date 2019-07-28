@@ -25,7 +25,7 @@
 #include "src/lib/levelmodel/file.h"
 #include "src/lib/log/log.h"
 #include "src/lib/levelmodel/fstreamptr.h"
-#include "src/lib/math/math.h"
+#include "lib/math/math.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
@@ -33,7 +33,7 @@ namespace LIB {
 namespace LEVELMODEL {
 
 typedef struct DESCENT_VERTEX {
-  ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_FIXED x, y, z;
+  ::DESCENT_BOT::LIB::MATH::DESCENT_FIXED x, y, z;
 
  private:
   friend class CRdl;
@@ -55,7 +55,7 @@ typedef struct DESCENT_CUBE {
     char energyCenterNumber;
     int16_t value;
   } energyCenter;
-  ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_SHORTFIXED staticLight;
+  ::DESCENT_BOT::LIB::MATH::DESCENT_SHORTFIXED staticLight;
   unsigned char walls[6];
 
  private:
