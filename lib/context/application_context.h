@@ -10,38 +10,35 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_CONTEXT_CONTEXT_H_
-#define SRC_LIB_CONTEXT_CONTEXT_H_
+#ifndef LIB_CONTEXT_APPLICATION_CONTEXT_H_
+#define LIB_CONTEXT_APPLICATION_CONTEXT_H_
 
 #include <map>
 #include <string>
 
-#include "src/lib/context/component.h"
+#include "lib/context/context.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace CONTEXT {
 
-class CContext {
+class CApplicationContext : public CContext {
  public:
-  CComponent *getComponent(const ::std::string &name);
- protected:
-  CContext();
-  virtual ~CContext();
+  CApplicationContext();
+  ~CApplicationContext() override;
 
+  CContext &getContext();
+  void registerComponent(CComponent *component);
   void registerComponent(const ::std::string &name, CComponent *component);
+ protected:
  private:
-  ::std::map<::std::string, CComponent *> mComponentMap;
-
-  CContext(const CContext &source) = delete;
-  CContext(const CContext &&source) = delete;
-  CContext &operator=(const CContext &source) = delete;
+  explicit CApplicationContext(const CContext &source) = delete;
+  explicit CApplicationContext(const CContext &&source) = delete;
+  CApplicationContext &operator=(const CContext &source) = delete;
 };
 
 }  // namespace CONTEXT
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_CONTEXT_CONTEXT_H_
+#endif  // LIB_CONTEXT_APPLICATION_CONTEXT_H_

@@ -10,7 +10,7 @@ cc_library(
   ],
   deps=[
     ':libnetwork',
-    '//src/lib/context:libcontext',
+    '//lib/context:libcontext',
     '//src/lib/log:liblog',
   ],
   visibility=['//visibility:public',],

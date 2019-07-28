@@ -12,6 +12,8 @@
  ***************************************************/
 #include "src/lib/levelmodel/hogmanager.h"
 
+#include "lib/context/context.h"
+
 using ::std::string;
 using ::std::vector;
 
@@ -20,7 +22,7 @@ namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
-using DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+using DESCENT_BOT::LIB::CONTEXT::CContext;
 
 CHogManager::CHogManager(CContext *context) {
   mContext = context;

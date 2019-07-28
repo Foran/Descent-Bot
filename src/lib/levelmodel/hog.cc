@@ -12,7 +12,9 @@
  ***************************************************/
 #include "src/lib/levelmodel/hog.h"
 
-using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+#include "lib/context/context.h"
+
+using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::std::cout;

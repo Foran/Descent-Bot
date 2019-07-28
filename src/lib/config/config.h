@@ -18,17 +18,17 @@
 #include <vector>
 
 #include "src/lib/config/config.pb.h"
-#include "src/lib/context/component.h"
-#include "src/lib/context/context.h"
+#include "lib/context/component.h"
+#include "lib/context/context.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
 namespace LIB {
 namespace CONFIG {
 
-class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
+class CConfig : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
  public:
-  explicit CConfig(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+  explicit CConfig(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   ~CConfig();
 
   ::std::string getName() const override;
@@ -36,10 +36,10 @@ class CConfig : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   void Reset();
 
   static CConfig *fromContext(
-    ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+    ::DESCENT_BOT::LIB::CONTEXT::CContext *context);
 
  private:
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   PROTO::Config mConfig;
 
   CConfig(const CConfig &source) = delete;

@@ -41,6 +41,7 @@ class CHogManager;
 }  // namespace DESCENT_BOT
 
 #include "src/lib/levelmodel/hogmanager.h"
+#include "lib/context/context.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
@@ -49,8 +50,8 @@ namespace LEVELMODEL {
 
 class CHog {
  public:
-  explicit CHog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
-  CHog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  explicit CHog(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
+  CHog(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
        const ::std::string &filename);
   CHog(const CHog &source);
 
@@ -66,7 +67,7 @@ class CHog {
   ::std::vector<::std::string> get_Filenames() const;
 
  private:
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   ::std::string mFilename;
   ::std::vector<CFile *> mFiles;
   fstreamptr get_Stream() const;

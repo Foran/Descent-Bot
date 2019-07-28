@@ -16,7 +16,7 @@ using ::std::make_pair;
 using ::std::string;
 using ::std::stringstream;
 
-using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 
 namespace DESCENT_BOT {
 namespace SRC {

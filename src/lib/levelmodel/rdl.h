@@ -19,6 +19,7 @@
 #include <vector>
 #include <iostream>
 
+#include "lib/context/context.h"
 #include "src/lib/levelmodel/hog.h"
 #include "src/lib/levelmodel/hogmanager.h"
 #include "src/lib/levelmodel/file.h"
@@ -125,12 +126,12 @@ typedef struct RDL_GAMEDATA_HEADER {
 
 class CRdl : public CFile {
  public:
-  explicit CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
-  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  explicit CRdl(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
+  CRdl(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
        const ::std::string &filename);
-  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CRdl(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
        const CHog &hog, const ::std::string &filename);
-  CRdl(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CRdl(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
        const ::std::string &hog, const ::std::string &filename);
   CRdl(const CRdl &source);
   ~CRdl();

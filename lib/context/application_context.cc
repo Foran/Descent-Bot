@@ -10,30 +10,34 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/context/context.h"
+#include "lib/context/application_context.h"
+
+#include <iostream>
+#include <utility>
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace CONTEXT {
 
-using ::std::string;
-
-CContext::CContext() {
+CApplicationContext::CApplicationContext() {
 }
 
-CContext::~CContext() {
+CApplicationContext::~CApplicationContext() {
 }
 
-CComponent *CContext::getComponent(const string &name) {
-  return mComponentMap[name];
+CContext &CApplicationContext::getContext() {
+  return *this;
 }
 
-void CContext::registerComponent(const string &name, CComponent *component) {
-  mComponentMap.emplace(name, component);
+void CApplicationContext::registerComponent(CComponent *component) {
+  registerComponent(component->getName(), component);
+}
+
+void CApplicationContext::registerComponent(const ::std::string &name,
+                                            CComponent *component) {
+  CContext::registerComponent(name, component);
 }
 
 }  // namespace CONTEXT
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
