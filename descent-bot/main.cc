@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
   CLog::fromContext(&applicationContext)->Write(
     LogType::LogType_Debug, 100, "Initialized");
 
-  for(string name : (*CHogManager::fromContext(
+  for (string name : (*CHogManager::fromContext(
     &applicationContext))["chaos.hog"].get_Filenames()) {
     CLog::fromContext(&applicationContext)->Write(
       LogType::LogType_Debug, 100, name);
