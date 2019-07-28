@@ -10,4 +10,18 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/levelmodel/missionmanager.h"
+#ifndef LIB_LEVELMODEL_MISSIONMANAGER_H_
+#define LIB_LEVELMODEL_MISSIONMANAGER_H_
+
+namespace DESCENT_BOT {
+namespace LIB {
+namespace LEVELMODEL {
+
+class CMissionManager {
+};
+
+}  // namespace LEVELMODEL
+}  // namespace LIB
+}  // namespace DESCENT_BOT
+
+#endif  // LIB_LEVELMODEL_MISSIONMANAGER_H_

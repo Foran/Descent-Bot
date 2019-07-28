@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/levelmodel/hogmanager.h"
+#include "lib/levelmodel/hogmanager.h"
 
 #include "lib/context/context.h"
 
@@ -18,7 +18,6 @@ using ::std::string;
 using ::std::vector;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -62,5 +61,4 @@ CHogManager *CHogManager::fromContext(CContext *context) {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

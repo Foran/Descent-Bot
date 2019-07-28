@@ -10,13 +10,12 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_MATH_MATH_H_
-#define SRC_LIB_MATH_MATH_H_
+#ifndef LIB_MATH_MATH_H_
+#define LIB_MATH_MATH_H_
 
 #include <iostream>
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace MATH {
 
@@ -61,7 +60,6 @@ typedef struct DESCENT_SHORTFIXED {
 
 }  // namespace MATH
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_MATH_MATH_H_
+#endif  // LIB_MATH_MATH_H_

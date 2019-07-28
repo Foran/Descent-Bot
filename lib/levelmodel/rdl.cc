@@ -10,14 +10,14 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/levelmodel/rdl.h"
+#include "lib/levelmodel/rdl.h"
 
 #include "lib/context/context.h"
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
-using ::DESCENT_BOT::SRC::LIB::MATH::DESCENT_SHORTFIXED;
+using ::DESCENT_BOT::LIB::MATH::DESCENT_SHORTFIXED;
 using ::std::cout;
 using ::std::dec;
 using ::std::endl;
@@ -29,7 +29,6 @@ using ::std::ostream;
 using ::std::string;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -574,5 +573,4 @@ void CRdl::Init() {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

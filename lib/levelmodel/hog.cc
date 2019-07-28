@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/levelmodel/hog.h"
+#include "lib/levelmodel/hog.h"
 
 #include "lib/context/context.h"
 
@@ -26,7 +26,6 @@ using ::std::string;
 using ::std::vector;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -150,5 +149,4 @@ fstreamptr CHog::get_Stream(const string &name) const {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

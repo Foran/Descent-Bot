@@ -10,13 +10,12 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/math/math.h"
+#include "lib/math/math.h"
 
 using ::std::istream;
 using ::std::ostream;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace MATH {
 
@@ -64,5 +63,4 @@ istream &operator>>(istream &input, DESCENT_SHORTFIXED &fixed) {
 
 }  // namespace MATH
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
