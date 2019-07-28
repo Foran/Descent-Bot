@@ -16,7 +16,7 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
-#include "src/lib/context/context.h"
+#include "lib/context/context.h"
 #include "src/lib/log/log.h"
 #include "src/lib/log/log_driver.h"
 #include "src/lib/log/log_driver_raw.h"
@@ -32,7 +32,7 @@ using ::std::vector;
 using PROTO::Config;
 using PROTO::Logger;
 
-using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverBase;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverRaw;

@@ -5,7 +5,7 @@ cc_binary(
   ],
   deps=[
     '//src/lib/config:libconfig',
-    '//src/lib/context:libapplication_context',
+    '//lib/context:libapplication_context',
     '//src/lib/levelmodel:liblevelmodel',
     '//src/lib/log:liblog',
     '//src/lib/network:libconnection',

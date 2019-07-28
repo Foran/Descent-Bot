@@ -16,7 +16,9 @@ using ::std::endl;
 using ::std::ofstream;
 using ::std::string;
 
-using ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext;
+#include "lib/context/context.h"
+
+using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 
 namespace DESCENT_BOT {
 namespace SRC {

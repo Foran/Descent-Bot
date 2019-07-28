@@ -10,23 +10,28 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_CONTEXT_COMPONENT_H_
-#define SRC_LIB_CONTEXT_COMPONENT_H_
-
-#include <string>
+#include "lib/context/context.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace CONTEXT {
 
-struct CComponent {
-  virtual ::std::string getName() const = 0;
-};
+using ::std::string;
+
+CContext::CContext() {
+}
+
+CContext::~CContext() {
+}
+
+CComponent *CContext::getComponent(const string &name) {
+  return mComponentMap[name];
+}
+
+void CContext::registerComponent(const string &name, CComponent *component) {
+  mComponentMap.emplace(name, component);
+}
 
 }  // namespace CONTEXT
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
-
-#endif  // SRC_LIB_CONTEXT_COMPONENT_H_

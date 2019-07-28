@@ -30,6 +30,7 @@ class CHog;
 }  // namespace SRC
 }  // namespace DESCENT_BOT
 
+#include "lib/context/context.h"
 #include "src/lib/levelmodel/hogmanager.h"
 #include "src/lib/levelmodel/hog.h"
 #include "src/lib/levelmodel/fstreamptr.h"
@@ -43,14 +44,14 @@ namespace LEVELMODEL {
 class CFile {
  public:
   /// Default constructor
-  explicit CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+  explicit CFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   /// Standalone file or file in missions/descent.hog
-  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
         const ::std::string &filename);
   /// File in hog or missions/descent.hog
-  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
         const CHog &hog, const ::std::string &filename);
-  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
         const ::std::string &hog, const ::std::string &filename);
   CFile(const CFile &source);
   virtual ~CFile();
@@ -62,7 +63,7 @@ class CFile {
   void Load(const ::std::string &hog, const ::std::string &filename);
 
  protected:
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   fstreamptr get_Stream();
   bool eof(::std::fstream &file);
   ::std::string mFilename;
@@ -71,7 +72,7 @@ class CFile {
 
  private:
   CHog *mHog;
-  CFile(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
         const CHog &hog, const ::std::string &filename,
         ::std::streampos offset, int length);
 

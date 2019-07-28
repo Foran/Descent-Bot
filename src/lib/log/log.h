@@ -21,8 +21,8 @@
 #include <map>
 #include <iostream>
 
-#include "src/lib/context/component.h"
-#include "src/lib/context/context.h"
+#include "lib/context/component.h"
+#include "lib/context/context.h"
 #include "src/lib/log/log_driver.h"
 
 namespace DESCENT_BOT {
@@ -36,7 +36,7 @@ namespace LOG {
 /// This class represents a logging chain target
 class CLog_Chain {
  public:
-  CLog_Chain(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context,
+  CLog_Chain(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
              const LogType type);
   ~CLog_Chain();
 
@@ -46,7 +46,7 @@ class CLog_Chain {
   void Write(int level, const ::std::string &message);
 
  private:
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   ::std::vector<CLogDriverBase *> mDrivers;
   LogType mType;
 
@@ -63,18 +63,18 @@ struct CLog_Cached_Entry {
 };
 
 /// This class manages all logging
-class CLog : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
+class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
  public:
-  explicit CLog(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+  explicit CLog(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   ~CLog();
 
   ::std::string getName() const override;
   void add_Logger(const LogType type, CLogDriverBase *log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
 
-  static CLog *fromContext(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+  static CLog *fromContext(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
  private:
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   bool mCacheEnabled;
   ::std::vector<CLog_Cached_Entry> mCache;
   ::std::map<LogType, CLog_Chain *> mChains;

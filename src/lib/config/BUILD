@@ -22,8 +22,8 @@ cc_library(
   ],
   deps = [
     ':libconfig_cc_proto',
-    '//src/lib/context:libcomponent',
-    '//src/lib/context:libcontext',
+    '//lib/context:libcomponent',
+    '//lib/context:libcontext',
     '//src/lib/log:liblog',
     '//src/lib/log:liblog-raw',
     '//src/lib/log:liblog-file',

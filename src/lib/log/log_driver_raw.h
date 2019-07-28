@@ -18,7 +18,7 @@
 #include <iostream>
 #include <string>
 
-#include "src/lib/context/context.h"
+#include "lib/context/context.h"
 #include "src/lib/log/log_driver.h"
 
 namespace DESCENT_BOT {
@@ -28,7 +28,7 @@ namespace LOG {
 
 class CLogDriverRaw : public CLogDriverBase {
  public:
-  explicit CLogDriverRaw(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+  explicit CLogDriverRaw(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   virtual void set_Name(const ::std::string &name);
   virtual ::std::string get_Name() const;
   virtual ::std::string get_Driver() const;

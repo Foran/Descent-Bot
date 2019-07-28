@@ -19,8 +19,8 @@
 #include <map>
 #include <string>
 
-#include "src/lib/context/component.h"
-#include "src/lib/context/context.h"
+#include "lib/context/component.h"
+#include "lib/context/context.h"
 #include "src/lib/network/network.h"
 #include "src/lib/network/packets.h"
 #include "src/lib/network/connection.h"
@@ -36,10 +36,10 @@ namespace NETWORK {
  * Manages all instances of CConnection
  * @see CConnection
  ***********************************************/
-class CConnectionManager : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
+class CConnectionManager : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
  public:
   explicit CConnectionManager(
-    ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context);
+    ::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   CConnectionManager(const CConnectionManager &source);
   ~CConnectionManager();
 
@@ -53,7 +53,7 @@ class CConnectionManager : public ::DESCENT_BOT::SRC::LIB::CONTEXT::CComponent {
   ::std::map<Descent_Socket, CConnection *> mConnections;
   ::std::map<struct sockaddr_in, ::std::string> mGames;
   ::std::map<::std::string, time_t> mGameAges;
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
 };
 
 }  // namespace NETWORK

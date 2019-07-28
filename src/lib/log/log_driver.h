@@ -17,7 +17,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "src/lib/context/context.h"
+#include "lib/context/context.h"
 
 namespace DESCENT_BOT {
 namespace SRC {
@@ -34,7 +34,7 @@ enum LogType {
 
 class CLogDriverBase {
  public:
-  explicit CLogDriverBase(::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *context) {
+  explicit CLogDriverBase(::DESCENT_BOT::LIB::CONTEXT::CContext *context) {
     mContext = context;
   }
   virtual ~CLogDriverBase() {}
@@ -56,7 +56,7 @@ class CLogDriverBase {
   // stringstream &operator<<(stringstream &source);
 
  protected:
-  ::DESCENT_BOT::SRC::LIB::CONTEXT::CContext *mContext;
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   // string getBuffer();
 
  private:
