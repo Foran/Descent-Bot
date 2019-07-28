@@ -36,7 +36,7 @@ cc_library(
     ':libcontext',
   ],
   visibility=[
-    '//src:__pkg__',
+    '//descent-bot:__pkg__',
   ],
 )
 

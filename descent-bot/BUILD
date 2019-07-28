@@ -15,5 +15,6 @@ cc_binary(
   ],
   data=[
     '//config:config',
+    '//missions:missions',
   ],
 )

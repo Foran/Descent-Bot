@@ -12,6 +12,9 @@
  ***************************************************/
 #include "src/lib/log/log_driver_file.h"
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 using ::std::endl;
 using ::std::ofstream;
 using ::std::string;
@@ -32,6 +35,7 @@ CLogDriverFile::CLogDriverFile(CContext *context) : CLogDriverBase(context) {
   mLevel = 100;
   mType = LogType_Debug;
   mName = "Default File";
+  mkdir("logs", 0777);
 }
 
 /**
@@ -108,6 +112,9 @@ bool CLogDriverFile::Write(int level, const string &message) {
            <<  message << endl;
     }
     file.close();
+  } else {
+    ::std::cout << "Unable to open "
+                << string("logs/") + mFilename << " for writing" << endl;
   }
 
   return retval;
