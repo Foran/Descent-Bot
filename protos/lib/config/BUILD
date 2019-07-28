@@ -3,6 +3,9 @@ proto_library(
   srcs=[
     'config.proto',
   ],
+  deps=[
+    '//protos/lib/log:liblogger_proto',
+  ],
 )
 
 cc_proto_library(
