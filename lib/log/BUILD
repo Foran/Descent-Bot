@@ -1,16 +1,55 @@
 cc_library(
+  name='liblog_type',
+  hdrs=[
+    'log_type.h',
+  ],
+  visibility=[
+    '//visibility:public',
+  ],
+)
+
+cc_library(
+  name='liblog_chain',
+  srcs=[
+    'log_chain.cc',
+  ],
+  hdrs=[
+    'log_chain.h',
+  ],
+  deps=[
+    ':liblog_driver',
+    ':liblog_type',
+  ],
+)
+
+cc_library(
+  name='liblog_driver',
+  srcs=[
+    'log_driver.cc',
+  ],
+  hdrs=[
+    'log_driver.h',
+  ],
+  deps=[
+    ':liblog_type',
+    '//lib/context:libcontext',
+  ],
+)
+
+cc_library(
   name='liblog',
   srcs=[
     'log.cc',
-    'log_driver.cc',
     'logger.cc',
   ],
   hdrs=[
     'log.h',
-    'log_driver.h',
     'logger.h',
   ],
   deps=[
+    ':liblog_chain',
+    ':liblog_driver',
+    ':liblog_type',
     '//lib/context:libcomponent',
     '//lib/context:libcontext',
   ],
@@ -21,7 +60,7 @@ cc_library(
 )
 
 cc_library(
-  name='liblog_file',
+  name='liblog_driver_file',
   srcs=[
     'log_driver_file.cc',
   ],
@@ -29,7 +68,8 @@ cc_library(
     'log_driver_file.h',
   ],
   deps=[
-    ':liblog',
+    ':liblog_driver',
+    ':liblog_type',
   ],
   visibility=[
     '//lib/config:__pkg__',
@@ -37,7 +77,7 @@ cc_library(
 )
 
 cc_library(
-  name='liblog_raw',
+  name='liblog_driver_raw',
   srcs=[
     'log_driver_raw.cc',
   ],
@@ -45,7 +85,8 @@ cc_library(
     'log_driver_raw.h',
   ],
   deps=[
-    ':liblog',
+    ':liblog_driver',
+    ':liblog_type',
   ],
   visibility=[
     '//lib/config:__pkg__',
