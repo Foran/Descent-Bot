@@ -20,10 +20,19 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <memory>
 
 #include "lib/context/component.h"
 #include "lib/context/context.h"
 #include "src/lib/log/log_driver.h"
+#include "src/lib/log/logger.h"
+
+#define LOG(type, level) LOG_CONTEXT(mContext, type, level)
+#define LOG_GLOBAL(type, level) \
+  LOG_CONTEXT(&CApplicationContext::getInstance(), type, level)
+#define LOG_CONTEXT(context, type, level) \
+  *CLog::fromContext(context)->Write(type, level) << "[" << __FILE__ << ":" \
+    << __LINE__ << "] "
 
 namespace DESCENT_BOT {
 namespace SRC {
@@ -62,6 +71,8 @@ struct CLog_Cached_Entry {
   ::time_t timestamp;
 };
 
+class CLogger;
+
 /// This class manages all logging
 class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
  public:
@@ -71,6 +82,7 @@ class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
   ::std::string getName() const override;
   void add_Logger(const LogType type, CLogDriverBase *log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
+  ::std::unique_ptr<CLogger> Write(const LogType type, int level);
 
   static CLog *fromContext(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
  private:

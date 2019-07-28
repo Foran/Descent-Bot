@@ -12,13 +12,14 @@
  ***************************************************/
 #include "lib/levelmodel/rdl.h"
 
+#include "lib/context/application_context.h"
 #include "lib/context/context.h"
 
+using ::DESCENT_BOT::LIB::CONTEXT::CApplicationContext;
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::DESCENT_BOT::LIB::MATH::DESCENT_SHORTFIXED;
-using ::std::cout;
 using ::std::dec;
 using ::std::endl;
 using ::std::hex;
@@ -69,14 +70,15 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
   unsigned char mask;
   if (!(input >> mask)) {
     input.setstate(ios::failbit);
-    cout << "Failed to read cube mask" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read cube mask";
     return input;
   }
   if (mask & 0x01) {
     input.read(reinterpret_cast<char*>(&cube.left), sizeof(cube.left));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.left value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.left value";
       return input;
     }
   }
@@ -84,7 +86,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char*>(&cube.top), sizeof(cube.top));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.top value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.top value";
       return input;
     }
   }
@@ -92,7 +95,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char*>(&cube.right), sizeof(cube.right));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.right value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.right value";
       return input;
     }
   }
@@ -100,7 +104,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char*>(&cube.bottom), sizeof(cube.bottom));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.bottom value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.bottom value";
       return input;
     }
   }
@@ -108,7 +113,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char*>(&cube.back), sizeof(cube.back));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.back value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.back value";
       return input;
     }
   }
@@ -116,7 +122,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char*>(&cube.front), sizeof(cube.front));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.front value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.front value";
       return input;
     }
   }
@@ -126,7 +133,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
                sizeof(cube.verticies[i]));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.verticies[" << i << "] value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.verticies[" << i << "] value";
       return input;
     }
   }
@@ -137,7 +145,8 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
                sizeof(cube.energyCenter.value));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read the cube.energy value" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read the cube.energy value";
       return input;
     }
   }
@@ -145,7 +154,7 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
              sizeof(cube.staticLight.value.raw));
   if (input.rdstate() != ios::goodbit) {
     input.setstate(ios::failbit);
-    cout << "Failed to read staticLight" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read staticLight";
     return input;
   }
   unsigned char wallmask;
@@ -155,32 +164,32 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
   }
   if (wallmask & 0x01 && !(input >> cube.walls[0])) {
     input.setstate(ios::failbit);
-    cout << "Failed to read Wall[0]" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read Wall[0]";
     return input;
   }
   if (wallmask & 0x02 && !(input >> cube.walls[1])) {
     input.setstate(ios::failbit);
-    cout << "Failed to read Wall[1]" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read Wall[1]";
     return input;
   }
   if (wallmask & 0x04 && !(input >> cube.walls[2])) {
     input.setstate(ios::failbit);
-    cout << "Failed to read Wall[2]" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read Wall[2]";
     return input;
   }
   if (wallmask & 0x08 && !(input >> cube.walls[3])) {
     input.setstate(ios::failbit);
-    cout << "Failed to read Wall[3]" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read Wall[3]";
     return input;
   }
   if (wallmask & 0x10 && !(input >> cube.walls[4])) {
     input.setstate(ios::failbit);
-    cout << "Failed to read Wall[4]" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read Wall[4]";
     return input;
   }
   if (wallmask & 0x20 && !(input >> cube.walls[5])) {
     input.setstate(ios::failbit);
-    cout << "Failed to read Wall[5]" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "Failed to read Wall[5]";
     return input;
   }
   if (!(mask & 0x01) || wallmask & 0x01) {
@@ -188,21 +197,24 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read texture for walls[0]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read texture for walls[0]";
       return input;
     }
     if (texture & 0x8000) {
       input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
       if (input.rdstate() != ios::goodbit) {
         input.setstate(ios::failbit);
-        cout << "Failed to read texture2 for walls[0]" << endl;
+        LOG_GLOBAL(LogType::LogType_Debug, 200)
+          << "Failed to read texture2 for walls[0]";
         return input;
       }
     }
     DESCENT_SHORTFIXED u, v, l;
     input >> u >> v >> l;
     if (input.rdstate() != ios::goodbit) {
-      cout << "Failed to read uvl for walls[0]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read uvl for walls[0]";
       return input;
     }
   }
@@ -211,24 +223,31 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read texture for walls[1]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read texture for walls[1]";
       return input;
     }
     if (texture & 0x8000) {
       input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
       if (input.rdstate() != ios::goodbit) {
         input.setstate(ios::failbit);
-        cout << "Failed to read texture2 for walls[1]" << endl;
+        LOG_GLOBAL(LogType::LogType_Debug, 200)
+          << "Failed to read texture2 for walls[1]";
         return input;
       }
     }
     DESCENT_SHORTFIXED u, v, l;
-    if (!(input >> u)) cout << "Failed to read u for walls[1]" << endl;
-    if (!(input >> v)) cout << "Failed to read v for walls[1]" << endl;
-    if (!(input >> l)) cout << "Failed to read l for walls[1]" << endl;
+    if (!(input >> u)) LOG_GLOBAL(LogType::LogType_Debug, 200)
+                         << "Failed to read u for walls[1]";
+    if (!(input >> v)) LOG_GLOBAL(LogType::LogType_Debug, 200)
+                         << "Failed to read v for walls[1]";
+    if (!(input >> l)) LOG_GLOBAL(LogType::LogType_Debug, 200)
+                         << "Failed to read l for walls[1]";
     if (input.rdstate() != ios::goodbit) {
-      cout << "state: " << (input.rdstate() & ios::eofbit) << endl;
-      cout << "Failed to read uvl for walls[1]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "state: "
+        << (input.rdstate() & ios::eofbit);
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read uvl for walls[1]";
       return input;
     }
   }
@@ -237,21 +256,24 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read texture for walls[2]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read texture for walls[2]";
       return input;
     }
     if (texture & 0x8000) {
       input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
       if (input.rdstate() != ios::goodbit) {
         input.setstate(ios::failbit);
-        cout << "Failed to read texture2 for walls[2]" << endl;
+        LOG_GLOBAL(LogType::LogType_Debug, 200)
+          << "Failed to read texture2 for walls[2]";
         return input;
       }
     }
     DESCENT_SHORTFIXED u, v, l;
     input >> u >> v >> l;
     if (input.rdstate() != ios::goodbit) {
-      cout << "Failed to read uvl for walls[2]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read uvl for walls[2]";
       return input;
     }
   }
@@ -260,21 +282,24 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read texture for walls[3]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read texture for walls[3]";
       return input;
     }
     if (texture & 0x8000) {
       input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
       if (input.rdstate() != ios::goodbit) {
         input.setstate(ios::failbit);
-        cout << "Failed to read texture2 for walls[3]" << endl;
+        LOG_GLOBAL(LogType::LogType_Debug, 200)
+          << "Failed to read texture2 for walls[3]";
         return input;
       }
     }
     DESCENT_SHORTFIXED u, v, l;
     input >> u >> v >> l;
     if (input.rdstate() != ios::goodbit) {
-      cout << "Failed to read uvl for walls[3]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read uvl for walls[3]";
       return input;
     }
   }
@@ -283,21 +308,24 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read texture for walls[4]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read texture for walls[4]";
       return input;
     }
     if (texture & 0x8000) {
       input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
       if (input.rdstate() != ios::goodbit) {
         input.setstate(ios::failbit);
-        cout << "Failed to read texture2 for walls[4]" << endl;
+        LOG_GLOBAL(LogType::LogType_Debug, 200)
+          << "Failed to read texture2 for walls[4]";
         return input;
       }
     }
     DESCENT_SHORTFIXED u, v, l;
     input >> u >> v >> l;
     if (input.rdstate() != ios::goodbit) {
-      cout << "Failed to read uvl for walls[4]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read uvl for walls[4]";
       return input;
     }
   }
@@ -306,21 +334,24 @@ istream &operator>>(istream &input, DESCENT_CUBE &cube) {
     input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
     if (input.rdstate() != ios::goodbit) {
       input.setstate(ios::failbit);
-      cout << "Failed to read texture for walls[4]" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read texture for walls[4]";
       return input;
     }
     if (texture & 0x8000) {
       input.read(reinterpret_cast<char *>(&texture), sizeof(texture));
       if (input.rdstate() != ios::goodbit) {
         input.setstate(ios::failbit);
-        cout << "Failed to read texture2 for walls[4]" << endl;
+        LOG_GLOBAL(LogType::LogType_Debug, 200)
+          << "Failed to read texture2 for walls[4]";
         return input;
       }
     }
     DESCENT_SHORTFIXED u, v, l;
     input >> u >> v >> l;
     if (input.rdstate() != ios::goodbit) {
-     cout << "Failed to read uvl for walls[5]" << endl;
+     LOG_GLOBAL(LogType::LogType_Debug, 200)
+       << "Failed to read uvl for walls[5]";
      return input;
     }
   }
@@ -428,17 +459,18 @@ void CRdl::Load(const string &hog, const string &filename) {
 
 void CRdl::doLoad() {
   fstreamptr file = get_Stream();
-  cout << "Loading " << mFilename << "..." << endl;
+  LOG(LogType::LogType_Debug, 200) << "Loading " << mFilename << "...";
 
   if ((*file).is_open()) {
     (*file) >> *this;
     (*file).close();
   } else {
-    cout << "Failed to open " << mFilename << endl;
+    LOG(LogType::LogType_Debug, 200) << "Failed to open " << mFilename;
   }
 
-  cout << "Vertex Count: " << mDescentVerticies.size() << ", Cube Count: "
-       << mDescentCubes.size() << endl;
+  LOG(LogType::LogType_Debug, 200) << "Vertex Count: "
+    << mDescentVerticies.size() << ", Cube Count: "
+    << mDescentCubes.size();
 }
 
 istream &operator>>(istream &input, RDL_HEADER &header) {
@@ -464,29 +496,29 @@ istream &operator>>(istream &input, RDL_GAMEDATA_HEADER &header) {
 
 ostream &operator<<(ostream &output, RDL_GAMEDATA_HEADER &header) {
   output << "Signature: 0x" << hex << header.fileinfo_signature << "(" << dec
-         << header.fileinfo_signature << ")" << endl;
-  output << "Version: " << header.fileinfo_version << endl;
-  output << "FileInfo Size: " << header.fileinfo_sizeof << endl;
+         << header.fileinfo_signature << ")";
+  output << "Version: " << header.fileinfo_version;
+  output << "FileInfo Size: " << header.fileinfo_sizeof;
   return output;
 }
 
 istream &operator>>(istream &input, CRdl &rdl) {
-  cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec
-       << input.tellg() << ")" << endl;
-  cout << "Hog pos is: 0x" << hex << rdl.mPos << "(" << dec << rdl.mPos
-       << ")"  << endl;
-  cout << "rdl length is: 0x" << hex << rdl.mLength << "(" << dec
-       << rdl.mLength << ")"  << endl;
+  LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x"
+    << hex << input.tellg() << "(" << dec << input.tellg() << ")";
+  LOG_GLOBAL(LogType::LogType_Debug, 200) << "Hog pos is: 0x" << hex
+    << rdl.mPos << "(" << dec << rdl.mPos << ")";
+  LOG_GLOBAL(LogType::LogType_Debug, 200) << "rdl length is: 0x" << hex
+    << rdl.mLength << "(" << dec << rdl.mLength << ")";
   input >> rdl.mHeader;
-  cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec
-       << input.tellg() << ")" << endl << "Version is: "
-       << rdl.mHeader.version << endl;
+  LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x" << hex
+    << input.tellg() << "(" << dec << input.tellg() << ")"  << "Version is: "
+    << rdl.mHeader.version;
   if (!memcmp(rdl.mHeader.signature, "LVLP", 4) && rdl.mHeader.version == 1) {
-    cout << rdl.mHeader << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << rdl.mHeader;
     input.seekg(static_cast<uint16_t>(rdl.mPos) +
                 rdl.mHeader.mineDataOffset, ios_base::beg);
-    cout << "File position is now: 0x" << hex << input.tellg() << "(" << dec
-         << input.tellg() << ")" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x"
+      << hex << input.tellg() << "(" << dec << input.tellg() << ")";
     char version;
     input >> version;
     uint16_t vertexCount = 0;
@@ -494,75 +526,82 @@ istream &operator>>(istream &input, CRdl &rdl) {
     input.read(reinterpret_cast<char *>(&vertexCount), sizeof(vertexCount));
     input.read(reinterpret_cast<char *>(&cubeCount), sizeof(cubeCount));
     if (!input.eof()) {
-      cout << vertexCount << " verticies, " << cubeCount << " cubes" << endl;
-      cout << "File position is now: 0x" << hex << input.tellg() << "("
-           << dec << input.tellg() << ")" << endl;
-      cout << "Minedata version: " << static_cast<int>(version) << endl;
-      cout << "sizeof(DESCENT_VERTEX) is " << sizeof(DESCENT_VERTEX)
-           << ", file.tellg() returned " << input.tellg() << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << vertexCount << " verticies, "
+        << cubeCount << " cubes";
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x"
+        << hex << input.tellg() << "(" << dec << input.tellg() << ")";
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Minedata version: "
+        << static_cast<int>(version);
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "sizeof(DESCENT_VERTEX) is "
+        << sizeof(DESCENT_VERTEX) << ", file.tellg() returned "
+        << input.tellg();
       for (unsigned int i = 0; i < vertexCount; i++) {
-        dynamic_cast<CLog*>(rdl.mContext->getComponent("Log"))->Write(
-          LogType::LogType_Debug, 200, "Added a vertex");
+        LOG_GLOBAL(LogType::LogType_Debug, 200) << "Added a vertex";
         DESCENT_VERTEX vertex;
         if (!(input >> vertex)) break;
         rdl.mDescentVerticies.push_back(vertex);
       }
-      cout << "First vertex is: " << rdl.mDescentVerticies[0].x << ", "
-           << rdl.mDescentVerticies[0].y << ", "
-           << rdl.mDescentVerticies[0].z << endl;
-      cout << "Second vertex is: " << rdl.mDescentVerticies[1].x << ", "
-           << rdl.mDescentVerticies[1].y << ", "
-           << rdl.mDescentVerticies[1].z << endl;
-      cout << "Third vertex is: " << rdl.mDescentVerticies[2].x << ", "
-           << rdl.mDescentVerticies[2].y << ", "
-           << rdl.mDescentVerticies[2].z << endl;
-      cout << "Fourth vertex is: " << rdl.mDescentVerticies[3].x << ", "
-           << rdl.mDescentVerticies[3].y << ", "
-           << rdl.mDescentVerticies[3].z << endl;
-      cout << "Fifth vertex is: " << rdl.mDescentVerticies[4].x << ", "
-           << rdl.mDescentVerticies[4].y << ", "
-           << rdl.mDescentVerticies[4].z << endl;
-      cout << "Sixth vertex is: " << rdl.mDescentVerticies[5].x << ", "
-           << rdl.mDescentVerticies[5].y << ", "
-           << rdl.mDescentVerticies[5].z << endl;
-      cout << "Seventh vertex is: " << rdl.mDescentVerticies[6].x << ", "
-           << rdl.mDescentVerticies[6].y << ", "
-           << rdl.mDescentVerticies[6].z << endl;
-      cout << "Eigth vertex is: " << rdl.mDescentVerticies[7].x << ", "
-           << rdl.mDescentVerticies[7].y << ", "
-           << rdl.mDescentVerticies[7].z << endl;
-      cout << "File position is now: " << input.tellg() << ", state bit is: "
-           << input.rdstate() << endl;
-      cout << "We expect to be at: "
-           << (static_cast<uint16_t>(rdl.mPos) + rdl.mHeader.mineDataOffset +
-               5 + (12 * vertexCount)) << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "First vertex is: "
+        << rdl.mDescentVerticies[0].x << ", " << rdl.mDescentVerticies[0].y
+        << ", " << rdl.mDescentVerticies[0].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Second vertex is: "
+        << rdl.mDescentVerticies[1].x << ", " << rdl.mDescentVerticies[1].y
+        << ", " << rdl.mDescentVerticies[1].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Third vertex is: "
+        << rdl.mDescentVerticies[2].x << ", " << rdl.mDescentVerticies[2].y
+        << ", " << rdl.mDescentVerticies[2].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Fourth vertex is: "
+        << rdl.mDescentVerticies[3].x << ", " << rdl.mDescentVerticies[3].y
+        << ", " << rdl.mDescentVerticies[3].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Fifth vertex is: "
+        << rdl.mDescentVerticies[4].x << ", " << rdl.mDescentVerticies[4].y
+        << ", " << rdl.mDescentVerticies[4].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Sixth vertex is: "
+        << rdl.mDescentVerticies[5].x << ", " << rdl.mDescentVerticies[5].y
+        << ", " << rdl.mDescentVerticies[5].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Seventh vertex is: "
+        << rdl.mDescentVerticies[6].x << ", " << rdl.mDescentVerticies[6].y
+        << ", " << rdl.mDescentVerticies[6].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Eigth vertex is: "
+           << rdl.mDescentVerticies[7].x << ", " << rdl.mDescentVerticies[7].y
+           << ", " << rdl.mDescentVerticies[7].z;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: "
+        << input.tellg() << ", state bit is: " << input.rdstate();
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "We expect to be at: "
+        << (static_cast<uint16_t>(rdl.mPos) + rdl.mHeader.mineDataOffset +
+            5 + (12 * vertexCount));
       uint16_t i;
       for (i = 0; i < cubeCount && input.rdstate() == ios::goodbit; i++) {
         DESCENT_CUBE cube;
         if (input >> cube) {
           rdl.mDescentCubes.push_back(cube);
         } else {
-          cout << "An error occured during processing" << endl;
-          cout << "Dumping cube data: " << cube << endl;
+          LOG_GLOBAL(LogType::LogType_Debug, 200)
+            << "An error occured during processing";
+          LOG_GLOBAL(LogType::LogType_Debug, 200) << "Dumping cube data: "
+            << cube;
         }
       }
-      cout << "File position is now: 0x" << hex << input.tellg() << "("
-           << dec << input.tellg() << ")" << endl;
-      cout << "Processed " << i << " of " << cubeCount << " Cubes" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x"
+        << hex << input.tellg() << "(" << dec << input.tellg() << ")";
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "Processed " << i << " of "
+        << cubeCount << " Cubes";
 
       input.seekg(static_cast<uint16_t>(rdl.mPos) + rdl.mHeader.gameDataOffset,
                   ios_base::beg);
-      cout << "File position is now: 0x" << hex << input.tellg() << "("
-           << dec << input.tellg() << ")" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x"
+        << hex << input.tellg() << "(" << dec << input.tellg() << ")";
       input >> rdl.mGameDataHeader;
-      cout << rdl.mGameDataHeader << endl;
-      cout << "File position is now: 0x" << hex << input.tellg() << "("
-           << dec << input.tellg() << ")" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << rdl.mGameDataHeader;
+      LOG_GLOBAL(LogType::LogType_Debug, 200) << "File position is now: 0x"
+        << hex << input.tellg() << "(" << dec << input.tellg() << ")";
     } else {
-      cout << "Failed to read Vertix and Cube counts" << endl;
+      LOG_GLOBAL(LogType::LogType_Debug, 200)
+        << "Failed to read Vertix and Cube counts";
     }
   } else {
-    cout << "Failed to read a valid signature (" << rdl.mHeader << ")" << endl;
+    LOG_GLOBAL(LogType::LogType_Debug, 200)
+      << "Failed to read a valid signature (" << rdl.mHeader << ")";
   }
   return input;
 }

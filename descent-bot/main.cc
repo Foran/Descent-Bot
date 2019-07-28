@@ -47,19 +47,18 @@ void dbot_signal_handler(int s) {
 
 int main(int argc, char **argv) {
   int retval = 0;
-  CApplicationContext applicationContext;
+  CLog log(&CApplicationContext::getInstance().getContext());
+  CApplicationContext::getInstance().registerComponent(&log);
 
-  CLog log(&applicationContext.getContext());
-  applicationContext.registerComponent(&log);
+  CConfig config(&CApplicationContext::getInstance().getContext());
+  CApplicationContext::getInstance().registerComponent(&config);
 
-  CConfig config(&applicationContext.getContext());
-  applicationContext.registerComponent(&config);
+  CConnectionManager connectionManager(
+    &CApplicationContext::getInstance().getContext());
+  CHogManager hogManager(&CApplicationContext::getInstance().getContext());
 
-  CConnectionManager connectionManager(&applicationContext.getContext());
-  CHogManager hogManager(&applicationContext.getContext());
-
-  applicationContext.registerComponent(&connectionManager);
-  applicationContext.registerComponent(&hogManager);
+  CApplicationContext::getInstance().registerComponent(&connectionManager);
+  CApplicationContext::getInstance().registerComponent(&hogManager);
 
 #ifndef _WIN32
   struct sigaction sigIntHandler;
@@ -71,32 +70,33 @@ int main(int argc, char **argv) {
   sigaction(SIGINT, &sigIntHandler, nullptr);
 #endif
 
-  CConfig::fromContext(&applicationContext)->Load("config/Main.conf");
+  CConfig::fromContext(
+    &CApplicationContext::getInstance())->Load("config/Main.conf");
 
-  CLog::fromContext(&applicationContext)->Write(
-    LogType::LogType_Debug, 100, "Initialized");
+  LOG_GLOBAL(LogType::LogType_Debug, 100) << "Initialized";
 
   for (string name : (*CHogManager::fromContext(
-    &applicationContext))["chaos.hog"].get_Filenames()) {
-    CLog::fromContext(&applicationContext)->Write(
-      LogType::LogType_Debug, 100, name);
+    &CApplicationContext::getInstance()))["chaos.hog"].get_Filenames()) {
+    LOG_GLOBAL(LogType::LogType_Debug, 100) << name;
   }
 
-  CRdl rdl1(&applicationContext, "chaos.hog", "chaos1.rdl");
-//  CRdl rdl2(&applicationContext, "chaos.hog", "chaos2.rdl");
+  CRdl rdl1(&CApplicationContext::getInstance(), "chaos.hog", "chaos1.rdl");
+  CRdl rdl2(&CApplicationContext::getInstance(), "chaos.hog", "chaos2.rdl");
 #ifdef _WIN32
   while (1) dynamic_cast<CConnectionManager*>(
-    applicationContext.getComponent("ConnectionManager"))->Pulse();
+    CApplicationContext::getInstance().getComponent("ConnectionManager"))
+      ->Pulse();
 #else
   while (dbot_signal_stillwantstoplay) {
     dynamic_cast<CConnectionManager*>(
-      applicationContext.getComponent("ConnectionManager"))->Pulse();
+      CApplicationContext::getInstance().getComponent("ConnectionManager"))
+        ->Pulse();
   }
 #endif
   // CConnection connection;
   // connection.find_Game();
 
-  cout << "Exiting gracefully" << endl;
+  LOG_GLOBAL(LogType::LogType_Debug, 100) << "Exiting gracefully";
 
   return retval;
 }

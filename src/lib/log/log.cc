@@ -12,9 +12,18 @@
  ***************************************************/
 #include "src/lib/log/log.h"
 
+#include <memory>
+
 using ::std::make_pair;
 using ::std::string;
 using ::std::stringstream;
+using ::std::ostream;
+using ::std::stringbuf;
+using ::std::cout;
+using ::std::endl;
+using ::std::flush;
+using ::std::unique_ptr;
+using ::std::make_unique;
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 
@@ -87,6 +96,10 @@ void CLog::Write(const LogType type, int level, const string &message) {
   } else if (mChains.find(type) != mChains.end() && mChains[type] != nullptr) {
     mChains[type]->Write(level, message);
   }
+}
+
+unique_ptr<CLogger> CLog::Write(const LogType type, int level) {
+  return unique_ptr<CLogger>(new CLogger(this, type, level));
 }
 
 void CLog::FlushCache() {

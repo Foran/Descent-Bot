@@ -13,6 +13,7 @@
 #include "lib/levelmodel/file.h"
 
 #include "lib/context/context.h"
+#include "src/lib/log/log.h"
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
@@ -56,8 +57,9 @@ CFile::CFile(CContext *context, const CHog &hog, const string &filename,
   mFilename = filename;
   mPos = offset;
   mLength = length;
-  cout << "Loading file " << hog.mFilename << "." << mFilename
-       << " at offset " << mPos << " for " << mLength << " bytes" << endl;
+  LOG(LogType::LogType_Debug, 200)
+    << "Loading file " << hog.mFilename << "." << mFilename
+    << " at offset " << mPos << " for " << mLength << " bytes";
 }
 
 CFile::CFile(const CFile &source) {
@@ -100,21 +102,20 @@ void CFile::Load(const string &hog, const string &filename) {
 }
 
 fstreamptr CFile::get_Stream() {
-  fstreamptr file;
+  fstreamptr file(mContext);
 
   if (mFilename.length() > 0) {
     if (mHog == nullptr) {
-      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(
-        LogType::LogType_Debug, 200, "Opening " + mFilename +
-                                     " in direct mode");
+      LOG(LogType::LogType_Debug, 200) << "Opening " + mFilename +
+                                     " in direct mode";
       (*file).open(("missions/" + mFilename).c_str(), ios::in | ios::binary);
       mPos = (*file).tellg();
     } else {
-      dynamic_cast<CLog*>(mContext->getComponent("Log"))->Write(
-        LogType::LogType_Debug, 200, "Opening " + mFilename +
-                                     " from " + mHog->mFilename);
+      LOG(LogType::LogType_Debug, 200) << "Opening " + mFilename +
+                                     " from " + mHog->mFilename;
       file = mHog->get_Stream(mFilename);
-      cout << ((*file).is_open() ? "True" : "False") << endl;
+      LOG(LogType::LogType_Debug, 200)
+        << ((*file).is_open() ? "True" : "False");
     }
   }
 

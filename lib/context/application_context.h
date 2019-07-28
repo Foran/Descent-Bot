@@ -30,8 +30,11 @@ class CApplicationContext : public CContext {
   CContext &getContext();
   void registerComponent(CComponent *component);
   void registerComponent(const ::std::string &name, CComponent *component);
+
+  static CApplicationContext &getInstance();
  protected:
  private:
+  static CApplicationContext mInstance;
   explicit CApplicationContext(const CContext &source) = delete;
   explicit CApplicationContext(const CContext &&source) = delete;
   CApplicationContext &operator=(const CContext &source) = delete;
