@@ -11,7 +11,7 @@
  * California, 94041, USA.
  ***************************************************/
 #include "gtest/gtest.h"
-#include "src/lib/config/config.h"
+#include "lib/config/config.h"
 
 class ConfigTest : public ::testing::Test {
  protected:

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package DESCENT_BOT.SRC.LIB.CONFIG.PROTO;
+package DESCENT_BOT.LIB.CONFIG.PROTO;
 
 message LoggerOption {
   string name = 1;

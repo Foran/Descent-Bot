@@ -10,19 +10,18 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_CONFIG_CONFIG_H_
-#define SRC_LIB_CONFIG_CONFIG_H_
+#ifndef LIB_CONFIG_CONFIG_H_
+#define LIB_CONFIG_CONFIG_H_
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "src/lib/config/config.pb.h"
+#include "protos/lib/config/config.pb.h"
 #include "lib/context/component.h"
 #include "lib/context/context.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace CONFIG {
 
@@ -48,7 +47,6 @@ class CConfig : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
 
 }  // namespace CONFIG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_CONFIG_CONFIG_H_
+#endif  // LIB_CONFIG_CONFIG_H_

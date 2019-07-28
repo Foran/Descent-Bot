@@ -32,7 +32,7 @@ cc_library(
     ':liblog',
   ],
   visibility=[
-    '//src/lib/config:__pkg__',
+    '//lib/config:__pkg__',
   ],
 )
 
@@ -48,7 +48,7 @@ cc_library(
     ':liblog',
   ],
   visibility=[
-    '//src/lib/config:__pkg__',
+    '//lib/config:__pkg__',
   ],
 )
 

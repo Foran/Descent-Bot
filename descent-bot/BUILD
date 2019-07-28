@@ -4,7 +4,7 @@ cc_binary(
     'main.cc',
   ],
   deps=[
-    '//src/lib/config:libconfig',
+    '//lib/config:libconfig',
     '//lib/context:libapplication_context',
     '//lib/levelmodel:liblevelmodel',
     '//src/lib/log:liblog',

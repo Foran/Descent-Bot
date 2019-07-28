@@ -9,10 +9,9 @@ cc_test(
   ],
   deps=[
     '@gtest//:gtest_main',
-    '//src/lib/config:libconfig',
+    '//lib/config:libconfig',
   ],
   copts=[
     '-Iexternal/gtest/include',
-    '-I/usr/include/libxml2',
   ],
 )

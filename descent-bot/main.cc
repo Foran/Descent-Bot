@@ -13,14 +13,14 @@
 #include <iostream>
 #include <string>
 
-#include "src/lib/config/config.h"
+#include "lib/config/config.h"
 #include "lib/context/application_context.h"
 #include "lib/levelmodel/hogmanager.h"
 #include "lib/levelmodel/rdl.h"
 #include "src/lib/log/log.h"
 #include "src/lib/network/connectionmanager.h"
 
-using ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
+using ::DESCENT_BOT::LIB::CONFIG::CConfig;
 using ::DESCENT_BOT::LIB::CONTEXT::CApplicationContext;
 using ::DESCENT_BOT::LIB::LEVELMODEL::CHogManager;
 using ::DESCENT_BOT::LIB::LEVELMODEL::CRdl;

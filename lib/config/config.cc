@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/config/config.h"
+#include "lib/config/config.h"
 
 #include <fcntl.h>
 #include <google/protobuf/text_format.h>
@@ -23,7 +23,6 @@
 #include "src/lib/log/log_driver_raw.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace CONFIG {
 
@@ -124,5 +123,4 @@ CConfig *CConfig::fromContext(CContext *context) {
 
 }  // namespace CONFIG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
