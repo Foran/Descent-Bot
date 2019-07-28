@@ -1,28 +1,9 @@
 syntax = "proto3";
 
+import "protos/lib/log/logger.proto";
+
 package DESCENT_BOT.LIB.CONFIG.PROTO;
 
-message LoggerOption {
-  string name = 1;
-  string value = 2;
-}
-
-message Logger {
-  enum LogType {
-    UNKNOWN = 0;
-    INFO = 1;
-    DEBUG = 2;
-    WARNING = 3;
-    ERROR = 4;
-    FATAL = 5;
-  }
-  string name = 1;
-  LogType type = 2;
-  uint32 level = 3;
-  string driver = 4;
-  repeated LoggerOption options = 5;
-}
-
 message Config {
-  repeated Logger loggers = 1;
+  repeated DESCENT_BOT.LIB.LOG.PROTO.Logger loggers = 1;
 }

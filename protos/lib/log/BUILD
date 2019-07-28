@@ -1,0 +1,29 @@
+proto_library(
+  name='liblogger_option_proto',
+  srcs=[
+    'logger_option.proto',
+  ],
+)
+
+proto_library(
+  name='liblogger_proto',
+  srcs=[
+    'logger.proto',
+  ],
+  deps=[
+    ':liblogger_option_proto',
+  ],
+  visibility=[
+    '//protos/lib/config:__pkg__',
+  ],
+)
+
+cc_proto_library(
+  name='liblog_cc_proto',
+  deps=[
+    ':liblogger_proto',
+  ],
+  visibility=[
+    '//lib/config:__pkg__',
+  ],
+)

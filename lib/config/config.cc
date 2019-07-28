@@ -30,7 +30,7 @@ using ::std::string;
 using ::std::vector;
 
 using PROTO::Config;
-using PROTO::Logger;
+using ::DESCENT_BOT::LIB::LOG::PROTO::Logger;
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::LIB::LOG::CLog;
