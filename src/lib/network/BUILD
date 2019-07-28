@@ -11,7 +11,7 @@ cc_library(
   deps=[
     ':libnetwork',
     '//lib/context:libcontext',
-    '//src/lib/log:liblog',
+    '//lib/log:liblog',
   ],
   visibility=['//visibility:public',],
 )

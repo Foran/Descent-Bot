@@ -10,15 +10,14 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LOG_LOGGER_H_
-#define SRC_LIB_LOG_LOGGER_H_
+#ifndef LIB_LOG_LOGGER_H_
+#define LIB_LOG_LOGGER_H_
 
 #include <iostream>
 
-#include "src/lib/log/log.h"
+#include "lib/log/log.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LOG {
 
@@ -58,7 +57,6 @@ class CLogger : public ::std::ostream {
 
 }  // namespace LOG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LOG_LOGGER_H_
+#endif  // LIB_LOG_LOGGER_H_

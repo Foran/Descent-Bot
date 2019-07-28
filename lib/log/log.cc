@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/log/log.h"
+#include "lib/log/log.h"
 
 #include <memory>
 
@@ -28,7 +28,6 @@ using ::std::make_unique;
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LOG {
 
@@ -127,5 +126,4 @@ string operator+(string input, int number) {
 
 }  // namespace LOG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LOG_LOG_H_
-#define SRC_LIB_LOG_LOG_H_
+#ifndef LIB_LOG_LOG_H_
+#define LIB_LOG_LOG_H_
 
 #include <time.h>
 
@@ -24,8 +24,8 @@
 
 #include "lib/context/component.h"
 #include "lib/context/context.h"
-#include "src/lib/log/log_driver.h"
-#include "src/lib/log/logger.h"
+#include "lib/log/log_driver.h"
+#include "lib/log/logger.h"
 
 #define LOG(type, level) LOG_CONTEXT(mContext, type, level)
 #define LOG_GLOBAL(type, level) \
@@ -35,7 +35,6 @@
     << __LINE__ << "] "
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace CONFIG {
 class CConfig;
@@ -96,14 +95,13 @@ class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
 
   void FlushCache();
 
-  friend class ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
+  friend class ::DESCENT_BOT::LIB::CONFIG::CConfig;
 };
 
 extern ::std::string operator+(::std::string input, int number);
 
 }  // namespace LOG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LOG_LOG_H_
+#endif  // LIB_LOG_LOG_H_

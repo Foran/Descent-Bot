@@ -21,10 +21,10 @@
 
 #include "lib/context/component.h"
 #include "lib/context/context.h"
+#include "lib/log/log.h"
 #include "src/lib/network/network.h"
 #include "src/lib/network/packets.h"
 #include "src/lib/network/connection.h"
-#include "src/lib/log/log.h"
 
 namespace DESCENT_BOT {
 namespace SRC {

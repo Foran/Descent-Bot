@@ -17,8 +17,8 @@
 
 using ::DESCENT_BOT::LIB::CONTEXT::CApplicationContext;
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::LIB::LOG::CLog;
+using ::DESCENT_BOT::LIB::LOG::LogType;
 using ::DESCENT_BOT::LIB::MATH::DESCENT_SHORTFIXED;
 using ::std::dec;
 using ::std::endl;

@@ -15,8 +15,8 @@
 #include "lib/context/context.h"
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::LIB::LOG::CLog;
+using ::DESCENT_BOT::LIB::LOG::LogType;
 using ::std::map;
 using ::std::string;
 

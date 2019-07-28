@@ -13,11 +13,11 @@
 #include "lib/levelmodel/file.h"
 
 #include "lib/context/context.h"
-#include "src/lib/log/log.h"
+#include "lib/log/log.h"
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::LIB::LOG::CLog;
+using ::DESCENT_BOT::LIB::LOG::LogType;
 using ::std::cout;
 using ::std::endl;
 using ::std::fstream;

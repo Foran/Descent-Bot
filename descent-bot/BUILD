@@ -7,7 +7,7 @@ cc_binary(
     '//lib/config:libconfig',
     '//lib/context:libapplication_context',
     '//lib/levelmodel:liblevelmodel',
-    '//src/lib/log:liblog',
+    '//lib/log:liblog',
     '//src/lib/network:libconnection',
   ],
   copts=[
