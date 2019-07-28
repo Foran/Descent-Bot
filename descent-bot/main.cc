@@ -11,6 +11,7 @@
  * California, 94041, USA.
  ***************************************************/
 #include <iostream>
+#include <string>
 
 #include "src/lib/config/config.h"
 #include "lib/context/application_context.h"
@@ -22,11 +23,13 @@
 using ::DESCENT_BOT::SRC::LIB::CONFIG::CConfig;
 using ::DESCENT_BOT::LIB::CONTEXT::CApplicationContext;
 using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CHogManager;
-// using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CRdl;
+using ::DESCENT_BOT::SRC::LIB::LEVELMODEL::CRdl;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::DESCENT_BOT::SRC::LIB::NETWORK::CConnectionManager;
 using ::std::cout;
 using ::std::endl;
+using ::std::string;
 
 #ifndef _WIN32
 /**************************
@@ -68,19 +71,19 @@ int main(int argc, char **argv) {
   sigaction(SIGINT, &sigIntHandler, nullptr);
 #endif
 
-  dynamic_cast<CConfig*>(
-    applicationContext.getComponent("Config"))->Load("config/Main.conf");
+  CConfig::fromContext(&applicationContext)->Load("config/Main.conf");
 
   CLog::fromContext(&applicationContext)->Write(
-    ::DESCENT_BOT::SRC::LIB::LOG::LogType::LogType_Debug, 100, "Initialized");
+    LogType::LogType_Debug, 100, "Initialized");
 
-  // vector<string> names = HogManager["chaos.hog"].get_Filenames();
-  // for(vector<string>::iterator i = names.begin(); i != names.end(); i++) {
-  //   cout << *i << endl;
-  // }
+  for (string name : (*CHogManager::fromContext(
+    &applicationContext))["chaos.hog"].get_Filenames()) {
+    CLog::fromContext(&applicationContext)->Write(
+      LogType::LogType_Debug, 100, name);
+  }
 
-  // CRdl rdl1(applicationContext, "chaos.hog", "chaos1.rdl");
-  // CRdl rdl2("chaos.hog", "chaos2.rdl");
+  CRdl rdl1(&applicationContext, "chaos.hog", "chaos1.rdl");
+//  CRdl rdl2(&applicationContext, "chaos.hog", "chaos2.rdl");
 #ifdef _WIN32
   while (1) dynamic_cast<CConnectionManager*>(
     applicationContext.getComponent("ConnectionManager"))->Pulse();
