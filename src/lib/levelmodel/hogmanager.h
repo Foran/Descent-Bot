@@ -34,6 +34,9 @@ class CHogManager : public DESCENT_BOT::LIB::CONTEXT::CComponent {
 
   ::std::string getName() const override;
   CHog &operator[](const ::std::string &filename);
+
+  static CHogManager *fromContext(
+    ::DESCENT_BOT::LIB::CONTEXT::CContext *context);
  private:
   DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   ::std::vector<CHog *> mHogs;

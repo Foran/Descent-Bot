@@ -56,6 +56,10 @@ CHog &CHogManager::operator[](const string &filename) {
   return *retval;
 }
 
+CHogManager *CHogManager::fromContext(CContext *context) {
+  return dynamic_cast<CHogManager *>(context->getComponent("HogManager"));
+}
+
 }  // namespace LEVELMODEL
 }  // namespace LIB
 }  // namespace SRC

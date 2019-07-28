@@ -47,7 +47,7 @@ CFile::CFile(CContext *context, const CHog &hog, const string &filename) {
 CFile::CFile(CContext *context, const string &hog,
              const string &filename) {
   mContext = context;
-//  mHog = &CHogManager::get_Instance()[hog];
+  mHog = &(*CHogManager::fromContext(mContext))[hog];
 }
 
 CFile::CFile(CContext *context, const CHog &hog, const string &filename,
@@ -94,7 +94,7 @@ void CFile::Load(const CHog &hog, const string &filename) {
 }
 
 void CFile::Load(const string &hog, const string &filename) {
-//  mHog = &CHogManager::get_Instance()[hog];
+  mHog = &(*CHogManager::fromContext(mContext))[hog];
   mFilename = filename;
   mLength = (*mHog)[filename].mLength;
   mPos = (*mHog)[filename].mPos;
