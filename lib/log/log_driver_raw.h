@@ -20,6 +20,7 @@
 
 #include "lib/context/context.h"
 #include "lib/log/log_driver.h"
+#include "lib/log/log_type.h"
 
 namespace DESCENT_BOT {
 namespace LIB {

@@ -24,7 +24,9 @@
 
 #include "lib/context/component.h"
 #include "lib/context/context.h"
+#include "lib/log/log_chain.h"
 #include "lib/log/log_driver.h"
+#include "lib/log/log_type.h"
 #include "lib/log/logger.h"
 
 #define LOG(type, level) LOG_CONTEXT(mContext, type, level)
@@ -40,28 +42,6 @@ namespace CONFIG {
 class CConfig;
 }  // namespace CONFIG
 namespace LOG {
-
-/// This class represents a logging chain target
-class CLog_Chain {
- public:
-  CLog_Chain(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
-             const LogType type);
-  ~CLog_Chain();
-
-  LogType get_Type() const;
-
-  void add_Logger(CLogDriverBase *log_driver);
-  void Write(int level, const ::std::string &message);
-
- private:
-  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
-  ::std::vector<CLogDriverBase *> mDrivers;
-  LogType mType;
-
-  CLog_Chain() = delete;
-  CLog_Chain(const CLog_Chain &source) = delete;
-  CLog_Chain &operator=(const CLog_Chain &source) = delete;
-};
 
 struct CLog_Cached_Entry {
   LogType type;

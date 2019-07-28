@@ -18,18 +18,11 @@
 #include <sstream>
 
 #include "lib/context/context.h"
+#include "lib/log/log_type.h"
 
 namespace DESCENT_BOT {
 namespace LIB {
 namespace LOG {
-
-enum LogType {
-  LogType_Fatal,
-  LogType_Error,
-  LogType_Warning,
-  LogType_Debug,
-  LogType_Info
-};
 
 class CLogDriverBase {
  public:
