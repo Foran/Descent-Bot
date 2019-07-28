@@ -26,6 +26,6 @@ cc_library(
     'network.h',
     'packets.h',
   ],
-  visibility=['//src/lib/network/test:__pkg__',],
+  visibility=['//lib/network/test:__pkg__',],
 )
 

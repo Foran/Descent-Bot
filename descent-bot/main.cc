@@ -18,7 +18,7 @@
 #include "lib/levelmodel/hogmanager.h"
 #include "lib/levelmodel/rdl.h"
 #include "lib/log/log.h"
-#include "src/lib/network/connectionmanager.h"
+#include "lib/network/connectionmanager.h"
 
 using ::DESCENT_BOT::LIB::CONFIG::CConfig;
 using ::DESCENT_BOT::LIB::CONTEXT::CApplicationContext;
@@ -26,7 +26,7 @@ using ::DESCENT_BOT::LIB::LEVELMODEL::CHogManager;
 using ::DESCENT_BOT::LIB::LEVELMODEL::CRdl;
 using ::DESCENT_BOT::LIB::LOG::CLog;
 using ::DESCENT_BOT::LIB::LOG::LogType;
-using ::DESCENT_BOT::SRC::LIB::NETWORK::CConnectionManager;
+using ::DESCENT_BOT::LIB::NETWORK::CConnectionManager;
 using ::std::cout;
 using ::std::endl;
 using ::std::string;

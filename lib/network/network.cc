@@ -10,12 +10,11 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/network/network.h"
+#include "lib/network/network.h"
 
 using ::std::string;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -82,5 +81,4 @@ int CNetwork::select(int nfds, fd_set *readfds, fd_set *writefds,
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

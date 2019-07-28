@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/network/connectionmanager.h"
+#include "lib/network/connectionmanager.h"
 
 #include "lib/context/context.h"
 
@@ -21,7 +21,6 @@ using ::std::map;
 using ::std::string;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -150,5 +149,4 @@ void CConnectionManager::Pulse() {
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

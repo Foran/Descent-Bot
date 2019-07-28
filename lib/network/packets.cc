@@ -10,13 +10,12 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/network/packets.h"
+#include "lib/network/packets.h"
 
 using ::std::cout;
 using ::std::endl;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -36,5 +35,4 @@ void CPacket_Request_Game_Info_Lite::Send(int socket,
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

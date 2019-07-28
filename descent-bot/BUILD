@@ -8,7 +8,7 @@ cc_binary(
     '//lib/context:libapplication_context',
     '//lib/levelmodel:liblevelmodel',
     '//lib/log:liblog',
-    '//src/lib/network:libconnection',
+    '//lib/network:libconnection',
   ],
   copts=[
     '--std=c++17',
