@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LEVELMODEL_RDL_H_
-#define SRC_LIB_LEVELMODEL_RDL_H_
+#ifndef LIB_LEVELMODEL_RDL_H_
+#define LIB_LEVELMODEL_RDL_H_
 
 #include <string.h>
 
@@ -20,15 +20,14 @@
 #include <iostream>
 
 #include "lib/context/context.h"
-#include "src/lib/levelmodel/hog.h"
-#include "src/lib/levelmodel/hogmanager.h"
-#include "src/lib/levelmodel/file.h"
+#include "lib/levelmodel/hog.h"
+#include "lib/levelmodel/hogmanager.h"
+#include "lib/levelmodel/file.h"
 #include "src/lib/log/log.h"
-#include "src/lib/levelmodel/fstreamptr.h"
+#include "lib/levelmodel/fstreamptr.h"
 #include "lib/math/math.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -156,7 +155,6 @@ class CRdl : public CFile {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LEVELMODEL_RDL_H_
+#endif  // LIB_LEVELMODEL_RDL_H_

@@ -10,41 +10,36 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LEVELMODEL_HOG_H_
-#define SRC_LIB_LEVELMODEL_HOG_H_
+#ifndef LIB_LEVELMODEL_HOG_H_
+#define LIB_LEVELMODEL_HOG_H_
 
 #include <string>
 #include <vector>
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 class CFile;
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
 #include "src/lib/log/log.h"
-#include "src/lib/levelmodel/file.h"
-#include "src/lib/levelmodel/fstreamptr.h"
+#include "lib/levelmodel/file.h"
+#include "lib/levelmodel/fstreamptr.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 class CHogManager;
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#include "src/lib/levelmodel/hogmanager.h"
+#include "lib/levelmodel/hogmanager.h"
 #include "lib/context/context.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -79,7 +74,6 @@ class CHog {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LEVELMODEL_HOG_H_
+#endif  // LIB_LEVELMODEL_HOG_H_

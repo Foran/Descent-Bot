@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/levelmodel/fstreamptr.h"
+#include "lib/levelmodel/fstreamptr.h"
 
 using ::std::cout;
 using ::std::endl;
@@ -18,7 +18,6 @@ using ::std::fstream;
 using ::std::map;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -69,5 +68,4 @@ fstream const &fstreamptr::operator*() const {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LEVELMODEL_FSTREAMPTR_H_
-#define SRC_LIB_LEVELMODEL_FSTREAMPTR_H_
+#ifndef LIB_LEVELMODEL_FSTREAMPTR_H_
+#define LIB_LEVELMODEL_FSTREAMPTR_H_
 
 #include <fstream>
 #include <iostream>
@@ -20,7 +20,6 @@
 #include "src/lib/log/log.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -43,7 +42,6 @@ class fstreamptr {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LEVELMODEL_FSTREAMPTR_H_
+#endif  // LIB_LEVELMODEL_FSTREAMPTR_H_

@@ -10,21 +10,5 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LEVELMODEL_MISSION_H_
-#define SRC_LIB_LEVELMODEL_MISSION_H_
-
-namespace DESCENT_BOT {
-namespace SRC {
-namespace LIB {
-namespace LEVELMODEL {
-
-class CMission {
-};
-
-}  // namespace LEVELMODEL
-}  // namespace LIB
-}  // namespace SRC
-}  // namespace DESCENT_BOT
-
-#endif  // SRC_LIB_LEVELMODEL_MISSION_H_
+#include "lib/levelmodel/mission.h"
 

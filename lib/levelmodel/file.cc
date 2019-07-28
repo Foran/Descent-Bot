@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/levelmodel/file.h"
+#include "lib/levelmodel/file.h"
 
 #include "lib/context/context.h"
 
@@ -25,7 +25,6 @@ using ::std::streampos;
 using ::std::string;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LEVELMODEL {
 
@@ -136,5 +135,4 @@ bool CFile::eof(fstream &file) {
 
 }  // namespace LEVELMODEL
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
