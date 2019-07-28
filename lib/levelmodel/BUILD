@@ -24,6 +24,7 @@ cc_library(
     '-std=c++11',
   ],
   deps=[
+    '//lib/context:libapplication_context',
     '//lib/context:libcontext',
     '//lib/context:libcomponent',
     '//src/lib/log:liblog',

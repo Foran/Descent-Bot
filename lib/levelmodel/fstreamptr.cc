@@ -12,10 +12,17 @@
  ***************************************************/
 #include "lib/levelmodel/fstreamptr.h"
 
+#include "lib/context/context.h"
+#include "src/lib/log/log.h"
+
 using ::std::cout;
 using ::std::endl;
 using ::std::fstream;
 using ::std::map;
+
+using ::DESCENT_BOT::LIB::CONTEXT::CContext;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
+using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -23,28 +30,32 @@ namespace LEVELMODEL {
 
 map<fstream *, int> fstreamptr::mReferences;
 
-fstreamptr::fstreamptr() {
+fstreamptr::fstreamptr(CContext *context) {
+  mContext = context;
   mPtr = new fstream();
   mReferences[mPtr] = 1;
-  cout << "Initial fstreamptf() called" << endl;
+  LOG(LogType::LogType_Debug, 200) << "Initial fstreamptf() called";
 }
 
 fstreamptr::fstreamptr(const fstreamptr &source) {
-  cout << "Copy constructor for fstreamptr called" << endl;
+  LOG(LogType::LogType_Debug, 200) << "Copy constructor for fstreamptr called";
   *this = source;
 }
 
-fstreamptr::fstreamptr(const char *filename,
+fstreamptr::fstreamptr(CContext *context, const char *filename,
                        const ::std::ios_base::openmode mode) {
+  mContext = context;
   mPtr = new fstream(filename, mode);
   mReferences[mPtr] = 1;
-  cout << "Initial fstreamptr(filename, mode) called" << endl;
+  LOG(LogType::LogType_Debug, 200)
+    << "Initial fstreamptr(filename, mode) called";
 }
 
 fstreamptr::~fstreamptr() {
   mReferences[mPtr]--;
-  cout << "Destructor for fstreamptr called with a reference count of "
-       << mReferences[mPtr] << endl;
+  LOG(LogType::LogType_Debug, 200)
+    << "Destructor for fstreamptr called with a reference count of "
+    << mReferences[mPtr];
   if (mReferences[mPtr] == 0) {
     mReferences.erase(mPtr);
     delete mPtr;
@@ -52,6 +63,7 @@ fstreamptr::~fstreamptr() {
 }
 
 fstreamptr &fstreamptr::operator=(const fstreamptr &source) {
+  mContext = source.mContext;
   mPtr = source.mPtr;
   mReferences[mPtr]++;
 

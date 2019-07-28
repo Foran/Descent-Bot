@@ -19,6 +19,8 @@ namespace DESCENT_BOT {
 namespace LIB {
 namespace CONTEXT {
 
+CApplicationContext CApplicationContext::mInstance;
+
 CApplicationContext::CApplicationContext() {
 }
 
@@ -36,6 +38,10 @@ void CApplicationContext::registerComponent(CComponent *component) {
 void CApplicationContext::registerComponent(const ::std::string &name,
                                             CComponent *component) {
   CContext::registerComponent(name, component);
+}
+
+CApplicationContext &CApplicationContext::getInstance() {
+  return mInstance;
 }
 
 }  // namespace CONTEXT

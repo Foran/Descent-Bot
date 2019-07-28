@@ -25,8 +25,8 @@ cc_library(
     '//lib/context:libcomponent',
     '//lib/context:libcontext',
     '//src/lib/log:liblog',
-    '//src/lib/log:liblog-raw',
-    '//src/lib/log:liblog-file',
+    '//src/lib/log:liblog_raw',
+    '//src/lib/log:liblog_file',
   ],
   visibility = ['//visibility:public'],
 )

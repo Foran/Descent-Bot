@@ -37,6 +37,7 @@ cc_library(
   ],
   visibility=[
     '//descent-bot:__pkg__',
+    '//lib/levelmodel:__pkg__',
   ],
 )
 

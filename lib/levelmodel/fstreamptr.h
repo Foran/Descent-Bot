@@ -17,7 +17,7 @@
 #include <iostream>
 #include <map>
 
-#include "src/lib/log/log.h"
+#include "lib/context/context.h"
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -25,9 +25,10 @@ namespace LEVELMODEL {
 
 class fstreamptr {
  public:
-  fstreamptr();
+  explicit fstreamptr(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   fstreamptr(const fstreamptr &source);
-  fstreamptr(const char *filename, const ::std::ios_base::openmode mode);
+  fstreamptr(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
+             const char *filename, const ::std::ios_base::openmode mode);
   ~fstreamptr();
 
   fstreamptr &operator=(const fstreamptr &source);
@@ -36,8 +37,11 @@ class fstreamptr {
   ::std::fstream const &operator*() const;
 
  private:
+  ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   ::std::fstream *mPtr;
   static ::std::map<::std::fstream *, int> mReferences;
+
+  fstreamptr() = delete;
 };
 
 }  // namespace LEVELMODEL

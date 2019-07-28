@@ -19,6 +19,7 @@ using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 using ::std::cout;
 using ::std::endl;
+using ::std::flush;
 using ::std::ios;
 using ::std::ios_base;
 using ::std::streampos;
@@ -82,7 +83,8 @@ vector<string> CHog::get_Filenames() const {
 
 bool CHog::Load(const string &filename) {
   bool retval = true;
-  fstreamptr file(("missions/" + filename).c_str(), ios::in | ios::binary);
+  fstreamptr file(mContext, ("missions/" + filename).c_str(),
+                  ios::in | ios::binary);
   char signature[3];
   char file_name[13];
   int file_size;
@@ -94,16 +96,15 @@ bool CHog::Load(const string &filename) {
     mFilename = filename;
     if (!(*file).eof() && (*file).read(signature, 3)) {
       if (signature[0] == 'D' && signature[1] == 'H' && signature[2] == 'F') {
-        CLog::fromContext(mContext)->Write(
-          LogType::LogType_Debug, 100, "Found a valid signature");
+        LOG(LogType::LogType_Debug, 100) << "Found a valid signature";
         while (!(*file).eof() && (*file).read(file_name, 13)) {
           string name = file_name;
           if (!(*file).eof() &&
               (*file).read(reinterpret_cast<char *>(&file_size), 4)) {
             streampos pos = (*file).tellg();
             mFiles.push_back(new CFile(mContext, *this, name, pos, file_size));
-            CLog::fromContext(mContext)->Write(
-              LogType::LogType_Debug, 60, "Found file: " + name + " in hog");
+            LOG(LogType::LogType_Debug, 60)
+              << "Found file: " << name << " in hog";
             (*file).seekg(file_size, ios_base::cur);
           }
         }
@@ -117,14 +118,14 @@ bool CHog::Load(const string &filename) {
 }
 
 fstreamptr CHog::get_Stream() const {
-  fstreamptr file(("missions/" + mFilename).c_str(), ios::in | ios::binary);
+  fstreamptr file(mContext, ("missions/" + mFilename).c_str(),
+                  ios::in | ios::binary);
 
-  CLog::fromContext(mContext)->Write(
-    LogType::LogType_Debug, 200, "Attempting to open Hog (" +
-                                 mFilename + ") Stream..." +
-                                 ((*file).is_open() ?
-                                  "Success" :
-                                  "Failure"));
+  LOG(LogType::LogType_Debug, 200) << "Attempting to open Hog (" <<
+                                   mFilename << ") Stream..." <<
+                                   ((*file).is_open() ?
+                                    "Success" :
+                                    "Failure");
 
   return file;
 }
@@ -133,15 +134,14 @@ fstreamptr CHog::get_Stream(const string &name) const {
   fstreamptr file = get_Stream();
 
   if ((*file).is_open()) {
-    cout << "Before: " << (*file).tellg() << endl;
+    LOG(LogType::LogType_Debug, 200) << "Before: " << (*file).tellg();
     (*file).seekg((*this)[name].mPos, ios_base::beg);
-    CLog::fromContext(mContext)->Write(
-      LogType::LogType_Debug, 200, "Attempting to open Hog (" +
-                                   mFilename + ") Entry (" + name +
-                                   ") Stream..." + (!(*file).eof() ?
-                                                    "Success" :
-                                                    "Failure"));
-    cout << "After: " << (*file).tellg() << endl;
+    LOG(LogType::LogType_Debug, 200) << "Attempting to open Hog (" <<
+                                     mFilename << ") Entry (" << name <<
+                                     ") Stream..." << (!(*file).eof() ?
+                                                      "Success" :
+                                                      "Failure");
+    LOG(LogType::LogType_Debug, 200) << "After: " << (*file).tellg();
   }
 
   return file;

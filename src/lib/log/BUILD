@@ -3,20 +3,25 @@ cc_library(
   srcs=[
     'log.cc',
     'log_driver.cc',
+    'logger.cc',
   ],
   hdrs=[
     'log.h',
     'log_driver.h',
+    'logger.h',
   ],
   deps=[
     '//lib/context:libcomponent',
     '//lib/context:libcontext',
   ],
+  copts=[
+    '--std=c++17',
+  ],
   visibility=['//visibility:public',],
 )
 
 cc_library(
-  name='liblog-file',
+  name='liblog_file',
   srcs=[
     'log_driver_file.cc',
   ],
@@ -32,7 +37,7 @@ cc_library(
 )
 
 cc_library(
-  name='liblog-raw',
+  name='liblog_raw',
   srcs=[
     'log_driver_raw.cc',
   ],
