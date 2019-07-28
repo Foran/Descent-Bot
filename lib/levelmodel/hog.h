@@ -24,7 +24,7 @@ class CFile;
 }  // namespace LIB
 }  // namespace DESCENT_BOT
 
-#include "src/lib/log/log.h"
+#include "lib/log/log.h"
 #include "lib/levelmodel/file.h"
 #include "lib/levelmodel/fstreamptr.h"
 

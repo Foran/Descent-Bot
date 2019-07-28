@@ -10,25 +10,25 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LOG_LOG_DRIVER_RAW_H_
-#define SRC_LIB_LOG_LOG_DRIVER_RAW_H_
+#ifndef LIB_LOG_LOG_DRIVER_FILE_H_
+#define LIB_LOG_LOG_DRIVER_FILE_H_
 
+#include <stdio.h>
 #include <stdlib.h>
 
-#include <iostream>
+#include <fstream>
 #include <string>
 
 #include "lib/context/context.h"
-#include "src/lib/log/log_driver.h"
+#include "lib/log/log_driver.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LOG {
 
-class CLogDriverRaw : public CLogDriverBase {
+class CLogDriverFile : public CLogDriverBase {
  public:
-  explicit CLogDriverRaw(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
+  explicit CLogDriverFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context);
   virtual void set_Name(const ::std::string &name);
   virtual ::std::string get_Name() const;
   virtual ::std::string get_Driver() const;
@@ -47,11 +47,11 @@ class CLogDriverRaw : public CLogDriverBase {
   int mLevel;
   LogType mType;
   ::std::string mName;
+  ::std::string mFilename;
 };
 
 }  // namespace LOG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LOG_LOG_DRIVER_RAW_H_
+#endif  // LIB_LOG_LOG_DRIVER_FILE_H_

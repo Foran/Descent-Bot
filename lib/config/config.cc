@@ -17,10 +17,10 @@
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 #include "lib/context/context.h"
-#include "src/lib/log/log.h"
-#include "src/lib/log/log_driver.h"
-#include "src/lib/log/log_driver_file.h"
-#include "src/lib/log/log_driver_raw.h"
+#include "lib/log/log.h"
+#include "lib/log/log_driver.h"
+#include "lib/log/log_driver_file.h"
+#include "lib/log/log_driver_raw.h"
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -33,11 +33,11 @@ using PROTO::Config;
 using PROTO::Logger;
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverBase;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverFile;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverRaw;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::LIB::LOG::CLog;
+using ::DESCENT_BOT::LIB::LOG::CLogDriverBase;
+using ::DESCENT_BOT::LIB::LOG::CLogDriverFile;
+using ::DESCENT_BOT::LIB::LOG::CLogDriverRaw;
+using ::DESCENT_BOT::LIB::LOG::LogType;
 
 /**
  * Default constructor of the CConfig class

@@ -13,7 +13,7 @@
 #include "lib/levelmodel/fstreamptr.h"
 
 #include "lib/context/context.h"
-#include "src/lib/log/log.h"
+#include "lib/log/log.h"
 
 using ::std::cout;
 using ::std::endl;
@@ -21,8 +21,8 @@ using ::std::fstream;
 using ::std::map;
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
-using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
-using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
+using ::DESCENT_BOT::LIB::LOG::CLog;
+using ::DESCENT_BOT::LIB::LOG::LogType;
 
 namespace DESCENT_BOT {
 namespace LIB {

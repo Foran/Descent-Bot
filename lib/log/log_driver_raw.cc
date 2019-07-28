@@ -10,7 +10,7 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/log/log_driver_raw.h"
+#include "lib/log/log_driver_raw.h"
 
 using ::std::cout;
 using ::std::endl;
@@ -21,7 +21,6 @@ using ::std::string;
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LOG {
 
@@ -87,5 +86,4 @@ bool CLogDriverRaw::Write(int level, const string &message) {
 
 }  // namespace LOG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_LOG_LOG_DRIVER_H_
-#define SRC_LIB_LOG_LOG_DRIVER_H_
+#ifndef LIB_LOG_LOG_DRIVER_H_
+#define LIB_LOG_LOG_DRIVER_H_
 
 #include <string>
 #include <iostream>
@@ -20,7 +20,6 @@
 #include "lib/context/context.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace LOG {
 
@@ -69,7 +68,6 @@ extern LogType GetLogType(::std::string type);
 
 }  // namespace LOG
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_LOG_LOG_DRIVER_H_
+#endif  // LIB_LOG_LOG_DRIVER_H_

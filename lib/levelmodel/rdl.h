@@ -23,7 +23,7 @@
 #include "lib/levelmodel/hog.h"
 #include "lib/levelmodel/hogmanager.h"
 #include "lib/levelmodel/file.h"
-#include "src/lib/log/log.h"
+#include "lib/log/log.h"
 #include "lib/levelmodel/fstreamptr.h"
 #include "lib/math/math.h"
 
