@@ -19,6 +19,7 @@
 #include "lib/context/context.h"
 #include "src/lib/log/log.h"
 #include "src/lib/log/log_driver.h"
+#include "src/lib/log/log_driver_file.h"
 #include "src/lib/log/log_driver_raw.h"
 
 namespace DESCENT_BOT {
@@ -35,6 +36,7 @@ using PROTO::Logger;
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLog;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverBase;
+using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverFile;
 using ::DESCENT_BOT::SRC::LIB::LOG::CLogDriverRaw;
 using ::DESCENT_BOT::SRC::LIB::LOG::LogType;
 
@@ -72,10 +74,17 @@ bool CConfig::Load(const string filename) {
         CLogDriverBase *driver = nullptr;
         if (::std::string("Raw") == mConfig.loggers(i).driver()) {
           driver = new CLogDriverRaw(mContext);
+        } else if (::std::string("File") == mConfig.loggers(i).driver()) {
+          driver = new CLogDriverFile(mContext);
         }
         if (driver != nullptr) {
           driver->set_Name(mConfig.loggers(i).name());
           driver->set_Level(mConfig.loggers(i).level());
+          for (int j = 0; j < mConfig.loggers(i).options_size(); j++) {
+            driver->set_Option(
+              mConfig.loggers(i).options(j).name(),
+              mConfig.loggers(i).options(j).value());
+          }
           switch (mConfig.loggers(i).type()) {
             case Logger::LogType::Logger_LogType_INFO:
               log->add_Logger(LogType::LogType_Info, driver);
