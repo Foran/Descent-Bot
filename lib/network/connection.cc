@@ -10,13 +10,12 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#include "src/lib/network/connection.h"
+#include "lib/network/connection.h"
 
 using ::std::cout;
 using ::std::endl;
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -65,5 +64,4 @@ void CConnection::ProcessInboundPackets() {
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT

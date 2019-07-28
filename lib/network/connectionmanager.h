@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_NETWORK_CONNECTIONMANAGER_H_
-#define SRC_LIB_NETWORK_CONNECTIONMANAGER_H_
+#ifndef LIB_NETWORK_CONNECTIONMANAGER_H_
+#define LIB_NETWORK_CONNECTIONMANAGER_H_
 
 #include <string.h>
 #include <time.h>
@@ -22,12 +22,11 @@
 #include "lib/context/component.h"
 #include "lib/context/context.h"
 #include "lib/log/log.h"
-#include "src/lib/network/network.h"
-#include "src/lib/network/packets.h"
-#include "src/lib/network/connection.h"
+#include "lib/network/network.h"
+#include "lib/network/packets.h"
+#include "lib/network/connection.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -58,7 +57,6 @@ class CConnectionManager : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_NETWORK_CONNECTIONMANAGER_H_
+#endif  // LIB_NETWORK_CONNECTIONMANAGER_H_

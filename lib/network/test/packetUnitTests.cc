@@ -13,10 +13,10 @@
 #include <string>
 
 #include "gtest/gtest.h"
-#include "src/lib/network/packets.h"
+#include "lib/network/packets.h"
 
-using ::DESCENT_BOT::SRC::LIB::NETWORK::PACKET_Game_Info_Lite;
-using ::DESCENT_BOT::SRC::LIB::NETWORK::UDP_PacketType;
+using ::DESCENT_BOT::LIB::NETWORK::PACKET_Game_Info_Lite;
+using ::DESCENT_BOT::LIB::NETWORK::UDP_PacketType;
 using ::std::string;
 
 class PacketTest : public ::testing::Test {

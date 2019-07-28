@@ -10,18 +10,17 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_NETWORK_PACKETS_H_
-#define SRC_LIB_NETWORK_PACKETS_H_
+#ifndef LIB_NETWORK_PACKETS_H_
+#define LIB_NETWORK_PACKETS_H_
 
 #include <errno.h>
 #include <string.h>
 
 #include <iostream>
 
-#include "src/lib/network/network.h"
+#include "lib/network/network.h"
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -144,7 +143,6 @@ class CPacket_Request_Game_Info_Lite {
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_NETWORK_PACKETS_H_
+#endif  // LIB_NETWORK_PACKETS_H_

@@ -10,8 +10,8 @@
  * Castro Street, Suite 900, Mountain View,
  * California, 94041, USA.
  ***************************************************/
-#ifndef SRC_LIB_NETWORK_NETWORK_H_
-#define SRC_LIB_NETWORK_NETWORK_H_
+#ifndef LIB_NETWORK_NETWORK_H_
+#define LIB_NETWORK_NETWORK_H_
 
 #ifdef _WIN32
 #include <WinSock2.h>
@@ -35,7 +35,6 @@ typedef int Descent_Socket;
 #include <string>
 
 namespace DESCENT_BOT {
-namespace SRC {
 namespace LIB {
 namespace NETWORK {
 
@@ -84,7 +83,6 @@ class CNetwork : INetwork {
 
 }  // namespace NETWORK
 }  // namespace LIB
-}  // namespace SRC
 }  // namespace DESCENT_BOT
 
-#endif  // SRC_LIB_NETWORK_NETWORK_H_
+#endif  // LIB_NETWORK_NETWORK_H_
