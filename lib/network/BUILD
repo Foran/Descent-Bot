@@ -9,7 +9,7 @@ cc_library(
     'connectionmanager.h',
   ],
   deps=[
-    ':libnetwork',
+    ':libpackets',
     '//lib/context:libcontext',
     '//lib/log:liblog',
   ],
@@ -20,15 +20,26 @@ cc_library(
   name='libnetwork',
   srcs=[
     'network.cc',
-    'packets.cc',
   ],
   hdrs=[
     'network.h',
-    'packets.h',
-  ],
-  deps=[
-    '//protos/lib/network:libnetwork_cc_proto',
   ],
   visibility=['//lib/network/test:__pkg__',],
 )
 
+cc_library(
+  name='libpackets',
+  srcs=[
+    'packets.cc',
+  ],
+  hdrs=[
+    'packets.h',
+  ],
+  deps=[
+    ':libnetwork',
+    '//lib/context:libapplication_context',
+    '//lib/log:liblog',
+    '//protos/lib/network:libnetwork_cc_proto',
+  ],
+  visibility=['//lib/network/test:__pkg__',],
+)

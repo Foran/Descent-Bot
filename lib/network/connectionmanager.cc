@@ -118,7 +118,20 @@ void CConnectionManager::Pulse() {
         LOG(LogType::LogType_Debug, 100) << "Recieved a packet ("
           << PROTO::UDP_PacketType_Name((PROTO::UDP_PacketType)packetId) << ")";
         switch (packetId) {
+          case UPID_GAME_INFO_LITE_REQ:
+            {
+              CPacket_Request_Game_Info_Lite request_packet;
+              PACKET_Request_Game_Info_Lite packet = request_packet.Recv(mSocket);
+              LOG(LogType::LogType_Debug, 100) << packet;
+            }
+            break;
           case UPID_GAME_INFO_LITE:
+            {
+              CPacket_Game_Info_Lite gameinfo_packet;
+              PACKET_Game_Info_Lite packet = gameinfo_packet.Recv(mSocket);
+              LOG(LogType::LogType_Debug, 100) << packet;
+            }
+            break;
           case UPID_GAME_INFO:
           default:
             LOG(LogType::LogType_Debug, 100) << "Throwing packet away";

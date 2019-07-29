@@ -6,7 +6,7 @@ cc_test(
   ],
   deps=[
     '@gtest//:gtest_main',
-    '//lib/network:libnetwork',
+    '//lib/network:libpackets',
   ],
   copts=[
     '-Iexternal/gtest/include',
