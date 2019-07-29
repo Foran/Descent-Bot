@@ -141,7 +141,8 @@ template<class T> struct CPacket {
   virtual T Recv(int socket) = 0;
 };
 
-class CPacket_Request_Game_Info_Lite : public CPacket<PACKET_Request_Game_Info_Lite> {
+class CPacket_Request_Game_Info_Lite
+  : public CPacket<PACKET_Request_Game_Info_Lite> {
  public:
   void Send(int socket, const struct sockaddr_in &addr) override;
   PACKET_Request_Game_Info_Lite Recv(int socket) override;

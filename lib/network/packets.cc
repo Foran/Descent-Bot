@@ -45,20 +45,24 @@ void CPacket_Request_Game_Info_Lite::Send(int socket,
   LOG_GLOBAL(LogType::LogType_Debug, 100) << strerror(err);
 }
 
-PACKET_Request_Game_Info_Lite CPacket_Request_Game_Info_Lite::Recv(int socket) {
+PACKET_Request_Game_Info_Lite CPacket_Request_Game_Info_Lite::Recv(
+  int socket) {
   PACKET_Request_Game_Info_Lite packet;
   struct sockaddr_in addr;
   socklen_t fromLen = sizeof(addr);
   recvfrom(socket, reinterpret_cast<char *>(&packet), sizeof(packet), 0,
-    (struct sockaddr *)&addr, (socklen_t *)&fromLen);
+    (struct sockaddr *)&addr, reinterpret_cast<socklen_t *>(&fromLen));
   return packet;
 }
 
-ostream &operator<<(ostream &output, const PACKET_Request_Game_Info_Lite &packet) {
-  output << "Type: " << PROTO::UDP_PacketType_Name((PROTO::UDP_PacketType)packet.Type) << "\n";
+ostream &operator<<(ostream &output,
+  const PACKET_Request_Game_Info_Lite &packet) {
+  output << "Type: "
+         << PROTO::UDP_PacketType_Name((PROTO::UDP_PacketType)packet.Type)
+         << "\n";
   output << "Major: " << packet.Major << "\n";
   output << "Minor: " << packet.Minor << "\n";
-  output << "Micro: " << packet.Micro << "\n";
+  output << "Micro: " << packet.Micro;
   return output;
 }
 
@@ -70,29 +74,34 @@ PACKET_Game_Info_Lite CPacket_Game_Info_Lite::Recv(int socket) {
   PACKET_Game_Info_Lite packet;
   struct sockaddr_in addr;
   socklen_t fromLen = sizeof(addr);
-  int len = recvfrom(socket, reinterpret_cast<char *>(&packet), sizeof(packet), 0,
-    (struct sockaddr *)&addr, (socklen_t *)&fromLen);
+  int len = recvfrom(socket, reinterpret_cast<char *>(&packet),
+    sizeof(packet), 0, (struct sockaddr *)&addr,
+    reinterpret_cast<socklen_t *>(&fromLen));
   char addrstr[16];
   inet_ntop(AF_INET, &(addr.sin_addr), addrstr, 16);
-  LOG_GLOBAL(LogType::LogType_Debug, 100) << "Received " << len << " bytes from "
+  LOG_GLOBAL(LogType::LogType_Debug, 100) << "Received " << len
+    << " bytes from "
     << addrstr << ":" << addr.sin_port;
   return packet;
 }
 
 ostream &operator<<(ostream &output, const PACKET_Game_Info_Lite &packet) {
-  output << "Type: " << PROTO::UDP_PacketType_Name((PROTO::UDP_PacketType)packet.Type) << "\n";
+  output << "Type: "
+         << PROTO::UDP_PacketType_Name((PROTO::UDP_PacketType)packet.Type)
+         << "\n";
   output << "Major: " << packet.Major << "\n";
   output << "Minor: " << packet.Minor << "\n";
   output << "Micro: " << packet.Micro << "\n";
   output << "Game ID: " << packet.Game_Id << "\n";
   output << "Level Num: " << packet.Level_Num << "\n";
-  output << "Game Mode: " << (int)packet.Game_Mode << "\n";
-  output << "Refuse Players: " << (int)packet.RefusePlayers << "\n";
-  output << "Difficulty: " << (int)packet.Difficulty << "\n";
-  output << "Game Status: " << (int)packet.Game_Status << "\n";
-  output << "Num Connected: " << (int)packet.Num_Connected << "\n";
-  output << "Max Players: " << (int)packet.Max_Players << "\n";
-  output << "Game Flags: " << (int)packet.Game_Flags << "\n";
+  output << "Game Mode: " << static_cast<int>(packet.Game_Mode) << "\n";
+  output << "Refuse Players: " << static_cast<int>(packet.RefusePlayers)
+         << "\n";
+  output << "Difficulty: " << static_cast<int>(packet.Difficulty) << "\n";
+  output << "Game Status: " << static_cast<int>(packet.Game_Status) << "\n";
+  output << "Num Connected: " << static_cast<int>(packet.Num_Connected) << "\n";
+  output << "Max Players: " << static_cast<int>(packet.Max_Players) << "\n";
+  output << "Game Flags: " << static_cast<int>(packet.Game_Flags) << "\n";
   output << "Game_Name: " << packet.Game_Name;
   return output;
 }
