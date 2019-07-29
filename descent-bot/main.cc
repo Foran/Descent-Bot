@@ -93,8 +93,6 @@ int main(int argc, char **argv) {
         ->Pulse();
   }
 #endif
-  // CConnection connection;
-  // connection.find_Game();
 
   LOG_GLOBAL(LogType::LogType_Debug, 100) << "Exiting gracefully";
 

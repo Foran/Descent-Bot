@@ -26,6 +26,9 @@ cc_library(
     'network.h',
     'packets.h',
   ],
+  deps=[
+    '//protos/lib/network:libnetwork_cc_proto',
+  ],
   visibility=['//lib/network/test:__pkg__',],
 )
 

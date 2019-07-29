@@ -13,6 +13,7 @@
 #include "lib/network/connectionmanager.h"
 
 #include "lib/context/context.h"
+#include "protos/lib/network/udp_packet_type.pb.h"
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 using ::DESCENT_BOT::LIB::LOG::CLog;
@@ -110,16 +111,17 @@ void CConnectionManager::Pulse() {
   result = CNetwork::get_Instance().select(max + 1, &read, NULL, NULL, &tv);
 
   if (result > 0) {
-    CLog::fromContext(mContext)->Write(
-      LogType::LogType_Debug, 100, "Received a packet");
     if (FD_ISSET(mSocket, &read)) {
       len = sizeof(addr);
       if (CNetwork::get_Instance().recvfrom(mSocket, &packetId, 1, MSG_PEEK,
                                       (struct sockaddr *)&addr, &len) > 0) {
+        LOG(LogType::LogType_Debug, 100) << "Recieved a packet ("
+          << PROTO::UDP_PacketType_Name((PROTO::UDP_PacketType)packetId) << ")";
         switch (packetId) {
           case UPID_GAME_INFO_LITE:
           case UPID_GAME_INFO:
           default:
+            LOG(LogType::LogType_Debug, 100) << "Throwing packet away";
             // throw the packet away
             CNetwork::get_Instance().recvfrom(mSocket, &packetId, 1, 0,
                                               (struct sockaddr *)&addr, &len);
