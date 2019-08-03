@@ -36,7 +36,7 @@ class PacketTest : public ::testing::Test {
  private:
 };
 
-TEST_F(PacketTest, DefaultConstructor) {
+TEST_F(PacketTest, DISABLED_DefaultConstructor) {
   unsigned char buffer[] = {0x05, 0x00, 0x00, 0x38, 0x00, 0x00, 0x00, 0x66,
                             0x6f, 0x72, 0x61, 0x6e, 0x27, 0x73, 0x20, 0x67,
                             0x61, 0x6d, 0x65, 0x00, 0x00, 0x00, 0x00, 0x54,
@@ -51,6 +51,9 @@ TEST_F(PacketTest, DefaultConstructor) {
   EXPECT_EQ(0, packet->Major);
   EXPECT_EQ(56, packet->Minor);
   EXPECT_EQ(0, packet->Micro);
+  EXPECT_EQ(0, packet->Game_Id);
+  EXPECT_EQ(0, packet->Game_Mode);
+  EXPECT_EQ(0, packet->Level_Num);
   EXPECT_EQ(string("foran's game"), string(packet->Game_Name));
   EXPECT_EQ(string("Total Chaos"), string(packet->Mission_Title));
   EXPECT_EQ(string("CHAOS"), string(packet->Mission_Name));

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package DESCENT_BOT.LIB.NETWORK.PROTO;
+
+/*************************************
+ * UDP Packet ID's taken directly from
+ * D1X-Rebirth source
+ *************************************/
+enum UDP_PacketType {
+  UNKNOWN = 0;
+  UPID_VERSION_DENY = 1;       // Netgame join or info has been denied due to
+                               // version difference.
+  UPID_GAME_INFO_REQ = 2;      // Requesting all info about a netgame.
+  UPID_GAME_INFO = 3;          // Packet containing all info about a netgame.
+  UPID_GAME_INFO_LITE_REQ = 4; // Requesting lite info about a netgame. Used
+                               // for discovering games.
+  UPID_GAME_INFO_LITE = 5;     // Packet containing lite netgame info.
+  UPID_DUMP = 6;               // Packet containing why player cannot join
+                               // this game.
+  UPID_ADDPLAYER = 7;          // Packet from Host containing info about a
+                               // new player.
+  UPID_REQUEST = 8;            // New player says: "I want to be inside of
+                               // you!" (haha, sorry I could not resist) /
+                               // Packet containing request to join the
+                               // game actually.
+  UPID_QUIT_JOINING = 9;       // Packet from a player who suddenly quits
+                               // joining.
+  UPID_SYNC = 10;              // Packet from host containing full netgame
+                               // info to sync players up.
+  UPID_OBJECT_DATA = 11;       // Packet from host containing object buffer.
+  UPID_PING = 12;              // Packet from host containing his GameTime
+                               // and the Ping list. Client returns this
+                               // time to host as UPID_PONG and adapts the
+                               // ping list.
+  UPID_PONG = 13;              // Packet answer from client to UPID_PING.
+                               // Contains the time the initial ping packet
+                               // was sent.
+  UPID_ENDLEVEL_H = 14;        // Packet from Host to all Clients containing
+                               // connect-states and kills information about
+                               // everyone in the game.
+  UPID_ENDLEVEL_C = 15;        // Packet from Client to Host containing
+                               // connect-state and kills information from
+                               // this Client.
+  UPID_PDATA_H = 16;           // Packet from Host to all Clients containing
+                               // all players movement data.
+  UPID_PDATA_C = 17;           // Packet from Client to Host containing his
+                               // movement data.
+  UPID_MDATA_P0 = 18;          // Packet containing multi buffer from a
+                               // player. Priority 0 - no ACK needed.
+  UPID_MDATA_P1 = 19;          // Packet containing multi buffer from a
+                               // player. Priority 1 - ACK needed. Also
+                               // contains pkt_num
+  UPID_MDATA_ACK = 20;         // ACK packet for UPID_MDATA_P1.
+}

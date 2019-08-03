@@ -118,9 +118,7 @@ struct PACKET_Game_Info_Lite {
   int16_t Major;
   int16_t Minor;
   int16_t Micro;
-  char Game_Name[16];
-  char Mission_Title[22];
-  char Mission_Name[9];
+  int Game_Id;
   int Level_Num;
   char Game_Mode;
   char RefusePlayers;
@@ -129,17 +127,38 @@ struct PACKET_Game_Info_Lite {
   char Num_Connected;
   char Max_Players;
   char Game_Flags;
-  char Team_Vector;
+  char Game_Name[26];
+  char Mission_Title[26];
+  char Mission_Name[9];
 #ifdef _WIN32
 };
 #else
 } __attribute__((__packed__, aligned(1)));
 #endif
 
-class CPacket_Request_Game_Info_Lite {
- public:
-  void Send(int socket, const struct sockaddr_in &addr);
+template<class T> struct CPacket {
+  virtual void Send(int socket, const struct sockaddr_in &addr) = 0;
+  virtual T Recv(int socket) = 0;
 };
+
+class CPacket_Request_Game_Info_Lite
+  : public CPacket<PACKET_Request_Game_Info_Lite> {
+ public:
+  void Send(int socket, const struct sockaddr_in &addr) override;
+  PACKET_Request_Game_Info_Lite Recv(int socket) override;
+};
+
+::std::ostream &operator<<(::std::ostream &output,
+  const PACKET_Request_Game_Info_Lite &packet);
+
+class CPacket_Game_Info_Lite : public CPacket<PACKET_Game_Info_Lite> {
+ public:
+  void Send(int socket, const struct sockaddr_in &addr) override;
+  PACKET_Game_Info_Lite Recv(int socket) override;
+};
+
+::std::ostream &operator<<(::std::ostream &output,
+  const PACKET_Game_Info_Lite &packet);
 
 }  // namespace NETWORK
 }  // namespace LIB
