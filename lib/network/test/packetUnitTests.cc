@@ -55,6 +55,6 @@ TEST_F(PacketTest, DISABLED_DefaultConstructor) {
   EXPECT_EQ(0, packet->Game_Mode);
   EXPECT_EQ(0, packet->Level_Num);
   EXPECT_EQ(string("foran's game"), string(packet->Game_Name));
-  //EXPECT_EQ(string("Total Chaos"), string(packet->Mission_Title));
-  //EXPECT_EQ(string("CHAOS"), string(packet->Mission_Name));
+  EXPECT_EQ(string("Total Chaos"), string(packet->Mission_Title));
+  EXPECT_EQ(string("CHAOS"), string(packet->Mission_Name));
 }
