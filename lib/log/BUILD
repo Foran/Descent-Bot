@@ -3,6 +3,9 @@ cc_library(
   hdrs=[
     'log_type.h',
   ],
+  copts=[
+    '--std=c++17',
+  ],
   visibility=[
     '//visibility:public',
   ],
@@ -15,6 +18,9 @@ cc_library(
   ],
   hdrs=[
     'log_chain.h',
+  ],
+  copts=[
+    '--std=c++17',
   ],
   deps=[
     ':liblog_driver',
@@ -29,6 +35,9 @@ cc_library(
   ],
   hdrs=[
     'log_driver.h',
+  ],
+  copts=[
+    '--std=c++17',
   ],
   deps=[
     ':liblog_type',
@@ -71,6 +80,9 @@ cc_library(
     ':liblog_driver',
     ':liblog_type',
   ],
+  copts=[
+    '--std=c++17',
+  ],
   visibility=[
     '//lib/config:__pkg__',
   ],
@@ -87,6 +99,9 @@ cc_library(
   deps=[
     ':liblog_driver',
     ':liblog_type',
+  ],
+  copts=[
+    '--std=c++17',
   ],
   visibility=[
     '//lib/config:__pkg__',

@@ -13,6 +13,9 @@ cc_library(
     '//lib/context:libcontext',
     '//lib/log:liblog',
   ],
+  copts=[
+    '--std=c++17',
+  ],
   visibility=['//visibility:public',],
 )
 
@@ -23,6 +26,9 @@ cc_library(
   ],
   hdrs=[
     'network.h',
+  ],
+  copts=[
+    '--std=c++17',
   ],
   visibility=['//lib/network/test:__pkg__',],
 )
@@ -40,6 +46,9 @@ cc_library(
     '//lib/context:libapplication_context',
     '//lib/log:liblog',
     '//protos/lib/network:libnetwork_cc_proto',
+  ],
+  copts=[
+    '--std=c++17',
   ],
   visibility=['//lib/network/test:__pkg__',],
 )

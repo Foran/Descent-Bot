@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
+#include <memory>
 
 #include "lib/context/context.h"
 #include "lib/log/log.h"
@@ -28,6 +29,9 @@ namespace CONFIG {
 
 using ::std::string;
 using ::std::vector;
+using ::std::make_unique;
+using ::std::move;
+using ::std::unique_ptr;
 
 using PROTO::Config;
 using ::DESCENT_BOT::LIB::LOG::PROTO::Logger;
@@ -70,11 +74,11 @@ bool CConfig::Load(const string filename) {
     } else {
       CLog *log = CLog::fromContext(mContext);
       for (int i = 0; i < mConfig.loggers_size(); i++) {
-        CLogDriverBase *driver = nullptr;
+        unique_ptr<CLogDriverBase> driver = nullptr;
         if (::std::string("Raw") == mConfig.loggers(i).driver()) {
-          driver = new CLogDriverRaw(mContext);
+          driver = make_unique<CLogDriverRaw>(mContext);
         } else if (::std::string("File") == mConfig.loggers(i).driver()) {
-          driver = new CLogDriverFile(mContext);
+          driver = make_unique<CLogDriverFile>(mContext);
         }
         if (driver != nullptr) {
           driver->set_Name(mConfig.loggers(i).name());
@@ -86,22 +90,21 @@ bool CConfig::Load(const string filename) {
           }
           switch (mConfig.loggers(i).type()) {
             case Logger::LogType::Logger_LogType_INFO:
-              log->add_Logger(LogType::LogType_Info, driver);
+              log->add_Logger(LogType::LogType_Info, move(driver));
               break;
             case Logger::LogType::Logger_LogType_DEBUG:
-              log->add_Logger(LogType::LogType_Debug, driver);
+              log->add_Logger(LogType::LogType_Debug, move(driver));
               break;
             case Logger::LogType::Logger_LogType_WARNING:
-              log->add_Logger(LogType::LogType_Warning, driver);
+              log->add_Logger(LogType::LogType_Warning, move(driver));
               break;
             case Logger::LogType::Logger_LogType_ERROR:
-              log->add_Logger(LogType::LogType_Error, driver);
+              log->add_Logger(LogType::LogType_Error, move(driver));
               break;
             case Logger::LogType::Logger_LogType_FATAL:
-              log->add_Logger(LogType::LogType_Fatal, driver);
+              log->add_Logger(LogType::LogType_Fatal, move(driver));
               break;
             default:
-              delete driver;
               break;
           }
         }

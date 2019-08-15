@@ -14,6 +14,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "lib/context/context.h"
 #include "lib/log/log_driver.h"
@@ -21,6 +22,9 @@
 
 using ::std::string;
 using ::std::vector;
+using ::std::unique_ptr;
+using ::std::make_unique;
+using ::std::move;
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
 
@@ -34,22 +38,19 @@ CLog_Chain::CLog_Chain(CContext *context, const LogType type) {
 }
 
 CLog_Chain::~CLog_Chain() {
-  for (auto& driver : mDrivers) {
-    delete driver;
-  }
 }
 
-LogType CLog_Chain::get_Type() const {
+auto CLog_Chain::get_Type() const {
   return mType;
 }
 
-void CLog_Chain::add_Logger(CLogDriverBase *log_driver) {
-  if (log_driver) mDrivers.push_back(log_driver);
+void CLog_Chain::add_Logger(unique_ptr<CLogDriverBase> log_driver) {
+  if (log_driver) mDrivers.push_back(move(log_driver));
 }
 
 void CLog_Chain::Write(int level, const string &message) {
   for (auto& driver : mDrivers) {
-    dynamic_cast<CLogDriverBase *>(driver)->Write(level, message);
+    dynamic_cast<CLogDriverBase *>(driver.get())->Write(level, message);
   }
 }
 

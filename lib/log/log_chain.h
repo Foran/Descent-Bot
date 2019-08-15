@@ -15,6 +15,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "lib/context/context.h"
 #include "lib/log/log_driver.h"
@@ -31,19 +32,19 @@ class CLog_Chain {
              const LogType type);
   ~CLog_Chain();
 
-  LogType get_Type() const;
+  auto get_Type() const;
 
-  void add_Logger(CLogDriverBase *log_driver);
+  void add_Logger(::std::unique_ptr<CLogDriverBase> log_driver);
   void Write(int level, const ::std::string &message);
 
  private:
   ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
-  ::std::vector<CLogDriverBase *> mDrivers;
+  ::std::vector<::std::unique_ptr<CLogDriverBase>> mDrivers;
   LogType mType;
 
   CLog_Chain() = delete;
   CLog_Chain(const CLog_Chain &source) = delete;
-  CLog_Chain &operator=(const CLog_Chain &source) = delete;
+  auto operator=(const CLog_Chain &source) = delete;
 };
 
 }  // namespace LOG
