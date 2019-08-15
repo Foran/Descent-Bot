@@ -44,7 +44,8 @@ CLog::~CLog() {
   return "Log";
 }
 
-void CLog::add_Logger(const LogType type, unique_ptr<CLogDriverBase> log_driver) {
+void CLog::add_Logger(const LogType type,
+                      unique_ptr<CLogDriverBase> log_driver) {
   if (log_driver) {
     if (mChains.find(type) == mChains.end()) {
       mChains.insert(make_pair(type, make_unique<CLog_Chain>(mContext, type)));

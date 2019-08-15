@@ -59,7 +59,8 @@ class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
   ~CLog();
 
   ::std::string getName() const override;
-  void add_Logger(const LogType type, ::std::unique_ptr<CLogDriverBase> log_driver);
+  void add_Logger(const LogType type,
+                  ::std::unique_ptr<CLogDriverBase> log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
   ::std::unique_ptr<CLogger> Write(const LogType type, int level);
 
