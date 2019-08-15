@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 namespace DESCENT_BOT {
 namespace LIB {

@@ -13,6 +13,7 @@
 #ifndef LIB_LEVELMODEL_HOG_H_
 #define LIB_LEVELMODEL_HOG_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -64,7 +65,7 @@ class CHog {
  private:
   ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   ::std::string mFilename;
-  ::std::vector<CFile *> mFiles;
+  ::std::vector<::std::unique_ptr<CFile>> mFiles;
   fstreamptr get_Stream() const;
   fstreamptr get_Stream(const ::std::string &name) const;
 

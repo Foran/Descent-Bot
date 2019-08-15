@@ -15,6 +15,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -44,7 +45,7 @@ class CHogManager : public DESCENT_BOT::LIB::CONTEXT::CComponent {
     ::DESCENT_BOT::LIB::CONTEXT::CContext *context);
  private:
   DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
-  ::std::vector<CHog *> mHogs;
+  ::std::vector<::std::unique_ptr<CHog>> mHogs;
 };
 
 }  // namespace LEVELMODEL
