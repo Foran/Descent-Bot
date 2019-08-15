@@ -12,6 +12,9 @@
  ***************************************************/
 #include "lib/levelmodel/hog.h"
 
+#include <memory>
+#include <vector>
+
 #include "lib/context/context.h"
 
 using ::DESCENT_BOT::LIB::CONTEXT::CContext;
@@ -25,6 +28,8 @@ using ::std::ios_base;
 using ::std::streampos;
 using ::std::string;
 using ::std::vector;
+using ::std::unique_ptr;
+using ::std::make_unique;
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -44,9 +49,6 @@ CHog::CHog(const CHog &source) {
 }
 
 CHog::~CHog() {
-  for (auto& file : mFiles) {
-    delete file;
-  }
 }
 
 CHog &CHog::operator=(const CHog &source) {
@@ -102,7 +104,9 @@ bool CHog::Load(const string &filename) {
           if (!(*file).eof() &&
               (*file).read(reinterpret_cast<char *>(&file_size), 4)) {
             streampos pos = (*file).tellg();
-            mFiles.push_back(new CFile(mContext, *this, name, pos, file_size));
+            mFiles.push_back(
+              unique_ptr<CFile>(
+                new CFile(mContext, *this, name, pos, file_size)));
             LOG(LogType::LogType_Debug, 60)
               << "Found file: " << name << " in hog";
             (*file).seekg(file_size, ios_base::cur);

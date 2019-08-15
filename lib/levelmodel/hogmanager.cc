@@ -12,10 +12,15 @@
  ***************************************************/
 #include "lib/levelmodel/hogmanager.h"
 
+#include <memory>
+#include <vector>
+
 #include "lib/context/context.h"
 
 using ::std::string;
 using ::std::vector;
+using ::std::make_unique;
+using ::std::move;
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -28,9 +33,6 @@ CHogManager::CHogManager(CContext *context) {
 }
 
 CHogManager::~CHogManager() {
-  for (auto& hog : mHogs) {
-    delete hog;
-  }
 }
 
 string CHogManager::getName() const {
@@ -42,14 +44,15 @@ CHog &CHogManager::operator[](const string &filename) {
 
   for (auto& hog : mHogs) {
     if (hog->mFilename == filename) {
-      retval = hog;
+      retval = hog.get();
       break;
     }
   }
 
   if (retval == nullptr) {
-    retval = new CHog(mContext, filename);
-    mHogs.push_back(retval);
+    auto hog = make_unique<CHog>(mContext, filename);
+    retval = hog.get();
+    mHogs.push_back(move(hog));
   }
 
   return *retval;
