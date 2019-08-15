@@ -24,3 +24,8 @@ script:
   - bazel run @cpplint_archive//:cpplint -- $(find $(pwd) | grep -E "[.](h|cc|cpp)$")
   - bazel build //...
   - bazel test //... --test_output=streamed
+
+cache:
+  directories:
+    - $HOME/.bzrepos
+    - $HOME/.cache/bazel
