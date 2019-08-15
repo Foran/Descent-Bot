@@ -14,5 +14,8 @@ cc_library(
     '//lib/log:liblog_driver_file',
     '//protos/lib/config:libconfig_cc_proto',
   ],
+  copts=[
+    '--std=c++17',
+  ],
   visibility = ['//visibility:public'],
 )

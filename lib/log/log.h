@@ -59,7 +59,7 @@ class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
   ~CLog();
 
   ::std::string getName() const override;
-  void add_Logger(const LogType type, CLogDriverBase *log_driver);
+  void add_Logger(const LogType type, ::std::unique_ptr<CLogDriverBase> log_driver);
   void Write(const LogType type, int level, const ::std::string &message);
   ::std::unique_ptr<CLogger> Write(const LogType type, int level);
 
@@ -67,8 +67,8 @@ class CLog : public ::DESCENT_BOT::LIB::CONTEXT::CComponent {
  private:
   ::DESCENT_BOT::LIB::CONTEXT::CContext *mContext;
   bool mCacheEnabled;
-  ::std::vector<CLog_Cached_Entry> mCache;
-  ::std::map<LogType, CLog_Chain *> mChains;
+  ::std::vector<::std::unique_ptr<CLog_Cached_Entry>> mCache;
+  ::std::map<LogType, ::std::unique_ptr<CLog_Chain>> mChains;
 
   CLog(const CLog &source);
   void operator=(const CLog &source);

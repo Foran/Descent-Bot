@@ -21,7 +21,7 @@ cc_library(
   copts=[
     '-pedantic',
     '-I/usr/include/libxml2',
-    '-std=c++11',
+    '-std=c++17',
   ],
   deps=[
     '//lib/context:libapplication_context',
