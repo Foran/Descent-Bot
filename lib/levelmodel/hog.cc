@@ -104,9 +104,8 @@ bool CHog::Load(const string &filename) {
           if (!(*file).eof() &&
               (*file).read(reinterpret_cast<char *>(&file_size), 4)) {
             streampos pos = (*file).tellg();
-            mFiles.push_back(
-              unique_ptr<CFile>(
-                new CFile(mContext, *this, name, pos, file_size)));
+            mFiles.push_back(CFile::createInstance(mContext, *this, name, pos,
+                                                   file_size));
             LOG(LogType::LogType_Debug, 60)
               << "Found file: " << name << " in hog";
             (*file).seekg(file_size, ios_base::cur);

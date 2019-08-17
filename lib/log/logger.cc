@@ -12,7 +12,10 @@
  ***************************************************/
 #include "lib/log/logger.h"
 
+#include <memory>
+
 using ::std::ostream;
+using ::std::unique_ptr;
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -38,6 +41,12 @@ int CLogger::CLoggerStringBuf::sync() {
   mLog->Write(mType, mLevel, str());
   str("");
   return 0;
+}
+
+unique_ptr<CLogger> CLogger::createInstance(CLog *log, const LogType type,
+                                            int level) {
+  // using new instead of make_unique because the constructor is private
+  return unique_ptr<CLogger>(new CLogger(log, type, level));
 }
 
 }  // namespace LOG
