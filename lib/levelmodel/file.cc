@@ -12,6 +12,8 @@
  ***************************************************/
 #include "lib/levelmodel/file.h"
 
+#include <memory>
+
 #include "lib/context/context.h"
 #include "lib/log/log.h"
 
@@ -24,6 +26,7 @@ using ::std::fstream;
 using ::std::ios;
 using ::std::streampos;
 using ::std::string;
+using ::std::unique_ptr;
 
 namespace DESCENT_BOT {
 namespace LIB {
@@ -132,6 +135,14 @@ bool CFile::eof(fstream &file) {
   }
 
   return retval;
+}
+
+unique_ptr<CFile> CFile::createInstance(
+        ::DESCENT_BOT::LIB::CONTEXT::CContext *context,
+        const CHog &hog, const ::std::string &filename,
+        ::std::streampos offset, int length) {
+  // using new instead of make_unique because the constructor is private
+  return unique_ptr<CFile>(new CFile(context, hog, filename, offset, length));
 }
 
 }  // namespace LEVELMODEL

@@ -70,6 +70,10 @@ class CFile {
   CFile(::DESCENT_BOT::LIB::CONTEXT::CContext *context,
         const CHog &hog, const ::std::string &filename,
         ::std::streampos offset, int length);
+  static ::std::unique_ptr<CFile> createInstance(
+        ::DESCENT_BOT::LIB::CONTEXT::CContext *context,
+        const CHog &hog, const ::std::string &filename,
+        ::std::streampos offset, int length);
 
   friend class CHog;
 };

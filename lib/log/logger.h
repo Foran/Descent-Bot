@@ -52,6 +52,9 @@ class CLogger : public ::std::ostream {
 
   CLogger &operator=(const CLogger &source) = delete;
 
+  static ::std::unique_ptr<CLogger> createInstance(CLog *log,
+    const LogType type, int level);
+
   friend class CLog;
 };
 

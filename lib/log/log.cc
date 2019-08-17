@@ -70,7 +70,7 @@ void CLog::Write(const LogType type, int level, const string &message) {
 }
 
 unique_ptr<CLogger> CLog::Write(const LogType type, int level) {
-  return unique_ptr<CLogger>(new CLogger(this, type, level));
+  return CLogger::createInstance(this, type, level);
 }
 
 void CLog::FlushCache() {
