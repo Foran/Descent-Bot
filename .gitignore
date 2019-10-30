@@ -17,3 +17,5 @@ bazel-bin
 bazel-genfiles
 bazel-out
 bazel-testlogs
+.clwb
+.vscode
